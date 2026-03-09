@@ -15,7 +15,7 @@
 
     body {
       font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: #fefefe;
+      background: #ffffff;
       color: #1e1e1e;
       line-height: 1.5;
     }
@@ -50,11 +50,11 @@
       display: block;
     }
 
-    /* Fallback text (shown if image is missing) */
+    /* Fallback text (shown if image is missing) – now black/white/red */
     .logo-fallback {
       font-size: 1.8rem;
       font-weight: 700;
-      color: #2c5f2d;
+      color: #000000;
       letter-spacing: -0.5px;
       line-height: 1.2;
     }
@@ -62,7 +62,7 @@
       display: block;
       font-size: 0.9rem;
       font-weight: 400;
-      color: #b22222;
+      color: #b22222; /* red */
       letter-spacing: 0.5px;
     }
 
@@ -80,12 +80,12 @@
     }
 
     .nav-links a:hover {
-      color: #b22222;
+      color: #b22222; /* red */
     }
 
     /* hero */
     .hero {
-      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
       color: white;
       padding: 5rem 0;
       text-align: center;
@@ -106,7 +106,7 @@
     }
 
     .hero .btn-primary {
-      background: #b22222;
+      background: #b22222; /* red */
       color: white;
       padding: 0.9rem 2rem;
       border-radius: 50px;
@@ -121,7 +121,7 @@
     }
 
     .hero .btn-primary:hover {
-      background: #8b1a1a;
+      background: #8b1a1a; /* darker red */
       transform: translateY(-2px);
     }
 
@@ -133,9 +133,12 @@
     .section-title {
       font-size: 2rem;
       font-weight: 700;
-      color: #2c5f2d;
+      color: #000000;
       margin-bottom: 2rem;
       text-align: center;
+      border-bottom: 2px solid #b22222;
+      display: inline-block;
+      padding-bottom: 0.5rem;
     }
 
     .grid-2 {
@@ -154,14 +157,14 @@
 
     .card i {
       font-size: 2rem;
-      color: #b22222;
+      color: #b22222; /* red */
       margin-bottom: 1rem;
     }
 
     .card h3 {
       font-size: 1.4rem;
       margin-bottom: 1rem;
-      color: #1e1e1e;
+      color: #000000;
     }
 
     .card p {
@@ -174,51 +177,28 @@
       color: #777;
     }
 
-    /* TicketTailor main CTA */
-    .ticket-cta {
-      background: #f0f7f0;
-      border-radius: 40px;
-      padding: 3rem 2rem;
-      text-align: center;
+    /* TicketTailor embed container */
+    .events-embed {
+      background: white;
+      border-radius: 30px;
+      padding: 2rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.05);
       margin: 2rem 0;
-      border: 2px solid #2c5f2d;
     }
 
-    .ticket-cta h3 {
-      font-size: 2.2rem;
-      color: #2c5f2d;
-      margin-bottom: 1rem;
+    .events-embed h3 {
+      font-size: 2rem;
+      color: #000000;
+      margin-bottom: 1.5rem;
+      text-align: center;
     }
 
-    .ticket-cta p {
-      max-width: 600px;
-      margin: 0 auto 2rem auto;
-      color: #1e1e1e;
-      font-size: 1.2rem;
-    }
-
-    .btn-ticket {
-      background: #2c5f2d;
-      color: white;
-      padding: 1.2rem 3rem;
-      border-radius: 60px;
-      font-weight: 700;
-      font-size: 1.5rem;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 1rem;
-      box-shadow: 0 12px 30px rgba(44,95,45,0.3);
-      transition: background 0.2s, transform 0.2s;
-    }
-
-    .btn-ticket:hover {
-      background: #1f4520;
-      transform: translateY(-2px);
-    }
-
-    .btn-ticket i {
-      font-size: 1.8rem;
+    .events-embed iframe {
+      width: 100%;
+      border: none;
+      border-radius: 20px;
+      background: transparent;
     }
 
     /* Contact section (no phone numbers) */
@@ -228,6 +208,14 @@
     }
     .contact-info p {
       margin: 0.5rem 0;
+    }
+    .contact-info a {
+      color: #b22222;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .contact-info a:hover {
+      text-decoration: underline;
     }
 
     /* footer */
@@ -275,6 +263,9 @@
         justify-content: center;
         gap: 1rem;
       }
+      .events-embed iframe {
+        height: 600px; /* Adjust for mobile if needed */
+      }
     }
   </style>
 </head>
@@ -309,7 +300,7 @@
     <div class="container">
       <h2>Authentic Italian Hospitality</h2>
       <p>Just 4km from Melbourne's CBD · Ample free parking · Over 35 years of event expertise</p>
-      <a href="#availability" class="btn-primary"><i class="fas fa-calendar-check"></i> Check availability & book</a>
+      <a href="#events" class="btn-primary"><i class="fas fa-calendar-check"></i> Check availability & book</a>
     </div>
   </section>
 
@@ -354,14 +345,18 @@
     </div>
   </section>
 
-  <!-- MAIN AVAILABILITY SECTION via TicketTailor -->
-  <section class="container" id="availability">
-    <div class="ticket-cta">
-      <h3><i class="fas fa-ticket-alt" style="color: #b22222;"></i> Check real‑time availability</h3>
-      <p>View all upcoming events, check available dates, and book instantly through our TicketTailor page.</p>
-      <a href="https://www.tickettailor.com/events/thememberslounge" target="_blank" rel="noopener" class="btn-ticket">
-        <i class="fas fa-calendar-alt"></i> See availability & book
-      </a>
+  <!-- EMBEDDED TICKETTAILOR EVENTS -->
+  <section class="container" id="events">
+    <div class="events-embed">
+      <h3><i class="fas fa-ticket-alt" style="color: #b22222;"></i> Upcoming events & bookings</h3>
+      <!-- TicketTailor iframe embed – replace with your actual embed code if different -->
+      <iframe src="https://www.tickettailor.com/events/thememberslounge/embed" 
+              height="800" 
+              scrolling="auto" 
+              frameborder="0" 
+              allowtransparency="true"
+              style="background: transparent;"></iframe>
+      <p style="text-align: center; margin-top: 1rem; color: #777;">Book directly above – no phone calls needed.</p>
     </div>
   </section>
 
@@ -374,7 +369,7 @@
           <i class="fas fa-map-marker-alt"></i>
           <h3>Address</h3>
           <p>476 Brunswick Rd, Parkville VIC 3052</p>
-          <p><a href="https://maps.google.com/?q=476+Brunswick+Rd+Parkville+VIC+3052" target="_blank">Get directions <i class="fas fa-external-link-alt"></i></a></p>
+          <p><a href="https://maps.google.com/?q=476+Brunswick+Rd+Parkville+VIC+3052" target="_blank" style="color: #b22222;">Get directions <i class="fas fa-external-link-alt"></i></a></p>
         </div>
         <div class="card">
           <i class="fas fa-clock"></i>
@@ -385,7 +380,7 @@
         </div>
       </div>
       <div class="contact-info" style="margin-top: 2rem;">
-        <p>For all enquiries, please use our <a href="#availability">online booking</a>.</p>
+        <p>For all enquiries, please use our <a href="#events">online booking</a>.</p>
       </div>
     </div>
   </section>
