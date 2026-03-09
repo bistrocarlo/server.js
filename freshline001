@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FRESH LINER | Aroma style.</title>
-  <meta name="description" content="FRESH LINER - Aromatizadores con estilo. Fragancias para auto, hogar y espacios comerciales. Diseño moderno, catálogo destacado y contacto directo." />
+  <title>Freshline | Aromatizadores Diferentes</title>
+  <meta name="description" content="Freshline Aromatizadores Diferentes. Fragancias para auto, hogar y espacios comerciales. Diseño moderno, catálogo destacado y contacto directo." />
   <meta name="theme-color" content="#111111" />
 
   <style>
@@ -120,14 +120,8 @@
       display:grid;
       place-items:center;
       color:#fff;
-    }
-
-    /* Icono de hoja (logo) */
-    .brand-mark svg {
-      width: 28px;
-      height: 28px;
-      display: block;
-      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+      font-weight:900;
+      letter-spacing:.08em;
     }
 
     .brand-copy{
@@ -136,20 +130,17 @@
 
     .brand-copy h1{
       margin:0;
-      font-size:1.2rem;
-      line-height:1.1;
-      letter-spacing:.02em;
-      font-weight:800;
+      font-size:1.08rem;
+      line-height:1;
+      letter-spacing:.04em;
       text-transform:uppercase;
     }
 
     .brand-copy span{
       display:block;
-      margin-top:2px;
-      color:var(--gold-dark);
-      font-size:.78rem;
-      font-weight:600;
-      letter-spacing:.04em;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:.82rem;
     }
 
     .nav-links{
@@ -743,18 +734,11 @@
 
   <header class="site-header">
     <div class="container nav">
-      <a class="brand" href="#inicio" aria-label="FRESH LINER inicio">
-        <div class="brand-mark">
-          <!-- Icono de hoja (logo) -->
-          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 4C12 4 8 6 6 10C4 14 5 19 8 22C11 25 16 26 21 24C26 22 28 17 27 13C26 9 22 5 16 4Z" fill="#2B5E2B" fill-opacity="0.9"/>
-            <path d="M15 8L13 13L16 15L19 13L17 8H15Z" fill="#F5E56B" />
-            <circle cx="16" cy="15" r="1.5" fill="#E63946" />
-          </svg>
-        </div>
+      <a class="brand" href="#inicio" aria-label="Freshline inicio">
+        <div class="brand-mark">F</div>
         <div class="brand-copy">
-          <h1>FRESH LINER</h1>
-          <span>Aroma style.</span>
+          <h1>Freshline</h1>
+          <span>Aromatizadores Diferentes</span>
         </div>
       </a>
 
@@ -943,7 +927,7 @@
             <span class="eyebrow" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#e8d394;">Qué mejora esta web</span>
             <h3>Una presencia digital mucho más fuerte, profesional y comercial.</h3>
             <p>
-              Esta propuesta está pensada para que FRESH LINER se vea como una marca confiable, moderna y lista para crecer en retail, distribuidores y clientes corporativos.
+              Esta propuesta está pensada para que Freshline se vea como una marca confiable, moderna y lista para crecer en retail, distribuidores y clientes corporativos.
             </p>
           </div>
 
@@ -990,7 +974,7 @@
           <div class="panel reveal">
             <h3 style="margin-top:0; font-size:1.9rem;">Nuestra esencia</h3>
             <p style="color:var(--muted); margin:0 0 14px;">
-              FRESH LINER nace para desarrollar fragancias con identidad, calidad y presencia comercial. La propuesta busca unir producto, diseño y experiencia sensorial en una marca consistente.
+              Freshline nace para desarrollar fragancias con identidad, calidad y presencia comercial. La propuesta busca unir producto, diseño y experiencia sensorial en una marca consistente.
             </p>
             <p style="color:var(--muted); margin:0;">
               Este bloque puede adaptarse con la historia real de la empresa, visión, valores, capacidad productiva, red de distribución y fortalezas diferenciales.
@@ -1139,13 +1123,13 @@
             <span class="eyebrow" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#e8d394;">Ventas y atención</span>
             <h3>Convertí visitas en clientes.</h3>
             <p>
-              Reemplazá los datos de abajo por la información real de FRESH LINER.
+              Reemplazá los datos de abajo por la información real de Freshline.
             </p>
 
             <div class="contact-points">
               <div class="contact-point">
                 <strong>Email</strong>
-                <span>ventas@freshliner.com.ar</span>
+                <span>ventas@freshline.com.ar</span>
               </div>
               <div class="contact-point">
                 <strong>Teléfono / WhatsApp</strong>
@@ -1173,8 +1157,8 @@
   <footer>
     <div class="container footer-wrap">
       <div>
-        <strong>FRESH LINER</strong><br />
-        Aroma style.
+        <strong>Freshline</strong><br />
+        Aromatizadores Diferentes
       </div>
 
       <div class="footer-links">
@@ -1186,7 +1170,7 @@
       </div>
 
       <div>
-        © <span id="year"></span> FRESH LINER. Todos los derechos reservados.
+        © <span id="year"></span> Freshline. Todos los derechos reservados.
       </div>
     </div>
   </footer>
