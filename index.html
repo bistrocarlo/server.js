@@ -43,25 +43,22 @@
       gap: 1rem;
     }
 
-    /* Logo area – replace with your actual image */
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
+    /* Logo area – replace with actual image */
     .logo img {
-      height: 60px;
+      height: 70px;
       width: auto;
       display: block;
     }
-    .logo .logo-fallback {
+
+    /* Fallback text (shown if image is missing) */
+    .logo-fallback {
       font-size: 1.8rem;
       font-weight: 700;
       color: #2c5f2d;
       letter-spacing: -0.5px;
       line-height: 1.2;
     }
-    .logo .logo-fallback span {
+    .logo-fallback span {
       display: block;
       font-size: 0.9rem;
       font-weight: 400;
@@ -177,24 +174,6 @@
       color: #777;
     }
 
-    .info-list {
-      list-style: none;
-    }
-
-    .info-list li {
-      margin-bottom: 0.8rem;
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-
-    .info-list i {
-      width: 1.5rem;
-      color: #2c5f2d;
-      font-size: 1.2rem;
-      margin-top: 0.2rem;
-    }
-
     /* TicketTailor main CTA */
     .ticket-cta {
       background: #f0f7f0;
@@ -303,20 +282,20 @@
 
   <header class="site-header">
     <div class="container header-inner">
-      <!-- REPLACE THIS WITH YOUR ACTUAL LOGO IMAGE -->
-      <div class="logo">
-        <!-- 
-          To add your Members Lounge logo:
-          1. Upload the logo image to your server (e.g., /images/logo.png)
-          2. Replace the src attribute below with the correct path.
-          3. Remove the fallback text div.
-        -->
-        <img src="path/to/your/logo.png" alt="The Members Lounge" style="display: none;"> <!-- hidden until you set the path -->
-        <div class="logo-fallback">
-          THE MEMBERS LOUNGE
-          <span>Reggio Calabria Club · Parkville</span>
-        </div>
+      <!-- ===== LOGO PLACEHOLDER ===== -->
+      <!-- Replace the "src" attribute with the actual URL of your Members Lounge logo.
+           For example: src="https://www.reggiocalabriaclub.com.au/images/logo.png" 
+           If you prefer to use a local file, upload it to your server and use a relative path like "/images/logo.png". -->
+      <img src="https://www.reggiocalabriaclub.com.au/path/to/your/logo.png" 
+           alt="The Members Lounge" 
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+           style="height: 70px; width: auto;">
+      <!-- Fallback text (shown if image fails to load) -->
+      <div class="logo-fallback" style="display: none;">
+        THE MEMBERS LOUNGE
+        <span>Reggio Calabria Club · Parkville</span>
       </div>
+
       <nav class="nav-links">
         <a href="#about">About</a>
         <a href="#functions">Functions</a>
@@ -427,9 +406,10 @@
     </div>
   </footer>
 
-  <!-- Instructions for adding the logo (can be removed after implementation) -->
-  <div style="background: #f0f0f0; padding: 1rem; text-align: center; font-size: 0.9rem; border-top: 1px solid #ccc;">
-    <strong>To add the Members Lounge logo:</strong> Replace the <code>img src</code> in the header with the correct path to your logo image (e.g., <code>/images/members-lounge-logo.png</code>). Then remove the fallback text div and this message.
-  </div>
+  <!-- Optional: remove the inline JavaScript for logo fallback if you don't need it -->
+  <script>
+    // The fallback text will appear automatically if the logo image fails to load.
+    // No further action required.
+  </script>
 </body>
 </html>
