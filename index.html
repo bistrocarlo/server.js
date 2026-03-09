@@ -43,14 +43,14 @@
       gap: 1rem;
     }
 
-    /* Logo area – replace with actual image */
+    /* Logo area – replace with your actual logo */
     .logo img {
       height: 70px;
       width: auto;
       display: block;
     }
 
-    /* Fallback text (shown if image is missing) – now black/white/red */
+    /* Fallback text (shown if image is missing) */
     .logo-fallback {
       font-size: 1.8rem;
       font-weight: 700;
@@ -80,7 +80,7 @@
     }
 
     .nav-links a:hover {
-      color: #b22222; /* red */
+      color: #b22222;
     }
 
     /* hero */
@@ -106,7 +106,7 @@
     }
 
     .hero .btn-primary {
-      background: #b22222; /* red */
+      background: #b22222;
       color: white;
       padding: 0.9rem 2rem;
       border-radius: 50px;
@@ -121,7 +121,7 @@
     }
 
     .hero .btn-primary:hover {
-      background: #8b1a1a; /* darker red */
+      background: #8b1a1a;
       transform: translateY(-2px);
     }
 
@@ -157,7 +157,7 @@
 
     .card i {
       font-size: 2rem;
-      color: #b22222; /* red */
+      color: #b22222;
       margin-bottom: 1rem;
     }
 
@@ -199,9 +199,26 @@
       border: none;
       border-radius: 20px;
       background: transparent;
+      min-height: 700px;
     }
 
-    /* Contact section (no phone numbers) */
+    .fallback-link {
+      text-align: center;
+      margin-top: 2rem;
+      display: none;
+    }
+
+    .fallback-link a {
+      background: #b22222;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    /* Contact section */
     .contact-info {
       text-align: center;
       color: #4a4a4a;
@@ -213,9 +230,6 @@
       color: #b22222;
       text-decoration: none;
       font-weight: 600;
-    }
-    .contact-info a:hover {
-      text-decoration: underline;
     }
 
     /* footer */
@@ -264,7 +278,7 @@
         gap: 1rem;
       }
       .events-embed iframe {
-        height: 600px; /* Adjust for mobile if needed */
+        min-height: 600px;
       }
     }
   </style>
@@ -349,14 +363,24 @@
   <section class="container" id="events">
     <div class="events-embed">
       <h3><i class="fas fa-ticket-alt" style="color: #b22222;"></i> Upcoming events & bookings</h3>
-      <!-- TicketTailor iframe embed – replace with your actual embed code if different -->
-      <iframe src="https://www.tickettailor.com/events/thememberslounge/embed" 
-              height="800" 
-              scrolling="auto" 
-              frameborder="0" 
-              allowtransparency="true"
-              style="background: transparent;"></iframe>
-      <p style="text-align: center; margin-top: 1rem; color: #777;">Book directly above – no phone calls needed.</p>
+
+      <!-- TicketTailor iframe using the correct URL -->
+      <iframe 
+        src="https://buytickets.at/thememberslounge" 
+        height="800" 
+        frameborder="0"
+        allowtransparency="true"
+        onload="this.style.visibility='visible';"
+        onerror="this.style.display='none'; document.getElementById('tt-fallback').style.display='block';">
+      </iframe>
+
+      <!-- Fallback link if iframe fails to load -->
+      <div id="tt-fallback" class="fallback-link" style="display: none;">
+        <p>Can't see the events? Click the button below to book directly:</p>
+        <a href="https://buytickets.at/thememberslounge" target="_blank" rel="noopener">
+          <i class="fas fa-calendar-alt"></i> View events & book now
+        </a>
+      </div>
     </div>
   </section>
 
@@ -401,10 +425,17 @@
     </div>
   </footer>
 
-  <!-- Optional: remove the inline JavaScript for logo fallback if you don't need it -->
   <script>
-    // The fallback text will appear automatically if the logo image fails to load.
-    // No further action required.
+    // Fallback if iframe fails to load (already handled by onerror, but ensure fallback shows)
+    window.addEventListener('load', function() {
+      var iframe = document.querySelector('iframe');
+      var fallback = document.getElementById('tt-fallback');
+      // If iframe has no content height (very small), consider it failed
+      if (iframe && iframe.contentWindow && iframe.contentWindow.document.body.scrollHeight < 100) {
+        iframe.style.display = 'none';
+        fallback.style.display = 'block';
+      }
+    });
   </script>
 </body>
 </html>
