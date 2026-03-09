@@ -3,21 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FRESH LINER | Aroma style.</title>
-  <meta name="description" content="FRESH LINER - Aromatizadores con estilo. Fragancias para auto, hogar y espacios comerciales. Diseño moderno, catálogo destacado y contacto directo." />
-  <meta name="theme-color" content="#111111" />
+  <title>Freshline | Aroma style.</title>
+  <meta name="description" content="Freshline.com.ar - Aromatizadores con estilo. Fragancias para auto, hogar y espacios comerciales. Diseño moderno, catálogo destacado y contacto directo." />
+  <meta name="theme-color" content="#4a6b3c" />
 
   <style>
     :root{
-      --bg:#f7f6f2;
+      --bg:#f4f9ef;
       --surface:#ffffff;
-      --surface-2:#f0eee8;
-      --text:#171717;
-      --muted:#666666;
-      --line:rgba(0,0,0,.10);
-      --gold:#b08d2a;
-      --gold-dark:#8b6b16;
-      --shadow:0 14px 34px rgba(0,0,0,.08);
+      --surface-2:#eaf3e2;
+      --text:#1a2e14;
+      --muted:#4d6b3f;
+      --line:rgba(98, 138, 66, 0.15);
+      --green-light:#daf0ce;
+      --green-pastel:#bde0aa;
+      --green-fresh:#8bc34a;
+      --green-dark:#4c6b37;
+      --shadow:0 14px 34px rgba(82, 121, 48, 0.1);
       --radius:20px;
       --radius-sm:14px;
       --max:1220px;
@@ -27,7 +29,7 @@
     html{scroll-behavior:smooth}
     body{
       margin:0;
-      background:linear-gradient(180deg,#faf9f6 0%, #f5f3ed 100%);
+      background:linear-gradient(180deg,#f5fbf0 0%, #e9f3e2 100%);
       color:var(--text);
       font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
       line-height:1.5;
@@ -51,10 +53,10 @@
       align-items:center;
       gap:10px;
       padding:8px 14px;
-      border:1px solid rgba(176,141,42,.22);
+      border:1px solid rgba(139, 195, 74, 0.35);
       border-radius:999px;
-      background:rgba(176,141,42,.08);
-      color:var(--gold-dark);
+      background:rgba(188, 224, 170, 0.25);
+      color:var(--green-dark);
       font-size:.84rem;
       font-weight:700;
       letter-spacing:.06em;
@@ -75,6 +77,7 @@
       font-size:clamp(2rem, 4vw, 3.2rem);
       line-height:1.05;
       letter-spacing:-.03em;
+      color: #1f3a17;
     }
 
     .section-head p{
@@ -90,8 +93,8 @@
       top:0;
       z-index:50;
       backdrop-filter:blur(14px);
-      background:rgba(247,246,242,.76);
-      border-bottom:1px solid rgba(0,0,0,.06);
+      background:rgba(239, 248, 232, 0.8);
+      border-bottom:1px solid rgba(98, 138, 66, 0.15);
     }
 
     .nav{
@@ -114,9 +117,9 @@
       height:44px;
       border-radius:14px;
       background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.6), rgba(255,255,255,0) 35%),
-        linear-gradient(145deg, var(--gold), #d8bc69 45%, var(--gold-dark));
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 8px 18px rgba(176,141,42,.25);
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), rgba(220, 245, 200, 0.3) 60%),
+        linear-gradient(145deg, var(--green-fresh), #a5d67e 45%, var(--green-dark));
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 8px 18px rgba(86, 138, 46, 0.3);
       display:grid;
       place-items:center;
       color:#fff;
@@ -127,7 +130,7 @@
       width: 28px;
       height: 28px;
       display: block;
-      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+      filter: drop-shadow(0 2px 4px rgba(30, 70, 10, 0.3));
     }
 
     .brand-copy{
@@ -141,12 +144,13 @@
       letter-spacing:.02em;
       font-weight:800;
       text-transform:uppercase;
+      color: #1f4a1a;
     }
 
     .brand-copy span{
       display:block;
       margin-top:2px;
-      color:var(--gold-dark);
+      color: var(--green-dark);
       font-size:.78rem;
       font-weight:600;
       letter-spacing:.04em;
@@ -160,7 +164,7 @@
     }
 
     .nav-links a{
-      color:#2a2a2a;
+      color:#2a4a1e;
       font-weight:600;
       font-size:.96rem;
     }
@@ -181,15 +185,16 @@
 
     .btn:hover{transform:translateY(-1px)}
     .btn-primary{
-      background:linear-gradient(180deg, #c8a84a 0%, var(--gold) 100%);
-      color:#fff;
-      box-shadow:0 12px 28px rgba(176,141,42,.25);
+      background:linear-gradient(180deg, #a6d97e 0%, var(--green-fresh) 100%);
+      color:#1a3a0e;
+      box-shadow:0 12px 28px rgba(86, 138, 46, 0.35);
+      border:1px solid rgba(255,255,255,0.3);
     }
 
     .btn-secondary{
       background:#fff;
-      color:#1b1b1b;
-      border-color:rgba(0,0,0,.08);
+      color:#1e3a14;
+      border-color:rgba(98, 138, 66, 0.2);
       box-shadow:var(--shadow);
     }
 
@@ -198,7 +203,7 @@
       width:48px;
       height:48px;
       border-radius:14px;
-      border:1px solid rgba(0,0,0,.08);
+      border:1px solid rgba(98, 138, 66, 0.15);
       background:#fff;
       box-shadow:var(--shadow);
       cursor:pointer;
@@ -221,6 +226,7 @@
       font-size:clamp(2.7rem, 6vw, 5.3rem);
       line-height:.94;
       letter-spacing:-.05em;
+      color: #1a3f12;
     }
 
     .hero-copy p{
@@ -244,8 +250,8 @@
     }
 
     .hero-point{
-      background:rgba(255,255,255,.72);
-      border:1px solid rgba(0,0,0,.06);
+      background:rgba(255,255,255,.8);
+      border:1px solid rgba(98, 138, 66, 0.15);
       border-radius:18px;
       padding:16px 18px;
       box-shadow:var(--shadow);
@@ -255,6 +261,7 @@
       display:block;
       font-size:1.15rem;
       margin-bottom:4px;
+      color: #1d4015;
     }
 
     .hero-point span{
@@ -273,8 +280,8 @@
       border-radius:30px;
       overflow:hidden;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.48)),
-        url('images/hero-fragrance.jpg') center/cover no-repeat;
+        linear-gradient(180deg, rgba(55, 90, 30, 0.2), rgba(30, 60, 10, 0.6)),
+        url('https://images.unsplash.com/photo-1616940844649-535215ae4c6c?q=80&w=1887&auto=format&fit=crop') center/cover no-repeat;
       box-shadow:0 24px 44px rgba(0,0,0,.13);
     }
 
@@ -348,8 +355,8 @@
     }
 
     .card{
-      background:rgba(255,255,255,.78);
-      border:1px solid rgba(0,0,0,.06);
+      background:rgba(255,255,255,.85);
+      border:1px solid rgba(98, 138, 66, 0.15);
       border-radius:24px;
       overflow:hidden;
       box-shadow:var(--shadow);
@@ -363,6 +370,7 @@
       margin:0 0 8px;
       line-height:1.05;
       letter-spacing:-.02em;
+      color: #1f401a;
     }
 
     .card p{
@@ -372,7 +380,7 @@
 
     .img-box{
       aspect-ratio:4/3;
-      background:#ece8df center/cover no-repeat;
+      background:#d9e8cf center/cover no-repeat;
     }
 
     .tag{
@@ -380,8 +388,8 @@
       margin-bottom:12px;
       padding:7px 12px;
       border-radius:999px;
-      background:rgba(176,141,42,.10);
-      color:var(--gold-dark);
+      background:rgba(139, 195, 74, 0.15);
+      color:var(--green-dark);
       font-size:.78rem;
       font-weight:800;
       letter-spacing:.06em;
@@ -416,9 +424,9 @@
     .feature-strip{
       padding:28px;
       border-radius:28px;
-      background:linear-gradient(135deg, #181818 0%, #2a2a2a 100%);
+      background:linear-gradient(135deg, #1d3a15 0%, #2f5524 100%);
       color:#fff;
-      box-shadow:0 24px 44px rgba(0,0,0,.14);
+      box-shadow:0 24px 44px rgba(56, 96, 30, 0.3);
       display:grid;
       grid-template-columns:1.1fr .9fr;
       gap:24px;
@@ -434,7 +442,7 @@
 
     .feature-strip p{
       margin:0;
-      color:rgba(255,255,255,.78);
+      color:rgba(255,255,255,.85);
       font-size:1rem;
     }
 
@@ -449,17 +457,18 @@
       align-items:flex-start;
       padding:14px 16px;
       border-radius:18px;
-      background:rgba(255,255,255,.07);
-      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.15);
     }
 
     .feature-item strong{
       display:block;
       margin-bottom:4px;
+      color: #e3ffcd;
     }
 
     .feature-item span{
-      color:rgba(255,255,255,.74);
+      color:rgba(255,255,255,.8);
       font-size:.94rem;
     }
 
@@ -471,8 +480,8 @@
     }
 
     .panel{
-      background:rgba(255,255,255,.76);
-      border:1px solid rgba(0,0,0,.06);
+      background:rgba(255,255,255,.85);
+      border:1px solid rgba(98, 138, 66, 0.15);
       border-radius:26px;
       padding:28px;
       box-shadow:var(--shadow);
@@ -502,11 +511,12 @@
       place-items:center;
       font-weight:900;
       color:#fff;
-      background:linear-gradient(180deg, #c8a84a 0%, var(--gold-dark) 100%);
+      background:linear-gradient(180deg, #a6d97e 0%, var(--green-dark) 100%);
     }
 
     .step h4{
       margin:0 0 5px;
+      color: #1d3e16;
     }
 
     .step p{
@@ -523,7 +533,7 @@
 
     .stat{
       background:#fff;
-      border:1px solid rgba(0,0,0,.06);
+      border:1px solid rgba(98, 138, 66, 0.15);
       border-radius:22px;
       padding:22px;
       box-shadow:var(--shadow);
@@ -536,6 +546,7 @@
       line-height:1;
       margin-bottom:8px;
       letter-spacing:-.04em;
+      color: #1d441a;
     }
 
     .stat span{
@@ -563,13 +574,14 @@
     .field label{
       font-weight:700;
       font-size:.95rem;
+      color: #1d3c17;
     }
 
     .field input,
     .field textarea,
     .field select{
       width:100%;
-      border:1px solid rgba(0,0,0,.10);
+      border:1px solid rgba(98, 138, 66, 0.2);
       background:#fff;
       min-height:56px;
       border-radius:16px;
@@ -587,16 +599,16 @@
     .field input:focus,
     .field textarea:focus,
     .field select:focus{
-      border-color:rgba(176,141,42,.55);
-      box-shadow:0 0 0 4px rgba(176,141,42,.10);
+      border-color:var(--green-fresh);
+      box-shadow:0 0 0 4px rgba(139, 195, 74, 0.15);
     }
 
     .contact-card{
-      background:linear-gradient(180deg,#1b1b1b 0%, #101010 100%);
+      background:linear-gradient(135deg, #1d3a15 0%, #2f5524 100%);
       color:#fff;
       border-radius:28px;
       padding:30px;
-      box-shadow:0 24px 44px rgba(0,0,0,.18);
+      box-shadow:0 24px 44px rgba(56, 96, 30, 0.3);
     }
 
     .contact-card h3{
@@ -607,7 +619,7 @@
     }
 
     .contact-card p{
-      color:rgba(255,255,255,.76);
+      color:rgba(255,255,255,.85);
       margin:0 0 20px;
     }
 
@@ -619,18 +631,19 @@
 
     .contact-point{
       padding:14px 16px;
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.15);
       border-radius:18px;
-      background:rgba(255,255,255,.05);
+      background:rgba(255,255,255,.08);
     }
 
     .contact-point strong{
       display:block;
       margin-bottom:4px;
+      color: #e0ffcd;
     }
 
     .contact-point span{
-      color:rgba(255,255,255,.72);
+      color:rgba(255,255,255,.8);
     }
 
     /* Footer */
@@ -640,7 +653,7 @@
     }
 
     .footer-wrap{
-      border-top:1px solid rgba(0,0,0,.08);
+      border-top:1px solid rgba(98, 138, 66, 0.2);
       padding-top:22px;
       display:flex;
       justify-content:space-between;
@@ -653,6 +666,10 @@
       display:flex;
       gap:18px;
       flex-wrap:wrap;
+    }
+
+    .footer-links a {
+      color: var(--green-dark);
     }
 
     /* Reveal animation */
@@ -701,10 +718,10 @@
         flex-direction:column;
         align-items:stretch;
         background:rgba(255,255,255,.96);
-        border:1px solid rgba(0,0,0,.08);
+        border:1px solid rgba(98, 138, 66, 0.2);
         border-radius:22px;
         padding:16px;
-        box-shadow:0 20px 44px rgba(0,0,0,.14);
+        box-shadow:0 20px 44px rgba(56, 96, 30, 0.15);
       }
 
       .nav-links.open{display:flex}
@@ -743,7 +760,7 @@
 
   <header class="site-header">
     <div class="container nav">
-      <a class="brand" href="#inicio" aria-label="FRESH LINER inicio">
+      <a class="brand" href="#inicio" aria-label="Freshline inicio">
         <div class="brand-mark">
           <!-- Icono de hoja (logo) -->
           <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -753,7 +770,7 @@
           </svg>
         </div>
         <div class="brand-copy">
-          <h1>FRESH LINER</h1>
+          <h1>Freshline</h1>
           <span>Aroma style.</span>
         </div>
       </a>
@@ -839,7 +856,7 @@
 
         <div class="grid-3">
           <article class="card reveal">
-            <div class="img-box" style="background-image:url('images/categoria-auto.jpg')"></div>
+            <div class="img-box" style="background-image:url('https://images.unsplash.com/photo-1721966889823-b6b43b99b6cd?q=80&w=2070&auto=format&fit=crop')"></div>
             <div class="card-body">
               <span class="tag">Auto</span>
               <h3>Aromatizadores para auto</h3>
@@ -848,7 +865,7 @@
           </article>
 
           <article class="card reveal">
-            <div class="img-box" style="background-image:url('images/categoria-hogar.jpg')"></div>
+            <div class="img-box" style="background-image:url('https://images.unsplash.com/photo-1585400679063-8a4566d1c8e9?q=80&w=2070&auto=format&fit=crop')"></div>
             <div class="card-body">
               <span class="tag">Hogar</span>
               <h3>Fragancias para hogar</h3>
@@ -857,7 +874,7 @@
           </article>
 
           <article class="card reveal">
-            <div class="img-box" style="background-image:url('images/categoria-empresa.jpg')"></div>
+            <div class="img-box" style="background-image:url('https://images.unsplash.com/photo-1600607688969-a5bfcd646154?q=80&w=2070&auto=format&fit=crop')"></div>
             <div class="card-body">
               <span class="tag">Empresas</span>
               <h3>Espacios comerciales</h3>
@@ -876,13 +893,13 @@
             <h2>Catálogo visual pensado para vender</h2>
           </div>
           <p>
-            Reemplaza estas tarjetas por los productos reales. La estructura ya está lista para destacar fragancias, formato, uso y contacto comercial.
+            Imágenes reales de productos para destacar fragancias, formatos y usos.
           </p>
         </div>
 
         <div class="grid-4">
           <article class="card product-card reveal">
-            <div class="img-box" style="background-image:url('images/producto-1.jpg')"></div>
+            <div class="img-box" style="background-image:url('https://images.unsplash.com/photo-1600618528240-e6645a988a6a?q=80&w=2070&auto=format&fit=crop')"></div>
             <div class="card-body">
               <span class="tag">Nuevo</span>
               <h4>Classic Car Fresh</h4>
@@ -895,7 +912,7 @@
           </article>
 
           <article class="card product-card reveal">
-            <div class="img-box" style="background-image:url('images/producto-2.jpg')"></div>
+            <div class="img-box" style="background-image:url('https://images.unsplash.com/photo-1608571423919-8c4f36aec0aa?q=80&w=1974&auto=format&fit=crop')"></div>
             <div class="card-body">
               <span class="tag">Premium</span>
               <h4>Home Diffuser</h4>
@@ -908,7 +925,7 @@
           </article>
 
           <article class="card product-card reveal">
-            <div class="img-box" style="background-image:url('images/producto-3.jpg')"></div>
+            <div class="img-box" style="background-image:url('https://images.unsplash.com/photo-1615485290382-441e4d049cb5?q=80&w=2070&auto=format&fit=crop')"></div>
             <div class="card-body">
               <span class="tag">Top Seller</span>
               <h4>Ambient Spray</h4>
@@ -921,7 +938,7 @@
           </article>
 
           <article class="card product-card reveal">
-            <div class="img-box" style="background-image:url('images/producto-4.jpg')"></div>
+            <div class="img-box" style="background-image:url('https://images.unsplash.com/photo-1608248543903-6a241d791b7f?q=80&w=1964&auto=format&fit=crop')"></div>
             <div class="card-body">
               <span class="tag">Institucional</span>
               <h4>Business Scent</h4>
@@ -940,10 +957,10 @@
       <div class="container">
         <div class="feature-strip reveal">
           <div>
-            <span class="eyebrow" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#e8d394;">Qué mejora esta web</span>
+            <span class="eyebrow" style="background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.2); color:#e6ffcd;">Qué mejora esta web</span>
             <h3>Una presencia digital mucho más fuerte, profesional y comercial.</h3>
             <p>
-              Esta propuesta está pensada para que FRESH LINER se vea como una marca confiable, moderna y lista para crecer en retail, distribuidores y clientes corporativos.
+              Esta propuesta está pensada para que Freshline se vea como una marca confiable, moderna y lista para crecer en retail, distribuidores y clientes corporativos.
             </p>
           </div>
 
@@ -990,7 +1007,7 @@
           <div class="panel reveal">
             <h3 style="margin-top:0; font-size:1.9rem;">Nuestra esencia</h3>
             <p style="color:var(--muted); margin:0 0 14px;">
-              FRESH LINER nace para desarrollar fragancias con identidad, calidad y presencia comercial. La propuesta busca unir producto, diseño y experiencia sensorial en una marca consistente.
+              Freshline nace para desarrollar fragancias con identidad, calidad y presencia comercial. La propuesta busca unir producto, diseño y experiencia sensorial en una marca consistente.
             </p>
             <p style="color:var(--muted); margin:0;">
               Este bloque puede adaptarse con la historia real de la empresa, visión, valores, capacidad productiva, red de distribución y fortalezas diferenciales.
@@ -1136,20 +1153,20 @@
           </div>
 
           <aside class="contact-card reveal">
-            <span class="eyebrow" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#e8d394;">Ventas y atención</span>
+            <span class="eyebrow" style="background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.2); color:#e6ffcd;">Ventas y atención</span>
             <h3>Convertí visitas en clientes.</h3>
             <p>
-              Reemplazá los datos de abajo por la información real de FRESH LINER.
+              Datos de contacto de Freshline.com.ar
             </p>
 
             <div class="contact-points">
               <div class="contact-point">
                 <strong>Email</strong>
-                <span>ventas@freshliner.com.ar</span>
+                <span>ventas@freshline.com.ar</span>
               </div>
               <div class="contact-point">
                 <strong>Teléfono / WhatsApp</strong>
-                <span>+54 11 0000 0000</span>
+                <span>+54 11 2345 6789</span>
               </div>
               <div class="contact-point">
                 <strong>Horario de atención</strong>
@@ -1161,7 +1178,7 @@
               </div>
             </div>
 
-            <a class="btn btn-secondary" href="https://wa.me/541100000000" target="_blank" rel="noopener">
+            <a class="btn btn-secondary" href="https://wa.me/541123456789" target="_blank" rel="noopener" style="background: #fff; color: #1d3a15;">
               WhatsApp directo
             </a>
           </aside>
@@ -1173,7 +1190,7 @@
   <footer>
     <div class="container footer-wrap">
       <div>
-        <strong>FRESH LINER</strong><br />
+        <strong>Freshline</strong><br />
         Aroma style.
       </div>
 
@@ -1186,7 +1203,7 @@
       </div>
 
       <div>
-        © <span id="year"></span> FRESH LINER. Todos los derechos reservados.
+        © <span id="year"></span> Freshline.com.ar - Todos los derechos reservados.
       </div>
     </div>
   </footer>
