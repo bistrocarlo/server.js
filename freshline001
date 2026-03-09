@@ -1,9 +1,3 @@
-Here is a complete, user-friendly HTML website for The Members Lounge / Reggio Calabria Club. It combines your club’s information with a direct link to your TicketTailor events page and a special button that lets customers send you an SMS with a pre‑written message to check availability and room details.
-
-The design is clean, mobile‑friendly, and ready to use. Just replace the phone number in the SMS button with your own.
-
-```html
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
