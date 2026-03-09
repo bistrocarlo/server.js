@@ -43,19 +43,29 @@
       gap: 1rem;
     }
 
-    .logo h1 {
+    /* Logo area – replace with your actual image */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .logo img {
+      height: 60px;
+      width: auto;
+      display: block;
+    }
+    .logo .logo-fallback {
       font-size: 1.8rem;
       font-weight: 700;
-      color: #2c5f2d; /* Italian green */
+      color: #2c5f2d;
       letter-spacing: -0.5px;
       line-height: 1.2;
     }
-
-    .logo span {
+    .logo .logo-fallback span {
       display: block;
       font-size: 0.9rem;
       font-weight: 400;
-      color: #b22222; /* Italian red */
+      color: #b22222;
       letter-spacing: 0.5px;
     }
 
@@ -232,17 +242,13 @@
       font-size: 1.8rem;
     }
 
-    /* SMS secondary */
-    .sms-secondary {
+    /* Contact section (no phone numbers) */
+    .contact-info {
       text-align: center;
-      margin: 2rem 0;
+      color: #4a4a4a;
     }
-
-    .sms-secondary a {
-      color: #2c5f2d;
-      font-weight: 600;
-      text-decoration: none;
-      border-bottom: 1px dashed #2c5f2d;
+    .contact-info p {
+      margin: 0.5rem 0;
     }
 
     /* footer */
@@ -297,9 +303,19 @@
 
   <header class="site-header">
     <div class="container header-inner">
+      <!-- REPLACE THIS WITH YOUR ACTUAL LOGO IMAGE -->
       <div class="logo">
-        <h1>THE MEMBERS LOUNGE</h1>
-        <span>Reggio Calabria Club · Parkville</span>
+        <!-- 
+          To add your Members Lounge logo:
+          1. Upload the logo image to your server (e.g., /images/logo.png)
+          2. Replace the src attribute below with the correct path.
+          3. Remove the fallback text div.
+        -->
+        <img src="path/to/your/logo.png" alt="The Members Lounge" style="display: none;"> <!-- hidden until you set the path -->
+        <div class="logo-fallback">
+          THE MEMBERS LOUNGE
+          <span>Reggio Calabria Club · Parkville</span>
+        </div>
       </div>
       <nav class="nav-links">
         <a href="#about">About</a>
@@ -370,27 +386,27 @@
     </div>
   </section>
 
-  <!-- Secondary SMS option -->
-  <div class="container sms-secondary">
-    <p>Prefer to ask a question? <a href="sms:+614XXXXXXXX?body=Hi%2C%20I'm%20interested%20in%20booking%20an%20event%20at%20The%20Members%20Lounge.%20Can%20you%20tell%20me%20more%20about%20the%20rooms%3F">Text us via SMS <i class="fas fa-comment-dots"></i></a> (replace with your number)</p>
-  </div>
-
+  <!-- CONTACT SECTION (NO PHONE NUMBERS) -->
   <section class="section" id="contact">
     <div class="container">
-      <h2 class="section-title">Contact & enquiries</h2>
+      <h2 class="section-title">Visit us</h2>
       <div class="grid-2">
         <div class="card">
-          <i class="fas fa-phone-alt"></i>
-          <h3>Call us</h3>
-          <p><strong>Functions / Bistro:</strong> <a href="tel:+61385600556">(03) 8560 0556</a></p>
-          <p><strong>General club enquiries:</strong> <a href="tel:+61393806500">(03) 9380 6500</a></p>
-        </div>
-        <div class="card">
           <i class="fas fa-map-marker-alt"></i>
-          <h3>Visit us</h3>
+          <h3>Address</h3>
           <p>476 Brunswick Rd, Parkville VIC 3052</p>
           <p><a href="https://maps.google.com/?q=476+Brunswick+Rd+Parkville+VIC+3052" target="_blank">Get directions <i class="fas fa-external-link-alt"></i></a></p>
         </div>
+        <div class="card">
+          <i class="fas fa-clock"></i>
+          <h3>Bistro hours</h3>
+          <p><strong>Saturday:</strong> 6:30 pm – 10:30 pm</p>
+          <p><strong>Sunday:</strong> 12:30 pm – 4:30 pm</p>
+          <p>Other times by appointment</p>
+        </div>
+      </div>
+      <div class="contact-info" style="margin-top: 2rem;">
+        <p>For all enquiries, please use our <a href="#availability">online booking</a>.</p>
       </div>
     </div>
   </section>
@@ -403,7 +419,6 @@
         <p>Italian hospitality since 2003</p>
       </div>
       <div class="footer-col">
-        <p><i class="fas fa-phone"></i> (03) 8560 0556</p>
         <p><i class="fas fa-envelope"></i> functions@memberslounge.com.au</p>
       </div>
       <div class="footer-col">
@@ -412,9 +427,9 @@
     </div>
   </footer>
 
-  <!-- small note to replace SMS number -->
-  <script>
-    // To use the SMS feature, replace +614XXXXXXXX with your actual mobile number in the href above.
-  </script>
+  <!-- Instructions for adding the logo (can be removed after implementation) -->
+  <div style="background: #f0f0f0; padding: 1rem; text-align: center; font-size: 0.9rem; border-top: 1px solid #ccc;">
+    <strong>To add the Members Lounge logo:</strong> Replace the <code>img src</code> in the header with the correct path to your logo image (e.g., <code>/images/members-lounge-logo.png</code>). Then remove the fallback text div and this message.
+  </div>
 </body>
 </html>
