@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Members Lounge · Step‑by‑Step Event Builder</title>
+  <title>The Members Lounge · Reggio Calabria Club</title>
   <!-- Font Awesome icons (free) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -140,7 +140,7 @@
       padding-bottom: 0.5rem;
     }
 
-    /* venues grid */
+    /* venue cards */
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -170,6 +170,11 @@
     .card p {
       color: #4a4a4a;
       margin-bottom: 0.5rem;
+    }
+
+    .card .small {
+      font-size: 0.9rem;
+      color: #777;
     }
 
     .card .menu-note {
@@ -370,6 +375,7 @@
     </div>
   </section>
 
+  <!-- About section with info from website -->
   <section class="section" id="about">
     <div class="container">
       <h2 class="section-title">Welcome to The Members Lounge</h2>
@@ -377,20 +383,20 @@
         <div class="card">
           <i class="fas fa-utensils"></i>
           <h3>Traditional Italian Cuisine</h3>
-          <p>Prepared by executive chef <strong>Carlo Pavia</strong>, celebrating regional Italian recipes with the highest standards of taste and quality.</p>
-          <p class="small">Over 2.65 million meals served since 2003.</p>
+          <p>Prepared by executive chef <strong>Carlo Pavia</strong>, celebrating regional Italian recipes with the highest standards of taste and quality. Over 2.65 million meals served since 2003.</p>
+          <p class="small">More than 9,200 successful events hosted.</p>
         </div>
         <div class="card">
           <i class="fas fa-glass-cheers"></i>
           <h3>Four Unique Venues</h3>
           <p>Versatile event spaces with breathtaking city and parkland views. Capacity for any occasion – from intimate gatherings to large celebrations.</p>
-          <p class="small">More than 9,200 successful events hosted.</p>
+          <p class="small">Operating since 2003 · 450 free parking spots</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Venues with menu info -->
+  <!-- Venues with menu info (placeholders – replace with actual data) -->
   <section class="section" id="venues">
     <div class="container">
       <h2 class="section-title">Our venues & their menus</h2>
@@ -404,7 +410,7 @@
         <div class="card">
           <i class="fas fa-tree"></i>
           <h3>The Terrace Room</h3>
-          <p>Light-filled space overlooking parklands. Perfect for corporate events.</p>
+          <p>Light‑filled space overlooking parklands. Perfect for corporate events.</p>
           <p class="menu-note"><i class="fas fa-utensil-spoon"></i> Menu: Canapés, buffet or seated lunch/dinner.</p>
         </div>
         <div class="card">
@@ -420,6 +426,7 @@
           <p class="menu-note"><i class="fas fa-utensil-spoon"></i> Menu: BBQ, finger food or sit‑down dinner.</p>
         </div>
       </div>
+      <p style="text-align: center; margin-top: 1rem; color: #b22222;"><i class="fas fa-info-circle"></i> *These are sample room names and menus – please update them to match your actual offerings.</p>
     </div>
   </section>
 
@@ -498,7 +505,7 @@
     </div>
   </section>
 
-  <!-- Contact section (address only) -->
+  <!-- Contact section with address and hours (from website) -->
   <section class="section" id="contact">
     <div class="container">
       <h2 class="section-title">Visit us</h2>
@@ -508,13 +515,14 @@
           <h3>Address</h3>
           <p>476 Brunswick Rd, Parkville VIC 3052</p>
           <p><a href="https://maps.google.com/?q=476+Brunswick+Rd+Parkville+VIC+3052" target="_blank" style="color: #b22222;">Get directions <i class="fas fa-external-link-alt"></i></a></p>
+          <p>Free parking for 450 vehicles · Easy freeway access to airport</p>
         </div>
         <div class="card">
           <i class="fas fa-clock"></i>
           <h3>Bistro hours</h3>
           <p><strong>Saturday:</strong> 6:30 pm – 10:30 pm</p>
           <p><strong>Sunday:</strong> 12:30 pm – 4:30 pm</p>
-          <p>Other times by appointment</p>
+          <p>Other times available for functions by appointment</p>
         </div>
       </div>
     </div>
@@ -537,16 +545,16 @@
   </footer>
 
   <script>
-    // Update room menu description based on selection
-    const roomSelect = document.getElementById('room');
-    const menuDesc = document.getElementById('menuDescription');
-
+    // Room menu descriptions (update these to match your real menus)
     const roomMenus = {
       'members': 'The Members Lounge menu: 5‑course Italian banquet or à la carte.',
       'terrace': 'The Terrace Room menu: Canapés, buffet or seated lunch/dinner.',
       'cellar': 'The Cellar menu: Shared platters & regional specialties.',
       'rooftop': 'The Rooftop menu: BBQ, finger food or sit‑down dinner.'
     };
+
+    const roomSelect = document.getElementById('room');
+    const menuDesc = document.getElementById('menuDescription');
 
     roomSelect.addEventListener('change', function() {
       const selected = this.value;
@@ -568,16 +576,15 @@
         return;
       }
 
-      // You can optionally send this data to your analytics or just proceed
-      // For now, we simply open the TicketTailor page.
+      // You can optionally send this data to your analytics or CRM here
+      // For now, simply open the TicketTailor page.
       window.location.href = 'https://buytickets.at/thememberslounge';
     });
 
-    // Fallback if iframe fails to load (already handled by onerror, but double-check)
+    // Fallback if iframe fails to load
     window.addEventListener('load', function() {
       const iframe = document.querySelector('iframe');
       const fallback = document.getElementById('tt-fallback');
-      // If iframe has no content height (very small), consider it failed
       if (iframe && iframe.contentWindow && iframe.contentWindow.document.body.scrollHeight < 100) {
         iframe.style.display = 'none';
         fallback.style.display = 'block';
