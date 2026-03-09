@@ -1,3 +1,14 @@
+Se actualizó el sitio con los siguientes cambios:
+
+· Fondo más blanco para reducir el verde, manteniendo acentos frescos en botones y detalles.
+· Nuevas imágenes de productos (IMG_2866.jpeg, IMG_2867.jpeg, IMG_2868.jpeg, IMG_2869.jpeg) con sus nombres reales: Citric Car, Aqua Car, Million Car, Vainilla Car.
+· Descripciones ajustadas a "Aromatizador para autos – 8 ml".
+· Secciones con fondo blanco y tarjetas limpias, conservando la personalidad de Freshline.
+· Dominio Freshline.com.ar en toda la web.
+
+El código está listo para usar con las imágenes en la misma carpeta.
+
+```html
 <!doctype html>
 <html lang="es">
 <head>
@@ -5,21 +16,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Freshline | Aroma style.</title>
   <meta name="description" content="Freshline.com.ar - Aromatizadores con estilo. Fragancias para auto, hogar y espacios comerciales. Diseño moderno, catálogo destacado y contacto directo." />
-  <meta name="theme-color" content="#4a6b3c" />
+  <meta name="theme-color" content="#8bc34a" />
 
   <style>
     :root{
-      --bg:#f4f9ef;
+      --bg:#ffffff;
       --surface:#ffffff;
-      --surface-2:#eaf3e2;
+      --surface-2:#f4f9f0;
       --text:#1a2e14;
       --muted:#4d6b3f;
       --line:rgba(98, 138, 66, 0.15);
-      --green-light:#daf0ce;
+      --green-light:#e2f0d6;
       --green-pastel:#bde0aa;
       --green-fresh:#8bc34a;
       --green-dark:#4c6b37;
-      --shadow:0 14px 34px rgba(82, 121, 48, 0.1);
+      --shadow:0 10px 30px rgba(0,0,0,0.03);
       --radius:20px;
       --radius-sm:14px;
       --max:1220px;
@@ -29,7 +40,7 @@
     html{scroll-behavior:smooth}
     body{
       margin:0;
-      background:linear-gradient(180deg,#f5fbf0 0%, #e9f3e2 100%);
+      background:var(--bg);
       color:var(--text);
       font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
       line-height:1.5;
@@ -53,9 +64,9 @@
       align-items:center;
       gap:10px;
       padding:8px 14px;
-      border:1px solid rgba(139, 195, 74, 0.35);
+      border:1px solid rgba(139, 195, 74, 0.3);
       border-radius:999px;
-      background:rgba(188, 224, 170, 0.25);
+      background:rgba(188, 224, 170, 0.15);
       color:var(--green-dark);
       font-size:.84rem;
       font-weight:700;
@@ -93,8 +104,8 @@
       top:0;
       z-index:50;
       backdrop-filter:blur(14px);
-      background:rgba(239, 248, 232, 0.8);
-      border-bottom:1px solid rgba(98, 138, 66, 0.15);
+      background:rgba(255,255,255,0.8);
+      border-bottom:1px solid rgba(98, 138, 66, 0.1);
     }
 
     .nav{
@@ -119,18 +130,17 @@
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), rgba(220, 245, 200, 0.3) 60%),
         linear-gradient(145deg, var(--green-fresh), #a5d67e 45%, var(--green-dark));
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 8px 18px rgba(86, 138, 46, 0.3);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 8px 18px rgba(86, 138, 46, 0.15);
       display:grid;
       place-items:center;
       color:#fff;
     }
 
-    /* Icono de hoja (logo) */
     .brand-mark svg {
       width: 28px;
       height: 28px;
       display: block;
-      filter: drop-shadow(0 2px 4px rgba(30, 70, 10, 0.3));
+      filter: drop-shadow(0 2px 4px rgba(30, 70, 10, 0.2));
     }
 
     .brand-copy{
@@ -187,7 +197,7 @@
     .btn-primary{
       background:linear-gradient(180deg, #a6d97e 0%, var(--green-fresh) 100%);
       color:#1a3a0e;
-      box-shadow:0 12px 28px rgba(86, 138, 46, 0.35);
+      box-shadow:0 8px 20px rgba(86, 138, 46, 0.2);
       border:1px solid rgba(255,255,255,0.3);
     }
 
@@ -195,7 +205,7 @@
       background:#fff;
       color:#1e3a14;
       border-color:rgba(98, 138, 66, 0.2);
-      box-shadow:var(--shadow);
+      box-shadow:0 4px 12px rgba(0,0,0,0.02);
     }
 
     .menu-toggle{
@@ -205,7 +215,7 @@
       border-radius:14px;
       border:1px solid rgba(98, 138, 66, 0.15);
       background:#fff;
-      box-shadow:var(--shadow);
+      box-shadow:0 4px 12px rgba(0,0,0,0.02);
       cursor:pointer;
     }
 
@@ -251,10 +261,10 @@
 
     .hero-point{
       background:rgba(255,255,255,.8);
-      border:1px solid rgba(98, 138, 66, 0.15);
+      border:1px solid rgba(98, 138, 66, 0.1);
       border-radius:18px;
       padding:16px 18px;
-      box-shadow:var(--shadow);
+      box-shadow:0 4px 16px rgba(0,0,0,0.02);
     }
 
     .hero-point strong{
@@ -280,9 +290,9 @@
       border-radius:30px;
       overflow:hidden;
       background:
-        linear-gradient(180deg, rgba(55, 90, 30, 0.2), rgba(30, 60, 10, 0.6)),
+        linear-gradient(180deg, rgba(55, 90, 30, 0.1), rgba(30, 60, 10, 0.4)),
         url('https://images.unsplash.com/photo-1616940844649-535215ae4c6c?q=80&w=1887&auto=format&fit=crop') center/cover no-repeat;
-      box-shadow:0 24px 44px rgba(0,0,0,.13);
+      box-shadow:0 24px 44px rgba(0,0,0,0.06);
     }
 
     .hero-overlay{
@@ -292,8 +302,8 @@
       bottom:24px;
       padding:22px;
       border-radius:22px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.2);
       backdrop-filter:blur(8px);
       color:#fff;
     }
@@ -306,7 +316,7 @@
 
     .hero-overlay p{
       margin:0;
-      color:rgba(255,255,255,.86);
+      color:rgba(255,255,255,.9);
     }
 
     .floating-card{
@@ -315,10 +325,10 @@
       right:-10px;
       width:min(280px, 72%);
       background:#fff;
-      border:1px solid rgba(0,0,0,.06);
+      border:1px solid rgba(0,0,0,.04);
       border-radius:22px;
       padding:18px;
-      box-shadow:0 20px 40px rgba(0,0,0,.10);
+      box-shadow:0 20px 40px rgba(0,0,0,0.04);
     }
 
     .floating-card small{
@@ -355,11 +365,11 @@
     }
 
     .card{
-      background:rgba(255,255,255,.85);
-      border:1px solid rgba(98, 138, 66, 0.15);
+      background:#fff;
+      border:1px solid rgba(98, 138, 66, 0.1);
       border-radius:24px;
       overflow:hidden;
-      box-shadow:var(--shadow);
+      box-shadow:0 4px 20px rgba(0,0,0,0.02);
     }
 
     .card-body{
@@ -380,7 +390,7 @@
 
     .img-box{
       aspect-ratio:4/3;
-      background:#d9e8cf center/cover no-repeat;
+      background:#f0f7ea center/cover no-repeat;
     }
 
     .tag{
@@ -388,7 +398,7 @@
       margin-bottom:12px;
       padding:7px 12px;
       border-radius:999px;
-      background:rgba(139, 195, 74, 0.15);
+      background:rgba(139, 195, 74, 0.1);
       color:var(--green-dark);
       font-size:.78rem;
       font-weight:800;
@@ -405,6 +415,8 @@
 
     .product-card .img-box{
       aspect-ratio:1/1;
+      background-size: cover;
+      background-position: center;
     }
 
     .product-card .meta{
@@ -424,9 +436,10 @@
     .feature-strip{
       padding:28px;
       border-radius:28px;
-      background:linear-gradient(135deg, #1d3a15 0%, #2f5524 100%);
-      color:#fff;
-      box-shadow:0 24px 44px rgba(56, 96, 30, 0.3);
+      background:#fff;
+      color:var(--text);
+      box-shadow:0 4px 24px rgba(0,0,0,0.02);
+      border:1px solid rgba(98, 138, 66, 0.15);
       display:grid;
       grid-template-columns:1.1fr .9fr;
       gap:24px;
@@ -438,11 +451,12 @@
       font-size:clamp(1.8rem, 3vw, 2.8rem);
       line-height:1.02;
       letter-spacing:-.03em;
+      color: #1d3a15;
     }
 
     .feature-strip p{
       margin:0;
-      color:rgba(255,255,255,.85);
+      color:var(--muted);
       font-size:1rem;
     }
 
@@ -457,18 +471,18 @@
       align-items:flex-start;
       padding:14px 16px;
       border-radius:18px;
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.15);
+      background:#f4f9f0;
+      border:1px solid rgba(98, 138, 66, 0.1);
     }
 
     .feature-item strong{
       display:block;
       margin-bottom:4px;
-      color: #e3ffcd;
+      color: #1d4015;
     }
 
     .feature-item span{
-      color:rgba(255,255,255,.8);
+      color:var(--muted);
       font-size:.94rem;
     }
 
@@ -480,11 +494,11 @@
     }
 
     .panel{
-      background:rgba(255,255,255,.85);
-      border:1px solid rgba(98, 138, 66, 0.15);
+      background:#fff;
+      border:1px solid rgba(98, 138, 66, 0.1);
       border-radius:26px;
       padding:28px;
-      box-shadow:var(--shadow);
+      box-shadow:0 4px 20px rgba(0,0,0,0.02);
     }
 
     .steps{
@@ -533,10 +547,10 @@
 
     .stat{
       background:#fff;
-      border:1px solid rgba(98, 138, 66, 0.15);
+      border:1px solid rgba(98, 138, 66, 0.1);
       border-radius:22px;
       padding:22px;
-      box-shadow:var(--shadow);
+      box-shadow:0 4px 16px rgba(0,0,0,0.02);
       text-align:center;
     }
 
@@ -600,15 +614,16 @@
     .field textarea:focus,
     .field select:focus{
       border-color:var(--green-fresh);
-      box-shadow:0 0 0 4px rgba(139, 195, 74, 0.15);
+      box-shadow:0 0 0 4px rgba(139, 195, 74, 0.1);
     }
 
     .contact-card{
-      background:linear-gradient(135deg, #1d3a15 0%, #2f5524 100%);
-      color:#fff;
+      background:#fff;
+      color:var(--text);
       border-radius:28px;
       padding:30px;
-      box-shadow:0 24px 44px rgba(56, 96, 30, 0.3);
+      box-shadow:0 4px 24px rgba(0,0,0,0.02);
+      border:1px solid rgba(98, 138, 66, 0.15);
     }
 
     .contact-card h3{
@@ -616,10 +631,11 @@
       font-size:2rem;
       line-height:1.03;
       letter-spacing:-.03em;
+      color: #1d3a15;
     }
 
     .contact-card p{
-      color:rgba(255,255,255,.85);
+      color:var(--muted);
       margin:0 0 20px;
     }
 
@@ -631,29 +647,30 @@
 
     .contact-point{
       padding:14px 16px;
-      border:1px solid rgba(255,255,255,.15);
+      border:1px solid rgba(98, 138, 66, 0.15);
       border-radius:18px;
-      background:rgba(255,255,255,.08);
+      background:#f9fcf7;
     }
 
     .contact-point strong{
       display:block;
       margin-bottom:4px;
-      color: #e0ffcd;
+      color: #1d4015;
     }
 
     .contact-point span{
-      color:rgba(255,255,255,.8);
+      color:var(--muted);
     }
 
     /* Footer */
     footer{
       padding:24px 0 46px;
       color:var(--muted);
+      background:#fff;
     }
 
     .footer-wrap{
-      border-top:1px solid rgba(98, 138, 66, 0.2);
+      border-top:1px solid rgba(98, 138, 66, 0.15);
       padding-top:22px;
       display:flex;
       justify-content:space-between;
@@ -721,7 +738,7 @@
         border:1px solid rgba(98, 138, 66, 0.2);
         border-radius:22px;
         padding:16px;
-        box-shadow:0 20px 44px rgba(56, 96, 30, 0.15);
+        box-shadow:0 20px 44px rgba(0,0,0,0.04);
       }
 
       .nav-links.open{display:flex}
@@ -762,7 +779,6 @@
     <div class="container nav">
       <a class="brand" href="#inicio" aria-label="Freshline inicio">
         <div class="brand-mark">
-          <!-- Icono de hoja (logo) -->
           <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M16 4C12 4 8 6 6 10C4 14 5 19 8 22C11 25 16 26 21 24C26 22 28 17 27 13C26 9 22 5 16 4Z" fill="#2B5E2B" fill-opacity="0.9"/>
             <path d="M15 8L13 13L16 15L19 13L17 8H15Z" fill="#F5E56B" />
@@ -899,11 +915,11 @@
 
         <div class="grid-4">
           <article class="card product-card reveal">
-            <div class="img-box" style="background-image:url('https://images.unsplash.com/photo-1600618528240-e6645a988a6a?q=80&w=2070&auto=format&fit=crop')"></div>
+            <div class="img-box" style="background-image:url('IMG_2866.jpeg')"></div>
             <div class="card-body">
-              <span class="tag">Nuevo</span>
-              <h4>Classic Car Fresh</h4>
-              <p>Aromatizador colgante de alta rotación para punto de venta y exhibición masiva.</p>
+              <span class="tag">Cítrico</span>
+              <h4>Citric Car</h4>
+              <p>Aromatizador para autos – 8 ml. Fresca y energizante.</p>
               <div class="meta">
                 <span>Uso: Auto</span>
                 <a href="#contacto"><strong>Consultar</strong></a>
@@ -912,39 +928,39 @@
           </article>
 
           <article class="card product-card reveal">
-            <div class="img-box" style="background-image:url('https://images.unsplash.com/photo-1608571423919-8c4f36aec0aa?q=80&w=1974&auto=format&fit=crop')"></div>
+            <div class="img-box" style="background-image:url('IMG_2867.jpeg')"></div>
+            <div class="card-body">
+              <span class="tag">Acuático</span>
+              <h4>Aqua Car</h4>
+              <p>Aromatizador para autos – 8 ml. Brisa marina y libertad.</p>
+              <div class="meta">
+                <span>Uso: Auto</span>
+                <a href="#contacto"><strong>Consultar</strong></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card product-card reveal">
+            <div class="img-box" style="background-image:url('IMG_2868.jpeg')"></div>
             <div class="card-body">
               <span class="tag">Premium</span>
-              <h4>Home Diffuser</h4>
-              <p>Fragancia sofisticada para ambientes interiores, con perfil elegante y presentación moderna.</p>
+              <h4>Million Car</h4>
+              <p>Aromatizador para autos – 8 ml. Exclusivo y sofisticado.</p>
               <div class="meta">
-                <span>Uso: Hogar</span>
+                <span>Uso: Auto</span>
                 <a href="#contacto"><strong>Consultar</strong></a>
               </div>
             </div>
           </article>
 
           <article class="card product-card reveal">
-            <div class="img-box" style="background-image:url('https://images.unsplash.com/photo-1615485290382-441e4d049cb5?q=80&w=2070&auto=format&fit=crop')"></div>
+            <div class="img-box" style="background-image:url('IMG_2869.jpeg')"></div>
             <div class="card-body">
-              <span class="tag">Top Seller</span>
-              <h4>Ambient Spray</h4>
-              <p>Spray ambiental ideal para hogar, showroom, recepción y espacios de atención al público.</p>
+              <span class="tag">Dulce</span>
+              <h4>Vainilla Car</h4>
+              <p>Aromatizador para autos – 8 ml. Calidez y confort.</p>
               <div class="meta">
-                <span>Uso: Ambiente</span>
-                <a href="#contacto"><strong>Consultar</strong></a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card product-card reveal">
-            <div class="img-box" style="background-image:url('https://images.unsplash.com/photo-1608248543903-6a241d791b7f?q=80&w=1964&auto=format&fit=crop')"></div>
-            <div class="card-body">
-              <span class="tag">Institucional</span>
-              <h4>Business Scent</h4>
-              <p>Solución pensada para empresas que buscan identidad olfativa y una presencia más premium.</p>
-              <div class="meta">
-                <span>Uso: Comercial</span>
+                <span>Uso: Auto</span>
                 <a href="#contacto"><strong>Consultar</strong></a>
               </div>
             </div>
@@ -957,7 +973,7 @@
       <div class="container">
         <div class="feature-strip reveal">
           <div>
-            <span class="eyebrow" style="background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.2); color:#e6ffcd;">Qué mejora esta web</span>
+            <span class="eyebrow" style="background:#e2f0d6; border-color:#bde0aa;">Qué mejora esta web</span>
             <h3>Una presencia digital mucho más fuerte, profesional y comercial.</h3>
             <p>
               Esta propuesta está pensada para que Freshline se vea como una marca confiable, moderna y lista para crecer en retail, distribuidores y clientes corporativos.
@@ -1153,7 +1169,7 @@
           </div>
 
           <aside class="contact-card reveal">
-            <span class="eyebrow" style="background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.2); color:#e6ffcd;">Ventas y atención</span>
+            <span class="eyebrow" style="background:#e2f0d6; border-color:#bde0aa;">Ventas y atención</span>
             <h3>Convertí visitas en clientes.</h3>
             <p>
               Datos de contacto de Freshline.com.ar
@@ -1178,7 +1194,7 @@
               </div>
             </div>
 
-            <a class="btn btn-secondary" href="https://wa.me/541123456789" target="_blank" rel="noopener" style="background: #fff; color: #1d3a15;">
+            <a class="btn btn-secondary" href="https://wa.me/541123456789" target="_blank" rel="noopener" style="background:#fff; color:#1d3a15; border-color:rgba(98,138,66,0.2);">
               WhatsApp directo
             </a>
           </aside>
@@ -1209,10 +1225,8 @@
   </footer>
 
   <script>
-    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Mobile menu
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
 
@@ -1224,7 +1238,6 @@
       link.addEventListener('click', () => navLinks.classList.remove('open'));
     });
 
-    // Reveal on scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if(entry.isIntersecting){
@@ -1236,7 +1249,6 @@
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Demo contact form
     document.getElementById('contactForm').addEventListener('submit', function(e){
       e.preventDefault();
       const nombre = document.getElementById('nombre').value.trim() || 'Gracias';
@@ -1246,3 +1258,4 @@
   </script>
 </body>
 </html>
+```
