@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Members Lounge · Reggio Calabria Club</title>
+  <title>The Members Lounge · Step‑by‑Step Event Builder</title>
   <!-- Font Awesome icons (free) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -50,7 +50,6 @@
       display: block;
     }
 
-    /* Fallback text (shown if image is missing) */
     .logo-fallback {
       font-size: 1.8rem;
       font-weight: 700;
@@ -62,7 +61,7 @@
       display: block;
       font-size: 0.9rem;
       font-weight: 400;
-      color: #b22222; /* red */
+      color: #b22222;
       letter-spacing: 0.5px;
     }
 
@@ -125,7 +124,7 @@
       transform: translateY(-2px);
     }
 
-    /* sections */
+    /* section */
     .section {
       padding: 4rem 0;
     }
@@ -141,6 +140,7 @@
       padding-bottom: 0.5rem;
     }
 
+    /* venues grid */
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -172,12 +172,84 @@
       margin-bottom: 0.5rem;
     }
 
-    .card .small {
+    .card .menu-note {
+      margin-top: 1rem;
       font-size: 0.9rem;
-      color: #777;
+      color: #b22222;
+      font-weight: 600;
     }
 
-    /* TicketTailor embed container */
+    /* builder form */
+    .builder-container {
+      background: white;
+      border-radius: 30px;
+      padding: 2.5rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.05);
+      margin: 2rem 0;
+    }
+
+    .form-row {
+      margin-bottom: 2rem;
+    }
+
+    .form-row label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #000;
+    }
+
+    .form-row select, .form-row textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 12px;
+      font-size: 1rem;
+      background: white;
+    }
+
+    .form-row textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .room-menu-info {
+      background: #f9f9f9;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      border-left: 4px solid #b22222;
+    }
+
+    .room-menu-info i {
+      color: #b22222;
+      margin-right: 0.5rem;
+    }
+
+    .btn-book {
+      background: #b22222;
+      color: white;
+      padding: 1.2rem 2rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+      transition: background 0.2s;
+    }
+
+    .btn-book:hover {
+      background: #8b1a1a;
+    }
+
+    /* TicketTailor embed */
     .events-embed {
       background: white;
       border-radius: 30px;
@@ -216,20 +288,6 @@
       text-decoration: none;
       font-weight: 600;
       display: inline-block;
-    }
-
-    /* Contact section */
-    .contact-info {
-      text-align: center;
-      color: #4a4a4a;
-    }
-    .contact-info p {
-      margin: 0.5rem 0;
-    }
-    .contact-info a {
-      color: #b22222;
-      text-decoration: none;
-      font-weight: 600;
     }
 
     /* footer */
@@ -277,9 +335,6 @@
         justify-content: center;
         gap: 1rem;
       }
-      .events-embed iframe {
-        min-height: 600px;
-      }
     }
   </style>
 </head>
@@ -288,14 +343,11 @@
   <header class="site-header">
     <div class="container header-inner">
       <!-- ===== LOGO PLACEHOLDER ===== -->
-      <!-- Replace the "src" attribute with the actual URL of your Members Lounge logo.
-           For example: src="https://www.reggiocalabriaclub.com.au/images/logo.png" 
-           If you prefer to use a local file, upload it to your server and use a relative path like "/images/logo.png". -->
+      <!-- Replace "src" with your actual logo URL -->
       <img src="https://www.reggiocalabriaclub.com.au/path/to/your/logo.png" 
            alt="The Members Lounge" 
            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
            style="height: 70px; width: auto;">
-      <!-- Fallback text (shown if image fails to load) -->
       <div class="logo-fallback" style="display: none;">
         THE MEMBERS LOUNGE
         <span>Reggio Calabria Club · Parkville</span>
@@ -303,8 +355,8 @@
 
       <nav class="nav-links">
         <a href="#about">About</a>
-        <a href="#functions">Functions</a>
-        <a href="#events">Events</a>
+        <a href="#venues">Venues</a>
+        <a href="#builder">Plan your event</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -314,7 +366,7 @@
     <div class="container">
       <h2>Authentic Italian Hospitality</h2>
       <p>Just 4km from Melbourne's CBD · Ample free parking · Over 35 years of event expertise</p>
-      <a href="#events" class="btn-primary"><i class="fas fa-calendar-check"></i> Check availability & book</a>
+      <a href="#builder" class="btn-primary"><i class="fas fa-calendar-check"></i> Start planning your event</a>
     </div>
   </section>
 
@@ -338,29 +390,91 @@
     </div>
   </section>
 
-  <section class="section" id="functions">
+  <!-- Venues with menu info -->
+  <section class="section" id="venues">
     <div class="container">
-      <h2 class="section-title">Plan your event with us</h2>
+      <h2 class="section-title">Our venues & their menus</h2>
       <div class="grid-2">
         <div class="card">
-          <i class="fas fa-map-pin"></i>
-          <h3>Location</h3>
-          <p>476 Brunswick Rd, Parkville VIC 3052</p>
-          <p>Free parking for 450 vehicles · Easy freeway access to airport</p>
+          <i class="fas fa-building"></i>
+          <h3>The Members Lounge</h3>
+          <p>Elegant main hall with city views. Ideal for weddings and galas.</p>
+          <p class="menu-note"><i class="fas fa-utensil-spoon"></i> Menu: 5‑course Italian banquet or à la carte.</p>
         </div>
         <div class="card">
-          <i class="fas fa-clock"></i>
-          <h3>Bistro hours</h3>
-          <p><strong>Saturday:</strong> 6:30 pm – 10:30 pm</p>
-          <p><strong>Sunday:</strong> 12:30 pm – 4:30 pm</p>
-          <p>Other times available for functions by appointment</p>
+          <i class="fas fa-tree"></i>
+          <h3>The Terrace Room</h3>
+          <p>Light-filled space overlooking parklands. Perfect for corporate events.</p>
+          <p class="menu-note"><i class="fas fa-utensil-spoon"></i> Menu: Canapés, buffet or seated lunch/dinner.</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-wine-glass-alt"></i>
+          <h3>The Cellar</h3>
+          <p>Intimate, rustic setting for small celebrations and wine tastings.</p>
+          <p class="menu-note"><i class="fas fa-utensil-spoon"></i> Menu: Shared platters & regional specialties.</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-sun"></i>
+          <h3>The Rooftop</h3>
+          <p>Open‑air venue with panoramic city views. Ideal for summer parties.</p>
+          <p class="menu-note"><i class="fas fa-utensil-spoon"></i> Menu: BBQ, finger food or sit‑down dinner.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- EMBEDDED TICKETTAILOR EVENTS -->
-  <section class="container" id="events">
+  <!-- Step‑by‑step event builder -->
+  <section class="section" id="builder">
+    <div class="container">
+      <h2 class="section-title">Plan your event, step by step</h2>
+      <div class="builder-container">
+        <form id="eventPlanner">
+          <!-- Step 1: Event type -->
+          <div class="form-row">
+            <label for="eventType"><i class="fas fa-calendar-alt" style="color:#b22222;"></i> What type of event are you planning?</label>
+            <select id="eventType" name="eventType" required>
+              <option value="" disabled selected>– Select an option –</option>
+              <option value="wedding">Wedding</option>
+              <option value="corporate">Corporate Gala / Conference</option>
+              <option value="birthday">Birthday / Anniversary</option>
+              <option value="engagement">Engagement Party</option>
+              <option value="baptism">Baptism / Communion</option>
+              <option value="other">Other (please specify in exclusions)</option>
+            </select>
+          </div>
+
+          <!-- Step 2: Room selection (each room has a menu) -->
+          <div class="form-row">
+            <label for="room"><i class="fas fa-door-open" style="color:#b22222;"></i> Choose your preferred room</label>
+            <select id="room" name="room" required>
+              <option value="" disabled selected>– Select a room –</option>
+              <option value="members">The Members Lounge</option>
+              <option value="terrace">The Terrace Room</option>
+              <option value="cellar">The Cellar</option>
+              <option value="rooftop">The Rooftop</option>
+            </select>
+            <div id="roomMenuInfo" class="room-menu-info">
+              <i class="fas fa-info-circle"></i> <span id="menuDescription">Select a room to see its menu.</span>
+            </div>
+          </div>
+
+          <!-- Step 3: Exclusions / special requests -->
+          <div class="form-row">
+            <label for="exclusions"><i class="fas fa-ban" style="color:#b22222;"></i> Any dietary exclusions or special requests?</label>
+            <textarea id="exclusions" name="exclusions" placeholder="E.g., vegetarian, gluten‑free, allergies, or anything else we should know..."></textarea>
+          </div>
+
+          <!-- Final step: proceed to booking -->
+          <button type="button" id="bookNowBtn" class="btn-book">
+            <i class="fas fa-ticket-alt"></i> Check availability & book now
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Embedded TicketTailor events -->
+  <section class="container" id="booking">
     <div class="events-embed">
       <h3><i class="fas fa-ticket-alt" style="color: #b22222;"></i> Upcoming events & bookings</h3>
 
@@ -374,7 +488,7 @@
         onerror="this.style.display='none'; document.getElementById('tt-fallback').style.display='block';">
       </iframe>
 
-      <!-- Fallback link if iframe fails to load -->
+      <!-- Fallback link if iframe fails -->
       <div id="tt-fallback" class="fallback-link" style="display: none;">
         <p>Can't see the events? Click the button below to book directly:</p>
         <a href="https://buytickets.at/thememberslounge" target="_blank" rel="noopener">
@@ -384,7 +498,7 @@
     </div>
   </section>
 
-  <!-- CONTACT SECTION (NO PHONE NUMBERS) -->
+  <!-- Contact section (address only) -->
   <section class="section" id="contact">
     <div class="container">
       <h2 class="section-title">Visit us</h2>
@@ -402,9 +516,6 @@
           <p><strong>Sunday:</strong> 12:30 pm – 4:30 pm</p>
           <p>Other times by appointment</p>
         </div>
-      </div>
-      <div class="contact-info" style="margin-top: 2rem;">
-        <p>For all enquiries, please use our <a href="#events">online booking</a>.</p>
       </div>
     </div>
   </section>
@@ -426,10 +537,46 @@
   </footer>
 
   <script>
-    // Fallback if iframe fails to load (already handled by onerror, but ensure fallback shows)
+    // Update room menu description based on selection
+    const roomSelect = document.getElementById('room');
+    const menuDesc = document.getElementById('menuDescription');
+
+    const roomMenus = {
+      'members': 'The Members Lounge menu: 5‑course Italian banquet or à la carte.',
+      'terrace': 'The Terrace Room menu: Canapés, buffet or seated lunch/dinner.',
+      'cellar': 'The Cellar menu: Shared platters & regional specialties.',
+      'rooftop': 'The Rooftop menu: BBQ, finger food or sit‑down dinner.'
+    };
+
+    roomSelect.addEventListener('change', function() {
+      const selected = this.value;
+      if (selected && roomMenus[selected]) {
+        menuDesc.textContent = roomMenus[selected];
+      } else {
+        menuDesc.textContent = 'Select a room to see its menu.';
+      }
+    });
+
+    // Book now button – gather data and redirect to TicketTailor
+    document.getElementById('bookNowBtn').addEventListener('click', function() {
+      const eventType = document.getElementById('eventType').value;
+      const room = document.getElementById('room').value;
+      const exclusions = document.getElementById('exclusions').value;
+
+      if (!eventType || !room) {
+        alert('Please select both an event type and a room.');
+        return;
+      }
+
+      // You can optionally send this data to your analytics or just proceed
+      // For now, we simply open the TicketTailor page.
+      window.location.href = 'https://buytickets.at/thememberslounge';
+    });
+
+    // Fallback if iframe fails to load (already handled by onerror, but double-check)
     window.addEventListener('load', function() {
-      var iframe = document.querySelector('iframe');
-      var fallback = document.getElementById('tt-fallback');
+      const iframe = document.querySelector('iframe');
+      const fallback = document.getElementById('tt-fallback');
       // If iframe has no content height (very small), consider it failed
       if (iframe && iframe.contentWindow && iframe.contentWindow.document.body.scrollHeight < 100) {
         iframe.style.display = 'none';
