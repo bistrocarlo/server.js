@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -97,7 +98,7 @@
       text-shadow: 0 1px 3px rgba(0,0,0,0.3);
     }
 
-    .hero .btn {
+    .hero .btn-primary {
       background: #b22222;
       color: white;
       padding: 0.9rem 2rem;
@@ -112,7 +113,7 @@
       cursor: pointer;
     }
 
-    .hero .btn:hover {
+    .hero .btn-primary:hover {
       background: #8b1a1a;
       transform: translateY(-2px);
     }
@@ -184,35 +185,36 @@
       margin-top: 0.2rem;
     }
 
-    /* SMS special button */
-    .sms-section {
-      background: #f8f5f0;
+    /* TicketTailor main CTA */
+    .ticket-cta {
+      background: #f0f7f0;
       border-radius: 40px;
       padding: 3rem 2rem;
       text-align: center;
       margin: 2rem 0;
-      border: 1px solid rgba(44,95,45,0.1);
+      border: 2px solid #2c5f2d;
     }
 
-    .sms-section h3 {
-      font-size: 2rem;
+    .ticket-cta h3 {
+      font-size: 2.2rem;
       color: #2c5f2d;
       margin-bottom: 1rem;
     }
 
-    .sms-section p {
+    .ticket-cta p {
       max-width: 600px;
       margin: 0 auto 2rem auto;
-      color: #4a4a4a;
+      color: #1e1e1e;
+      font-size: 1.2rem;
     }
 
-    .btn-sms {
+    .btn-ticket {
       background: #2c5f2d;
       color: white;
-      padding: 1rem 2.5rem;
+      padding: 1.2rem 3rem;
       border-radius: 60px;
       font-weight: 700;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
@@ -221,30 +223,26 @@
       transition: background 0.2s, transform 0.2s;
     }
 
-    .btn-sms:hover {
+    .btn-ticket:hover {
       background: #1f4520;
       transform: translateY(-2px);
     }
 
-    .btn-sms i {
-      font-size: 1.5rem;
+    .btn-ticket i {
+      font-size: 1.8rem;
     }
 
-    /* TicketTailor button */
-    .ticket-btn {
-      background: #b22222;
-      color: white;
-      padding: 1rem 2rem;
-      border-radius: 60px;
+    /* SMS secondary */
+    .sms-secondary {
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .sms-secondary a {
+      color: #2c5f2d;
       font-weight: 600;
       text-decoration: none;
-      display: inline-block;
-      margin-top: 1rem;
-      transition: background 0.2s;
-    }
-
-    .ticket-btn:hover {
-      background: #8b1a1a;
+      border-bottom: 1px dashed #2c5f2d;
     }
 
     /* footer */
@@ -316,7 +314,7 @@
     <div class="container">
       <h2>Authentic Italian Hospitality</h2>
       <p>Just 4km from Melbourne's CBD · Ample free parking · Over 35 years of event expertise</p>
-      <a href="#sms" class="btn"><i class="fas fa-calendar-check"></i> Check availability & rooms</a>
+      <a href="#availability" class="btn-primary"><i class="fas fa-calendar-check"></i> Check availability & book</a>
     </div>
   </section>
 
@@ -361,28 +359,21 @@
     </div>
   </section>
 
-  <!-- SMS availability section (core feature) -->
-  <section class="container" id="sms">
-    <div class="sms-section">
-      <h3><i class="fas fa-comment-dots" style="color: #b22222;"></i> Quick check via SMS</h3>
-      <p>Tap the button below to send us a pre‑written message. We’ll reply with availability, room options, and any info you need.</p>
-      <a href="sms:+614XXXXXXXX?body=Hi%2C%20I'm%20interested%20in%20booking%20an%20event%20at%20The%20Members%20Lounge.%20Can%20you%20tell%20me%20about%20availability%20and%20room%20options%3F%20Thank%20you!" class="btn-sms">
-        <i class="fas fa-sms"></i> Text us for availability
+  <!-- MAIN AVAILABILITY SECTION via TicketTailor -->
+  <section class="container" id="availability">
+    <div class="ticket-cta">
+      <h3><i class="fas fa-ticket-alt" style="color: #b22222;"></i> Check real‑time availability</h3>
+      <p>View all upcoming events, check available dates, and book instantly through our TicketTailor page.</p>
+      <a href="https://www.tickettailor.com/events/thememberslounge" target="_blank" rel="noopener" class="btn-ticket">
+        <i class="fas fa-calendar-alt"></i> See availability & book
       </a>
-      <p style="margin-top: 1.5rem; font-size: 0.9rem;">*Replace the phone number in the link with your own.</p>
     </div>
   </section>
 
-  <!-- TicketTailor events section -->
-  <section class="section" id="events">
-    <div class="container" style="text-align: center;">
-      <h2 class="section-title">Upcoming events & tickets</h2>
-      <p style="margin-bottom: 2rem;">Check our latest events and secure your place via TicketTailor.</p>
-      <a href="https://www.tickettailor.com/events/thememberslounge" target="_blank" rel="noopener" class="ticket-btn">
-        <i class="fas fa-ticket-alt"></i> Go to TicketTailor
-      </a>
-    </div>
-  </section>
+  <!-- Secondary SMS option -->
+  <div class="container sms-secondary">
+    <p>Prefer to ask a question? <a href="sms:+614XXXXXXXX?body=Hi%2C%20I'm%20interested%20in%20booking%20an%20event%20at%20The%20Members%20Lounge.%20Can%20you%20tell%20me%20more%20about%20the%20rooms%3F">Text us via SMS <i class="fas fa-comment-dots"></i></a> (replace with your number)</p>
+  </div>
 
   <section class="section" id="contact">
     <div class="container">
@@ -421,23 +412,9 @@
     </div>
   </footer>
 
-  <!-- small script to update SMS number (placeholder) – user must edit manually -->
+  <!-- small note to replace SMS number -->
   <script>
-    // You can replace the phone number in the SMS link with your own.
-    // The current placeholder is +614XXXXXXXX (Australian mobile).
-    // To change it, edit the 'href' attribute of the .btn-sms link.
+    // To use the SMS feature, replace +614XXXXXXXX with your actual mobile number in the href above.
   </script>
 </body>
 </html>
-```
-
-🔧 How to use it
-
-1. Replace the phone number in the SMS button:
-   · Look for sms:+614XXXXXXXX in the code and change it to your actual mobile number (e.g., sms:+61412345678).
-   · The pre‑filled message asks about availability and room options – you can edit that text inside the body= parameter if you wish.
-2. Update contact details if needed (email, addresses).
-3. Test the SMS link on a mobile phone – it will open the default messaging app with the message ready to send.
-4. Upload the file to your web server, or use it as a landing page.
-
-The site is fully responsive and gives your customers a simple, direct way to reach you.
