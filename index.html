@@ -305,7 +305,7 @@
         </div>
     </div>
 
-    <!-- Owner input table -->
+    <!-- OWNER INPUT TABLE -->
     <table id="rosterTable">
         <thead id="tableHeader">
             <tr>
@@ -372,7 +372,7 @@
         </tbody>
     </table>
 
-    <!-- Live daily totals (owner view) -->
+    <!-- OWNER SUMMARY (live daily totals) -->
     <div class="summary-section">
         <span class="summary-title">🍷 Today's drinks summary</span>
         <div class="daily-totals" id="dailyTotals">
@@ -387,7 +387,7 @@
         <span id="completeBadge" class="complete-badge" style="display: none;">✅ All cleaning done</span>
     </div>
 
-    <!-- Footer with buttons -->
+    <!-- FOOTER BUTTONS -->
     <div class="footer-bar">
         <div>🧹 Tick when finished · 👥 Enter guests for drinks</div>
         <div style="display: flex; gap: 1rem;">
@@ -519,7 +519,7 @@
 
         updateSummary();
 
-        // Expose function to open cleaner summary sheet
+        // Function to open cleaner summary sheet (printable, no inputs)
         window.openCleanerSheet = function() {
             // Gather dates from headers
             const dates = {};
@@ -527,54 +527,67 @@
                 dates[day] = headers[day].textContent; // e.g. "Tue 11/03"
             }
 
-            // Collect ticked rooms per day
-            const roomsPerDay = {};
-            for (let day of dayIds) roomsPerDay[day] = [];
+            // Collect ticked rooms with their guest counts per day
+            const dayRoomData = {};
+            for (let day of dayIds) dayRoomData[day] = [];
 
             rows.forEach(row => {
                 const roomName = roomNames[row.id];
                 const checkboxes = row.querySelectorAll('input.clean-check');
+                const guestInputs = row.querySelectorAll('input.guest-count');
                 checkboxes.forEach((cb, index) => {
                     if (cb.checked) {
-                        roomsPerDay[dayIds[index]].push(roomName);
+                        const guestCount = parseInt(guestInputs[index].value, 10) || 0;
+                        dayRoomData[dayIds[index]].push({ room: roomName, guests: guestCount });
                     }
                 });
             });
 
-            // Build summary HTML only for days with at least one room ticked
+            // Build summary HTML (only days with at least one room ticked)
             let summaryHtml = `
             <html>
             <head>
                 <title>Reggio Calabria Club · Cleaner summary</title>
                 <style>
                     body { font-family: 'Inter', sans-serif; padding: 2rem; background: white; }
-                    h1 { font-size: 2rem; color: #1e2b3a; margin-bottom: 0.5rem; }
-                    .club-sub { color: #8b1e1e; font-weight: 500; margin-bottom: 2rem; }
-                    table { width: 100%; border-collapse: collapse; background: white; }
+                    h1 { font-size: 2rem; color: #1e2b3a; margin-bottom: 0.2rem; }
+                    .week-info { color: #8b1e1e; font-weight: 500; margin-bottom: 2rem; }
+                    .day-section { margin-bottom: 2rem; }
+                    .day-title { font-size: 1.3rem; font-weight: 600; background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 30px; display: inline-block; margin-bottom: 0.8rem; }
+                    table { width: 100%; border-collapse: collapse; background: white; margin-bottom: 1rem; }
                     th { background: #f1f5f9; color: #1e2b3a; padding: 0.8rem; text-align: left; border-bottom: 2px solid #cbd5e1; }
                     td { padding: 0.8rem; border-bottom: 1px solid #e6edf4; }
-                    .rooms { color: #2b3f52; font-size: 0.9rem; }
-                    .grand-total { font-size: 1.2rem; margin-top: 2rem; padding: 1rem; background: #1e2b3a; color: white; border-radius: 40px; display: inline-block; }
+                    .room-name { font-weight: 500; }
+                    .guest-number { font-weight: 600; color: #8b1e1e; }
+                    .day-total { font-size: 1rem; font-weight: 600; margin-top: 0.3rem; text-align: right; }
+                    .grand-total { font-size: 1.3rem; margin-top: 2rem; padding: 1rem; background: #1e2b3a; color: white; border-radius: 40px; display: inline-block; }
                 </style>
             </head>
             <body>
                 <h1>Reggio Calabria Club</h1>
-                <div class="club-sub">🧹 Cleaner summary · week starting ${dates.Tue}</div>
-                <table>
-                    <tr><th>Day</th><th>Rooms to clean</th><th>Total guests (drinks)</th></tr>
+                <div class="week-info">🧹 Cleaner summary · week starting ${dates.Tue}</div>
             `;
 
             let grandTotal = 0;
             for (let day of dayIds) {
-                if (roomsPerDay[day].length === 0) continue; // skip days with no cleaning
-                const total = guestTotals[day];
-                grandTotal += total;
-                const roomsList = roomsPerDay[day].join(', ');
-                summaryHtml += `<tr><td>${dates[day]}</td><td class="rooms">${roomsList}</td><td><strong>${total}</strong></td></tr>`;
+                const rooms = dayRoomData[day];
+                if (rooms.length === 0) continue; // skip days with no cleaning
+
+                const dayTotal = rooms.reduce((sum, r) => sum + r.guests, 0);
+                grandTotal += dayTotal;
+
+                summaryHtml += `<div class="day-section">`;
+                summaryHtml += `<div class="day-title">${dates[day]}</div>`;
+                summaryHtml += `<table><tr><th>Room</th><th>Guests (drinks)</th></tr>`;
+                rooms.forEach(r => {
+                    summaryHtml += `<tr><td class="room-name">${r.room}</td><td class="guest-number">${r.guests}</td></tr>`;
+                });
+                summaryHtml += `</table>`;
+                summaryHtml += `<div class="day-total">🍷 Day total: <strong>${dayTotal}</strong></div>`;
+                summaryHtml += `</div>`;
             }
 
             summaryHtml += `
-                </table>
                 <div class="grand-total">🍷 Total drinks for the week: ${grandTotal}</div>
                 <p style="margin-top: 2rem; color: #5a6f82;">Cleaners: please clean the listed rooms on each day.</p>
             </body>
