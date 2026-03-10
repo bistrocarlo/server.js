@@ -1,443 +1,438 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Members Lounge · Reggio Calabria Club</title>
-  <!-- Font Awesome icons (free) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: #fefefe;
-      color: #1e1e1e;
-      line-height: 1.5;
-    }
-
-    .container {
-      width: min(90%, 1200px);
-      margin: 0 auto;
-    }
-
-    /* header */
-    .site-header {
-      background: white;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 0;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .logo h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #2c5f2d; /* Italian green */
-      letter-spacing: -0.5px;
-      line-height: 1.2;
-    }
-
-    .logo span {
-      display: block;
-      font-size: 0.9rem;
-      font-weight: 400;
-      color: #b22222; /* Italian red */
-      letter-spacing: 0.5px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      font-weight: 500;
-      color: #2c2c2c;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: #b22222;
-    }
-
-    /* hero */
-    .hero {
-      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
-      color: white;
-      padding: 5rem 0;
-      text-align: center;
-    }
-
-    .hero h2 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      margin-bottom: 1rem;
-      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      max-width: 700px;
-      margin: 0 auto 2rem auto;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-    }
-
-    .hero .btn {
-      background: #b22222;
-      color: white;
-      padding: 0.9rem 2rem;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      text-decoration: none;
-      display: inline-block;
-      transition: background 0.2s, transform 0.2s;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      border: none;
-      cursor: pointer;
-    }
-
-    .hero .btn:hover {
-      background: #8b1a1a;
-      transform: translateY(-2px);
-    }
-
-    /* sections */
-    .section {
-      padding: 4rem 0;
-    }
-
-    .section-title {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #2c5f2d;
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
-
-    .card {
-      background: white;
-      border-radius: 24px;
-      padding: 2rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-      border: 1px solid rgba(0,0,0,0.05);
-    }
-
-    .card i {
-      font-size: 2rem;
-      color: #b22222;
-      margin-bottom: 1rem;
-    }
-
-    .card h3 {
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-      color: #1e1e1e;
-    }
-
-    .card p {
-      color: #4a4a4a;
-      margin-bottom: 0.5rem;
-    }
-
-    .card .small {
-      font-size: 0.9rem;
-      color: #777;
-    }
-
-    .info-list {
-      list-style: none;
-    }
-
-    .info-list li {
-      margin-bottom: 0.8rem;
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-
-    .info-list i {
-      width: 1.5rem;
-      color: #2c5f2d;
-      font-size: 1.2rem;
-      margin-top: 0.2rem;
-    }
-
-    /* SMS special button */
-    .sms-section {
-      background: #f8f5f0;
-      border-radius: 40px;
-      padding: 3rem 2rem;
-      text-align: center;
-      margin: 2rem 0;
-      border: 1px solid rgba(44,95,45,0.1);
-    }
-
-    .sms-section h3 {
-      font-size: 2rem;
-      color: #2c5f2d;
-      margin-bottom: 1rem;
-    }
-
-    .sms-section p {
-      max-width: 600px;
-      margin: 0 auto 2rem auto;
-      color: #4a4a4a;
-    }
-
-    .btn-sms {
-      background: #2c5f2d;
-      color: white;
-      padding: 1rem 2.5rem;
-      border-radius: 60px;
-      font-weight: 700;
-      font-size: 1.3rem;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 1rem;
-      box-shadow: 0 12px 30px rgba(44,95,45,0.3);
-      transition: background 0.2s, transform 0.2s;
-    }
-
-    .btn-sms:hover {
-      background: #1f4520;
-      transform: translateY(-2px);
-    }
-
-    .btn-sms i {
-      font-size: 1.5rem;
-    }
-
-    /* TicketTailor button */
-    .ticket-btn {
-      background: #b22222;
-      color: white;
-      padding: 1rem 2rem;
-      border-radius: 60px;
-      font-weight: 600;
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 1rem;
-      transition: background 0.2s;
-    }
-
-    .ticket-btn:hover {
-      background: #8b1a1a;
-    }
-
-    /* footer */
-    .site-footer {
-      background: #1e1e1e;
-      color: #ddd;
-      padding: 2.5rem 0;
-      margin-top: 2rem;
-    }
-
-    .footer-inner {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 2rem;
-    }
-
-    .footer-col p {
-      margin: 0.5rem 0;
-    }
-
-    .footer-col a {
-      color: #ddd;
-      text-decoration: none;
-    }
-
-    .footer-col a:hover {
-      color: white;
-    }
-
-    .copyright {
-      text-align: center;
-      margin-top: 2rem;
-      padding-top: 2rem;
-      border-top: 1px solid #333;
-      color: #aaa;
-    }
-
-    @media (max-width: 700px) {
-      .header-inner {
-        flex-direction: column;
-        text-align: center;
-      }
-      .nav-links {
-        justify-content: center;
-        gap: 1rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reggio Calabria Club · complete roster</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        body {
+            background: #e8ecf2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1.5rem;
+            margin: 0;
+        }
+        .roster-card {
+            max-width: 1400px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -8px rgba(0, 20, 30, 0.25);
+            overflow: hidden;
+            border: 1px solid #d6dee7;
+        }
+        .header {
+            background: #1e2b3a;
+            padding: 1.8rem 2rem 1.4rem 2rem;
+            color: white;
+        }
+        .club-name {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .club-name span {
+            background: #c49a2b;
+            color: #1e2b3a;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+        }
+        .sub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.2rem;
+        }
+        .date-block {
+            background: #2a3a4b;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1rem;
+            font-weight: 400;
+            color: #e0edf5;
+        }
+        .date-block input {
+            background: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            width: 170px;
+            color: #0b1a26;
+            font-weight: 500;
+        }
+        .legend {
+            display: flex;
+            gap: 1.5rem;
+            color: #ccdbe9;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            table-layout: fixed;
+        }
+        th {
+            background: #f1f5f9;
+            color: #1e2b3a;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.8rem 0.2rem;
+            text-align: center;
+            border-bottom: 2px solid #cbd5e1;
+            border-right: 1px solid #dde5ed;
+        }
+        th:last-child { border-right: none; }
+        td {
+            padding: 0.6rem 0.2rem;
+            border-bottom: 1px solid #e6edf4;
+            text-align: center;
+            vertical-align: middle;
+            background: white;
+        }
+        .room-col {
+            background: #f9fcff;
+            font-weight: 600;
+            color: #14222e;
+            text-align: left;
+            padding-left: 1rem;
+            font-size: 0.95rem;
+            border-right: 1px solid #d2dde9;
+            width: 140px;
+        }
+        .room-code {
+            display: inline-block;
+            background: #dde5f0;
+            border-radius: 30px;
+            padding: 0.1rem 0.6rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-left: 6px;
+            color: #14222e;
+            letter-spacing: 0.3px;
+        }
+        .day-cell {
+            min-width: 100px;
+        }
+        .signoff {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .signoff input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #8b1e1e;
+            cursor: pointer;
+        }
+        .signoff input[type="text"] {
+            width: 90%;
+            max-width: 90px;
+            padding: 4px 4px;
+            border: 1px solid #b9c9da;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            text-align: center;
+            background: #ffffff;
+        }
+        .signoff input[type="number"] {
+            width: 70px;
+            padding: 4px;
+            border: 1px solid #b9c9da;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            text-align: center;
+            background: #ffffff;
+            -moz-appearance: textfield;
+        }
+        .signoff input[type="number"]::-webkit-outer-spin-button,
+        .signoff input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .signoff input:focus {
+            border-color: #8b1e1e;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(139,30,30,0.15);
+        }
+        .total-col {
+            font-weight: 600;
+            background: #f0f5fb;
+            color: #1e2b3a;
+            width: 70px;
+            border-left: 1px solid #d2dde9;
+        }
+        .footer-bar {
+            background: #f0f4fa;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-top: 1px solid #cfddee;
+            font-size: 0.9rem;
+            color: #2b3f52;
+        }
+        .print-btn {
+            background: #1e2b3a;
+            color: white;
+            border: none;
+            padding: 0.6rem 2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 0.9rem;
+            border: 1px solid #1e2b3a;
+        }
+        .print-btn:hover {
+            background: #8b1e1e;
+            border-color: #8b1e1e;
+        }
+        .footer-note {
+            display: flex;
+            gap: 1.5rem;
+        }
+        @media (max-width: 900px) {
+            table, thead, tbody, tr, th, td { display: block; }
+            thead tr { display: none; }
+            tr {
+                margin-bottom: 1.5rem;
+                border: 1px solid #d7e1ec;
+                border-radius: 16px;
+                overflow: hidden;
+            }
+            td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.8rem 1.2rem;
+                border-bottom: 1px solid #e2eaf3;
+                text-align: right;
+            }
+            .room-col {
+                background: #e5ecf5;
+                font-weight: 700;
+                border-right: none;
+                justify-content: flex-start;
+                gap: 10px;
+                padding-left: 1.2rem;
+            }
+            td:before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #1d384c;
+                font-size: 0.8rem;
+                text-transform: uppercase;
+            }
+            .total-col {
+                border-left: none;
+                background: #f0f5fb;
+            }
+            .signoff {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-
-  <header class="site-header">
-    <div class="container header-inner">
-      <div class="logo">
-        <h1>THE MEMBERS LOUNGE</h1>
-        <span>Reggio Calabria Club · Parkville</span>
-      </div>
-      <nav class="nav-links">
-        <a href="#about">About</a>
-        <a href="#functions">Functions</a>
-        <a href="#events">Events</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </div>
-  </header>
-
-  <section class="hero">
-    <div class="container">
-      <h2>Authentic Italian Hospitality</h2>
-      <p>Just 4km from Melbourne's CBD · Ample free parking · Over 35 years of event expertise</p>
-      <a href="#sms" class="btn"><i class="fas fa-calendar-check"></i> Check availability & rooms</a>
-    </div>
-  </section>
-
-  <section class="section" id="about">
-    <div class="container">
-      <h2 class="section-title">Welcome to The Members Lounge</h2>
-      <div class="grid-2">
-        <div class="card">
-          <i class="fas fa-utensils"></i>
-          <h3>Traditional Italian Cuisine</h3>
-          <p>Prepared by executive chef <strong>Carlo Pavia</strong>, celebrating regional Italian recipes with the highest standards of taste and quality.</p>
-          <p class="small">Over 2.65 million meals served since 2003.</p>
+<div class="roster-card">
+    <div class="header">
+        <div class="club-name">
+            Reggio Calabria Club <span>cleaning & guests</span>
         </div>
-        <div class="card">
-          <i class="fas fa-glass-cheers"></i>
-          <h3>Four Unique Venues</h3>
-          <p>Versatile event spaces with breathtaking city and parkland views. Capacity for any occasion – from intimate gatherings to large celebrations.</p>
-          <p class="small">More than 9,200 successful events hosted.</p>
+        <div class="sub-header">
+            <div class="date-block">
+                <span>📅 Week starting Tuesday</span>
+                <input type="text" placeholder="DD / MM / YYYY" id="startDate" value="__ / __ / ____">
+            </div>
+            <div class="legend">
+                <div class="legend-item">✅ cleaned</div>
+                <div class="legend-item">✍️ cleaner</div>
+                <div class="legend-item">👥 guests</div>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
 
-  <section class="section" id="functions">
-    <div class="container">
-      <h2 class="section-title">Plan your event with us</h2>
-      <div class="grid-2">
-        <div class="card">
-          <i class="fas fa-map-pin"></i>
-          <h3>Location</h3>
-          <p>476 Brunswick Rd, Parkville VIC 3052</p>
-          <p>Free parking for 450 vehicles · Easy freeway access to airport</p>
+    <table id="rosterTable">
+        <thead>
+            <tr>
+                <th>Room</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Total guests</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Members Lounge -->
+            <tr id="row-ML">
+                <td class="room-col" data-label="Room">Members Lounge <span class="room-code">ML</span></td>
+                <td data-label="Tuesday" class="day-cell">
+                    <div class="signoff">
+                        <input type="checkbox" class="clean-check">
+                        <input type="text" placeholder="name" class="cleaner-name">
+                        <input type="number" min="0" value="0" class="guest-count" step="1">
+                    </div>
+                </td>
+                <td data-label="Wednesday" class="day-cell">
+                    <div class="signoff">
+                        <input type="checkbox" class="clean-check">
+                        <input type="text" placeholder="name" class="cleaner-name">
+                        <input type="number" min="0" value="0" class="guest-count" step="1">
+                    </div>
+                </td>
+                <td data-label="Thursday" class="day-cell">
+                    <div class="signoff">
+                        <input type="checkbox" class="clean-check">
+                        <input type="text" placeholder="name" class="cleaner-name">
+                        <input type="number" min="0" value="0" class="guest-count" step="1">
+                    </div>
+                </td>
+                <td data-label="Friday" class="day-cell">
+                    <div class="signoff">
+                        <input type="checkbox" class="clean-check">
+                        <input type="text" placeholder="name" class="cleaner-name">
+                        <input type="number" min="0" value="0" class="guest-count" step="1">
+                    </div>
+                </td>
+                <td data-label="Saturday" class="day-cell">
+                    <div class="signoff">
+                        <input type="checkbox" class="clean-check">
+                        <input type="text" placeholder="name" class="cleaner-name">
+                        <input type="number" min="0" value="0" class="guest-count" step="1">
+                    </div>
+                </td>
+                <td data-label="Sunday" class="day-cell">
+                    <div class="signoff">
+                        <input type="checkbox" class="clean-check">
+                        <input type="text" placeholder="name" class="cleaner-name">
+                        <input type="number" min="0" value="0" class="guest-count" step="1">
+                    </div>
+                </td>
+                <td data-label="Monday" class="day-cell">
+                    <div class="signoff">
+                        <input type="checkbox" class="clean-check">
+                        <input type="text" placeholder="name" class="cleaner-name">
+                        <input type="number" min="0" value="0" class="guest-count" step="1">
+                    </div>
+                </td>
+                <td class="total-col" data-label="Total guests">0</td>
+            </tr>
+            <!-- Bistroteca -->
+            <tr id="row-BT">
+                <td class="room-col" data-label="Room">Bistroteca <span class="room-code">BT</span></td>
+                <td data-label="Tuesday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Wednesday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Thursday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Friday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Saturday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Sunday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Monday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td class="total-col" data-label="Total guests">0</td>
+            </tr>
+            <!-- Ottimo Room -->
+            <tr id="row-OR">
+                <td class="room-col" data-label="Room">Ottimo Room <span class="room-code">OR</span></td>
+                <td data-label="Tuesday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Wednesday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Thursday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Friday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Saturday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Sunday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Monday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td class="total-col" data-label="Total guests">0</td>
+            </tr>
+            <!-- Sala Reggio Ballroom -->
+            <tr id="row-SR">
+                <td class="room-col" data-label="Room">Sala Reggio Ballroom <span class="room-code">SR</span></td>
+                <td data-label="Tuesday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Wednesday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Thursday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Friday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Saturday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Sunday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Monday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="text" placeholder="name" class="cleaner-name"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td class="total-col" data-label="Total guests">0</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer-bar">
+        <div class="footer-note">
+            <span>🧹 Cleaner signs after finishing</span>
+            <span>👥 Enter guest numbers for drink planning</span>
         </div>
-        <div class="card">
-          <i class="fas fa-clock"></i>
-          <h3>Bistro hours</h3>
-          <p><strong>Saturday:</strong> 6:30 pm – 10:30 pm</p>
-          <p><strong>Sunday:</strong> 12:30 pm – 4:30 pm</p>
-          <p>Other times available for functions by appointment</p>
-        </div>
-      </div>
+        <button class="print-btn" onclick="window.print()">🖨️ Print roster</button>
     </div>
-  </section>
+</div>
 
-  <!-- SMS availability section (core feature) -->
-  <section class="container" id="sms">
-    <div class="sms-section">
-      <h3><i class="fas fa-comment-dots" style="color: #b22222;"></i> Quick check via SMS</h3>
-      <p>Tap the button below to send us a pre‑written message. We’ll reply with availability, room options, and any info you need.</p>
-      <a href="sms:+614XXXXXXXX?body=Hi%2C%20I'm%20interested%20in%20booking%20an%20event%20at%20The%20Members%20Lounge.%20Can%20you%20tell%20me%20about%20availability%20and%20room%20options%3F%20Thank%20you!" class="btn-sms">
-        <i class="fas fa-sms"></i> Text us for availability
-      </a>
-      <p style="margin-top: 1.5rem; font-size: 0.9rem;">*Replace the phone number in the link with your own.</p>
-    </div>
-  </section>
+<script>
+    (function() {
+        // Function to update total for a specific row
+        function updateRowTotal(row) {
+            const guestInputs = row.querySelectorAll('input.guest-count');
+            let total = 0;
+            guestInputs.forEach(input => {
+                const val = parseInt(input.value, 10);
+                if (!isNaN(val)) total += val;
+            });
+            const totalCell = row.querySelector('.total-col');
+            if (totalCell) totalCell.textContent = total;
+        }
 
-  <!-- TicketTailor events section -->
-  <section class="section" id="events">
-    <div class="container" style="text-align: center;">
-      <h2 class="section-title">Upcoming events & tickets</h2>
-      <p style="margin-bottom: 2rem;">Check our latest events and secure your place via TicketTailor.</p>
-      <a href="https://www.tickettailor.com/events/thememberslounge" target="_blank" rel="noopener" class="ticket-btn">
-        <i class="fas fa-ticket-alt"></i> Go to TicketTailor
-      </a>
-    </div>
-  </section>
+        // Attach event listeners to all guest-count inputs
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const guestInputs = row.querySelectorAll('input.guest-count');
+            guestInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    updateRowTotal(row);
+                });
+                // Also trigger on blur in case of weird behavior
+                input.addEventListener('blur', function() {
+                    updateRowTotal(row);
+                });
+            });
+            // Initial update
+            updateRowTotal(row);
+        });
 
-  <section class="section" id="contact">
-    <div class="container">
-      <h2 class="section-title">Contact & enquiries</h2>
-      <div class="grid-2">
-        <div class="card">
-          <i class="fas fa-phone-alt"></i>
-          <h3>Call us</h3>
-          <p><strong>Functions / Bistro:</strong> <a href="tel:+61385600556">(03) 8560 0556</a></p>
-          <p><strong>General club enquiries:</strong> <a href="tel:+61393806500">(03) 9380 6500</a></p>
-        </div>
-        <div class="card">
-          <i class="fas fa-map-marker-alt"></i>
-          <h3>Visit us</h3>
-          <p>476 Brunswick Rd, Parkville VIC 3052</p>
-          <p><a href="https://maps.google.com/?q=476+Brunswick+Rd+Parkville+VIC+3052" target="_blank">Get directions <i class="fas fa-external-link-alt"></i></a></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-col">
-        <h4>The Members Lounge</h4>
-        <p>Reggio Calabria Club</p>
-        <p>Italian hospitality since 2003</p>
-      </div>
-      <div class="footer-col">
-        <p><i class="fas fa-phone"></i> (03) 8560 0556</p>
-        <p><i class="fas fa-envelope"></i> functions@memberslounge.com.au</p>
-      </div>
-      <div class="footer-col">
-        <p>&copy; 2025 Pribamo. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- small script to update SMS number (placeholder) – user must edit manually -->
-  <script>
-    // You can replace the phone number in the SMS link with your own.
-    // The current placeholder is +614XXXXXXXX (Australian mobile).
-    // To change it, edit the 'href' attribute of the .btn-sms link.
-  </script>
+        // Optional: allow cleaner name fields to be pre-filled? not needed
+        // Also handle date input if desired – just a placeholder
+    })();
+</script>
 </body>
 </html>
-```
-
-🔧 How to use it
-
-1. Replace the phone number in the SMS button:
-   · Look for sms:+614XXXXXXXX in the code and change it to your actual mobile number (e.g., sms:+61412345678).
-   · The pre‑filled message asks about availability and room options – you can edit that text inside the body= parameter if you wish.
-2. Update contact details if needed (email, addresses).
-3. Test the SMS link on a mobile phone – it will open the default messaging app with the message ready to send.
-4. Upload the file to your web server, or use it as a landing page.
-
-The site is fully responsive and gives your customers a simple, direct way to reach you.
