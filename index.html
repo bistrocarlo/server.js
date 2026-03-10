@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Reggio Calabria Club · cleaning & drinks</title>
     <!-- jsPDF and autoTable for PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -19,36 +19,36 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 1.5rem;
+            padding: 1rem;
             margin: 0;
         }
         .roster-card {
             max-width: 1400px;
             width: 100%;
             background: #ffffff;
-            border-radius: 32px;
+            border-radius: 24px;
             box-shadow: 0 20px 35px -8px rgba(0, 20, 30, 0.25);
             overflow: hidden;
             border: 1px solid #d6dee7;
         }
         .header {
             background: #1e2b3a;
-            padding: 1.5rem 2rem;
+            padding: 1.2rem 1.5rem;
             color: white;
         }
         .club-name {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 600;
             letter-spacing: -0.5px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
             flex-wrap: wrap;
         }
         .club-name span {
             background: #c49a2b;
             color: #1e2b3a;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 600;
             padding: 0.2rem 1rem;
             border-radius: 30px;
@@ -56,59 +56,62 @@
         .date-picker-row {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
+            gap: 1rem;
+            margin-top: 0.8rem;
             flex-wrap: wrap;
             background: #2a3a4b;
-            padding: 0.7rem 1.5rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 40px;
         }
         .date-picker-row label {
             color: #e0edf5;
-            font-weight: 400;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         .date-picker-row input[type="date"] {
             background: white;
             border: none;
-            padding: 0.4rem 1rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 30px;
             font-size: 0.9rem;
             color: #0b1a26;
-            font-weight: 500;
             border: 1px solid #b9c9da;
         }
         .legend {
             display: flex;
-            gap: 1.5rem;
+            gap: 1.2rem;
             color: #ccdbe9;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             margin-left: auto;
         }
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
+        }
+        /* Table styles */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             background: white;
-            table-layout: fixed;
+            min-width: 800px;
         }
         th {
             background: #f1f5f9;
             color: #1e2b3a;
             font-weight: 600;
-            font-size: 0.9rem;
-            padding: 0.8rem 0.2rem;
+            font-size: 0.85rem;
+            padding: 0.7rem 0.2rem;
             text-align: center;
             border-bottom: 2px solid #cbd5e1;
             border-right: 1px solid #dde5ed;
         }
         th:last-child { border-right: none; }
         td {
-            padding: 0.6rem 0.2rem;
+            padding: 0.5rem 0.2rem;
             border-bottom: 1px solid #e6edf4;
             text-align: center;
             vertical-align: middle;
@@ -119,169 +122,120 @@
             font-weight: 600;
             color: #14222e;
             text-align: left;
-            padding-left: 1rem;
-            font-size: 0.95rem;
+            padding-left: 0.8rem;
+            font-size: 0.9rem;
             border-right: 1px solid #d2dde9;
-            width: 140px;
+            width: 130px;
         }
         .room-code {
             display: inline-block;
             background: #dde5f0;
             border-radius: 30px;
-            padding: 0.1rem 0.6rem;
-            font-size: 0.65rem;
+            padding: 0.1rem 0.5rem;
+            font-size: 0.6rem;
             font-weight: 700;
-            margin-left: 6px;
-            color: #14222e;
+            margin-left: 5px;
         }
         .day-cell {
-            min-width: 100px;
+            min-width: 95px;
         }
         .signoff {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
         }
         .signoff input[type="checkbox"] {
             width: 18px;
             height: 18px;
             accent-color: #8b1e1e;
-            cursor: pointer;
         }
         .signoff input[type="number"] {
-            width: 70px;
+            width: 65px;
             padding: 4px;
             border: 1px solid #b9c9da;
             border-radius: 30px;
             font-size: 0.7rem;
             text-align: center;
-            background: #ffffff;
-            -moz-appearance: textfield;
-        }
-        .signoff input[type="number"]::-webkit-outer-spin-button,
-        .signoff input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        .signoff input:focus {
-            border-color: #8b1e1e;
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(139,30,30,0.15);
         }
         .total-col {
             font-weight: 600;
             background: #f0f5fb;
-            color: #1e2b3a;
             width: 70px;
             border-left: 1px solid #d2dde9;
         }
         .badge-section {
             background: #f8fafd;
-            padding: 1rem 2rem;
+            padding: 0.8rem 1.5rem;
             border-top: 2px solid #d9e2ec;
             border-bottom: 1px solid #d9e2ec;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 1rem;
         }
         .complete-badge {
             background: #2b7a4b;
             color: white;
             padding: 0.3rem 1.2rem;
             border-radius: 40px;
-            font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
         .footer-bar {
             background: #f0f4fa;
-            padding: 1.2rem 2rem;
+            padding: 1rem 1.5rem;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
+            flex-direction: column;
             gap: 1rem;
-            font-size: 0.9rem;
+        }
+        .footer-note {
+            font-size: 0.85rem;
             color: #2b3f52;
-        }
-        .print-btn, .summary-btn, .drinks-btn, .pdf-btn {
-            background: #1e2b3a;
-            color: white;
-            border: none;
-            padding: 0.6rem 2rem;
-            border-radius: 40px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.15s;
-            font-size: 0.9rem;
-            border: 1px solid #1e2b3a;
-        }
-        .summary-btn {
-            background: #8b1e1e;
-            border-color: #8b1e1e;
-        }
-        .drinks-btn {
-            background: #2b7a4b;
-            border-color: #2b7a4b;
-        }
-        .pdf-btn {
-            background: #1e2b3a;
-            border-color: #1e2b3a;
-        }
-        .print-btn:hover, .summary-btn:hover, .drinks-btn:hover, .pdf-btn:hover {
-            filter: brightness(1.1);
         }
         .button-group {
             display: flex;
-            gap: 1rem;
             flex-wrap: wrap;
+            gap: 0.8rem;
         }
-        @media (max-width: 900px) {
-            table, thead, tbody, tr, th, td { display: block; }
-            thead tr { display: none; }
-            tr {
-                margin-bottom: 1.5rem;
-                border: 1px solid #d7e1ec;
-                border-radius: 16px;
-                overflow: hidden;
+        .btn {
+            background: #1e2b3a;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: 1px solid #1e2b3a;
+            flex: 1 0 auto;
+            min-width: 120px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn.cleaner {
+            background: #8b1e1e;
+            border-color: #8b1e1e;
+        }
+        .btn.drinks {
+            background: #2b7a4b;
+            border-color: #2b7a4b;
+        }
+        .btn.consolidated {
+            background: #1e2b3a;
+            border-color: #1e2b3a;
+        }
+        .btn:active {
+            filter: brightness(0.9);
+        }
+        @media (max-width: 600px) {
+            .button-group .btn {
+                flex: 1 1 100%;
             }
-            td {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0.8rem 1.2rem;
-                border-bottom: 1px solid #e2eaf3;
-                text-align: right;
-            }
-            .room-col {
-                background: #e5ecf5;
-                font-weight: 700;
-                border-right: none;
-                justify-content: flex-start;
-                gap: 10px;
-                padding-left: 1.2rem;
-            }
-            td:before {
-                content: attr(data-label);
-                font-weight: 600;
-                color: #1d384c;
-                font-size: 0.8rem;
-                text-transform: uppercase;
-            }
-            .total-col {
-                border-left: none;
-                background: #f0f5fb;
-            }
-            .button-group {
+            .date-picker-row {
                 flex-direction: column;
-                width: 100%;
+                align-items: stretch;
             }
-            .button-group button {
-                width: 100%;
+            .legend {
+                margin-left: 0;
+                justify-content: center;
             }
         }
     </style>
@@ -302,408 +256,479 @@
         </div>
     </div>
 
-    <!-- OWNER INPUT TABLE -->
-    <table id="rosterTable">
-        <thead id="tableHeader">
-            <tr>
-                <th>Room</th>
-                <th id="headTue">Tuesday</th>
-                <th id="headWed">Wednesday</th>
-                <th id="headThu">Thursday</th>
-                <th id="headFri">Friday</th>
-                <th id="headSat">Saturday</th>
-                <th id="headSun">Sunday</th>
-                <th id="headMon">Monday</th>
-                <th>Total guests</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Members Lounge -->
-            <tr id="row-ML">
-                <td class="room-col" data-label="Room">Members Lounge <span class="room-code">ML</span></td>
-                <td data-label="Tue" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Wed" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Thu" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Fri" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Sat" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Sun" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Mon" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td class="total-col" data-label="Total guests">0</td>
-            </tr>
-            <!-- Bistroteca -->
-            <tr id="row-BT">
-                <td class="room-col" data-label="Room">Bistroteca <span class="room-code">BT</span></td>
-                <td data-label="Tue" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Wed" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Thu" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Fri" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Sat" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Sun" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Mon" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td class="total-col" data-label="Total guests">0</td>
-            </tr>
-            <!-- Ottimo Room -->
-            <tr id="row-OR">
-                <td class="room-col" data-label="Room">Ottimo Room <span class="room-code">OR</span></td>
-                <td data-label="Tue" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Wed" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Thu" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Fri" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Sat" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Sun" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Mon" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td class="total-col" data-label="Total guests">0</td>
-            </tr>
-            <!-- Sala Reggio Ballroom -->
-            <tr id="row-SR">
-                <td class="room-col" data-label="Room">Sala Reggio Ballroom <span class="room-code">SR</span></td>
-                <td data-label="Tue" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Wed" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Thu" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Fri" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Sat" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Sun" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Mon" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td class="total-col" data-label="Total guests">0</td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Input table -->
+    <div class="table-wrapper">
+        <table id="rosterTable">
+            <thead id="tableHeader">
+                <tr>
+                    <th>Room</th>
+                    <th id="headTue">Tuesday</th>
+                    <th id="headWed">Wednesday</th>
+                    <th id="headThu">Thursday</th>
+                    <th id="headFri">Friday</th>
+                    <th id="headSat">Saturday</th>
+                    <th id="headSun">Sunday</th>
+                    <th id="headMon">Monday</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="row-ML">
+                    <td class="room-col">Members Lounge <span class="room-code">ML</span></td>
+                    <td data-label="Tue" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                    <td data-label="Wed" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                    <td data-label="Thu" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                    <td data-label="Fri" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                    <td data-label="Sat" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                    <td data-label="Sun" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                    <td data-label="Mon" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                    <td class="total-col">0</td>
+                </tr>
+                <tr id="row-BT">
+                    <td class="room-col">Bistroteca <span class="room-code">BT</span></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td class="total-col">0</td>
+                </tr>
+                <tr id="row-OR">
+                    <td class="room-col">Ottimo Room <span class="room-code">OR</span></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td class="total-col">0</td>
+                </tr>
+                <tr id="row-SR">
+                    <td class="room-col">Sala Reggio Ballroom <span class="room-code">SR</span></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td class="total-col">0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <!-- All cleaning done badge only -->
     <div class="badge-section">
         <span id="completeBadge" class="complete-badge" style="display: none;">✅ All cleaning done</span>
     </div>
 
-    <!-- FOOTER BUTTONS: two separate summaries + PDF downloads -->
     <div class="footer-bar">
-        <div>🧹 Tick cleaning · 👥 Enter guests</div>
+        <div class="footer-note">🧹 Tick cleaning · 👥 Enter guests</div>
         <div class="button-group">
-            <button class="summary-btn" onclick="openCleanerSheet()">🧹 Cleaner summary</button>
-            <button class="drinks-btn" onclick="openDrinksSheet()">🍷 Drinks summary</button>
-            <button class="pdf-btn" onclick="downloadCleanerPDF()">📥 Cleaner PDF</button>
-            <button class="pdf-btn" onclick="downloadDrinksPDF()">📥 Drinks PDF</button>
-            <button class="print-btn" onclick="window.print()">🖨️ Print main</button>
+            <button class="btn cleaner" onclick="openCleanerSheet()">🧹 Cleaner summary</button>
+            <button class="btn drinks" onclick="openDrinksSheet()">🍷 Drinks summary</button>
+            <button class="btn consolidated" onclick="downloadConsolidatedPDF()">📄 Consolidated PDF</button>
+            <button class="btn" onclick="window.print()">🖨️ Print main</button>
         </div>
     </div>
 </div>
 
 <script>
-    (function() {
-        const rows = document.querySelectorAll('tbody tr');
-        const dayIds = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
-        const guestTotals = { Tue:0, Wed:0, Thu:0, Fri:0, Sat:0, Sun:0, Mon:0 };
+(function() {
+    // ================== DATA PERSISTENCE ==================
+    const STORAGE_KEY = 'reggioCalabriaData';
+    const rows = document.querySelectorAll('tbody tr');
+    const dayIds = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
+    const roomNames = {
+        'row-ML': 'Members Lounge',
+        'row-BT': 'Bistroteca',
+        'row-OR': 'Ottimo Room',
+        'row-SR': 'Sala Reggio Ballroom'
+    };
 
-        // Map row IDs to room names
-        const roomNames = {
-            'row-ML': 'Members Lounge',
-            'row-BT': 'Bistroteca',
-            'row-OR': 'Ottimo Room',
-            'row-SR': 'Sala Reggio Ballroom'
-        };
+    // Load saved data from localStorage
+    function loadFromStorage() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (!saved) return;
 
-        // Date handling
-        const startDateInput = document.getElementById('startDate');
-        const headers = {
-            Tue: document.getElementById('headTue'),
-            Wed: document.getElementById('headWed'),
-            Thu: document.getElementById('headThu'),
-            Fri: document.getElementById('headFri'),
-            Sat: document.getElementById('headSat'),
-            Sun: document.getElementById('headSun'),
-            Mon: document.getElementById('headMon')
-        };
-
-        function formatDate(date) {
-            const d = new Date(date);
-            const day = d.getDate().toString().padStart(2,'0');
-            const month = (d.getMonth()+1).toString().padStart(2,'0');
-            return `${day}/${month}`;
-        }
-
-        function updateHeaders() {
-            if (!startDateInput.value) return;
-            const startDate = new Date(startDateInput.value + 'T12:00:00');
-            if (isNaN(startDate)) return;
-
-            const days = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
-            days.forEach((day, index) => {
-                const current = new Date(startDate);
-                current.setDate(startDate.getDate() + index);
-                headers[day].textContent = `${day} ${formatDate(current)}`;
+        try {
+            const data = JSON.parse(saved);
+            rows.forEach(row => {
+                const checkboxes = row.querySelectorAll('input.clean-check');
+                const guestInputs = row.querySelectorAll('input.guest-count');
+                const rowId = row.id;
+                if (data[rowId]) {
+                    checkboxes.forEach((cb, idx) => {
+                        if (data[rowId].checks && data[rowId].checks[idx] !== undefined) {
+                            cb.checked = data[rowId].checks[idx];
+                        }
+                    });
+                    guestInputs.forEach((inp, idx) => {
+                        if (data[rowId].guests && data[rowId].guests[idx] !== undefined) {
+                            inp.value = data[rowId].guests[idx];
+                        }
+                    });
+                }
             });
+            // Also load start date if saved
+            if (data.startDate) {
+                document.getElementById('startDate').value = data.startDate;
+            }
+        } catch (e) {
+            console.warn('Failed to load saved data', e);
         }
+    }
 
-        startDateInput.addEventListener('change', updateHeaders);
-        // Set default to next Tuesday
-        const today = new Date();
-        const dayOfWeek = today.getDay(); // 0 Sun, 1 Mon, 2 Tue, ...
-        const daysUntilTuesday = (2 - dayOfWeek + 7) % 7;
-        const nextTue = new Date(today);
-        nextTue.setDate(today.getDate() + daysUntilTuesday);
-        const year = nextTue.getFullYear();
-        const month = (nextTue.getMonth() + 1).toString().padStart(2,'0');
-        const day = nextTue.getDate().toString().padStart(2,'0');
-        startDateInput.value = `${year}-${month}-${day}`;
-        updateHeaders();
-
-        // Update row total and all-cleaning badge
-        function updateRowTotal(row) {
-            const guestInputs = row.querySelectorAll('input.guest-count');
-            let total = 0;
-            guestInputs.forEach(input => {
-                const val = parseInt(input.value, 10);
-                if (!isNaN(val)) total += val;
-            });
-            const totalCell = row.querySelector('.total-col');
-            if (totalCell) totalCell.textContent = total;
-        }
-
-        function updateBadge() {
-            const allCheckboxes = document.querySelectorAll('input.clean-check');
-            const allChecked = Array.from(allCheckboxes).every(cb => cb.checked);
-            document.getElementById('completeBadge').style.display = allChecked ? 'inline-flex' : 'none';
-        }
-
-        // Attach listeners
+    // Save current data to localStorage
+    function saveToStorage() {
+        const data = { startDate: document.getElementById('startDate').value };
         rows.forEach(row => {
-            const guestInputs = row.querySelectorAll('input.guest-count');
-            guestInputs.forEach(input => {
-                input.addEventListener('input', () => {
-                    updateRowTotal(row);
-                });
-                input.addEventListener('blur', () => {
-                    updateRowTotal(row);
-                });
-            });
-
             const checkboxes = row.querySelectorAll('input.clean-check');
-            checkboxes.forEach(cb => cb.addEventListener('change', updateBadge));
+            const guestInputs = row.querySelectorAll('input.guest-count');
+            const checks = Array.from(checkboxes).map(cb => cb.checked);
+            const guests = Array.from(guestInputs).map(inp => parseInt(inp.value, 10) || 0);
+            data[row.id] = { checks, guests };
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
 
-            updateRowTotal(row);
+    // ================== DATE HANDLING ==================
+    const startDateInput = document.getElementById('startDate');
+    const headers = {
+        Tue: document.getElementById('headTue'),
+        Wed: document.getElementById('headWed'),
+        Thu: document.getElementById('headThu'),
+        Fri: document.getElementById('headFri'),
+        Sat: document.getElementById('headSat'),
+        Sun: document.getElementById('headSun'),
+        Mon: document.getElementById('headMon')
+    };
+
+    function formatDate(date) {
+        const d = new Date(date);
+        const day = d.getDate().toString().padStart(2,'0');
+        const month = (d.getMonth()+1).toString().padStart(2,'0');
+        return `${day}/${month}`;
+    }
+
+    function updateHeaders() {
+        if (!startDateInput.value) return;
+        const startDate = new Date(startDateInput.value + 'T12:00:00');
+        if (isNaN(startDate)) return;
+
+        const days = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
+        days.forEach((day, index) => {
+            const current = new Date(startDate);
+            current.setDate(startDate.getDate() + index);
+            headers[day].textContent = `${day} ${formatDate(current)}`;
+        });
+        saveToStorage(); // save date
+    }
+
+    startDateInput.addEventListener('change', updateHeaders);
+
+    // Set default to next Tuesday if not saved
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+    const daysUntilTuesday = (2 - dayOfWeek + 7) % 7;
+    const nextTue = new Date(today);
+    nextTue.setDate(today.getDate() + daysUntilTuesday);
+    const year = nextTue.getFullYear();
+    const month = (nextTue.getMonth() + 1).toString().padStart(2,'0');
+    const day = nextTue.getDate().toString().padStart(2,'0');
+    const defaultDate = `${year}-${month}-${day}`;
+
+    if (!startDateInput.value) {
+        startDateInput.value = defaultDate;
+    }
+
+    // ================== UPDATE TOTALS & BADGE ==================
+    function updateRowTotal(row) {
+        const guestInputs = row.querySelectorAll('input.guest-count');
+        let total = 0;
+        guestInputs.forEach(input => {
+            const val = parseInt(input.value, 10);
+            if (!isNaN(val)) total += val;
+        });
+        const totalCell = row.querySelector('.total-col');
+        if (totalCell) totalCell.textContent = total;
+    }
+
+    function updateBadge() {
+        const allCheckboxes = document.querySelectorAll('input.clean-check');
+        const allChecked = Array.from(allCheckboxes).every(cb => cb.checked);
+        document.getElementById('completeBadge').style.display = allChecked ? 'inline-flex' : 'none';
+    }
+
+    // Attach listeners and load data
+    rows.forEach(row => {
+        const guestInputs = row.querySelectorAll('input.guest-count');
+        guestInputs.forEach(input => {
+            input.addEventListener('input', () => {
+                updateRowTotal(row);
+                saveToStorage();
+            });
+            input.addEventListener('blur', () => {
+                updateRowTotal(row);
+                saveToStorage();
+            });
         });
 
-        updateBadge();
+        const checkboxes = row.querySelectorAll('input.clean-check');
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', () => {
+                updateBadge();
+                saveToStorage();
+            });
+        });
 
-        // Helper to get dates with formatting
-        function getDates() {
-            const dates = {};
-            for (let day of dayIds) {
-                dates[day] = headers[day].textContent; // e.g. "Tue 11/03"
-            }
-            return dates;
+        updateRowTotal(row);
+    });
+
+    // Load from storage after listeners are set
+    loadFromStorage();
+    updateHeaders(); // ensure headers match saved date
+    updateBadge();
+
+    // ================== HELPER ==================
+    function getDates() {
+        const dates = {};
+        for (let day of dayIds) {
+            dates[day] = headers[day].textContent;
         }
+        return dates;
+    }
 
-        // CLEANER SUMMARY (new window)
-        window.openCleanerSheet = function() {
-            const dates = getDates();
-            const dayRoomData = {};
-            for (let day of dayIds) dayRoomData[day] = [];
+    // ================== SUMMARY WINDOWS (optional) ==================
+    window.openCleanerSheet = function() {
+        const dates = getDates();
+        const dayRoomData = {};
+        for (let day of dayIds) dayRoomData[day] = [];
 
+        rows.forEach(row => {
+            const roomName = roomNames[row.id];
+            const checkboxes = row.querySelectorAll('input.clean-check');
+            checkboxes.forEach((cb, index) => {
+                if (cb.checked) {
+                    dayRoomData[dayIds[index]].push(roomName);
+                }
+            });
+        });
+
+        let summaryHtml = `
+        <html><head><title>Cleaner summary</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body { font-family: system-ui, sans-serif; padding: 1rem; }
+            h1 { font-size: 1.8rem; color: #1e2b3a; }
+            .day { margin-bottom: 1.5rem; }
+            .day-title { font-size: 1.3rem; background: #f1f5f9; padding: 0.4rem 1rem; border-radius: 30px; display: inline-block; }
+            ul { list-style: none; padding-left: 1rem; }
+            li { padding: 0.3rem 0; font-size: 1rem; }
+        </style></head>
+        <body><h1>Reggio Calabria Club</h1><p>🧹 Cleaner summary · week starting ${dates.Tue}</p>`;
+
+        for (let day of dayIds) {
+            const rooms = dayRoomData[day];
+            if (rooms.length === 0) continue;
+            summaryHtml += `<div class="day"><div class="day-title">${dates[day]}</div><ul>`;
+            rooms.forEach(r => { summaryHtml += `<li>${r}</li>`; });
+            summaryHtml += `</ul></div>`;
+        }
+        summaryHtml += `</body></html>`;
+        const w = window.open('');
+        w.document.write(summaryHtml);
+        w.document.close();
+    };
+
+    window.openDrinksSheet = function() {
+        const dates = getDates();
+        const dayDrinksData = {};
+        for (let day of dayIds) dayDrinksData[day] = [];
+
+        rows.forEach(row => {
+            const roomName = roomNames[row.id];
+            const guestInputs = row.querySelectorAll('input.guest-count');
+            guestInputs.forEach((input, index) => {
+                const guests = parseInt(input.value, 10) || 0;
+                dayDrinksData[dayIds[index]].push({ room: roomName, guests });
+            });
+        });
+
+        let summaryHtml = `
+        <html><head><title>Drinks summary</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body { font-family: system-ui, sans-serif; padding: 1rem; }
+            h1 { color: #1e2b3a; }
+            .day { margin-bottom: 1.5rem; }
+            .day-title { font-size: 1.3rem; background: #f1f5f9; padding: 0.4rem 1rem; border-radius: 30px; display: inline-block; }
+            table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+            th { background: #f1f5f9; text-align: left; padding: 0.5rem; }
+            td { padding: 0.5rem; border-bottom: 1px solid #ccc; }
+            .day-total { font-weight: 600; margin-top: 0.3rem; text-align: right; }
+            .grand-total { font-size: 1.2rem; background: #1e2b3a; color: white; padding: 1rem; border-radius: 40px; display: inline-block; }
+        </style></head>
+        <body><h1>Reggio Calabria Club</h1><p>🍷 Drinks summary · week starting ${dates.Tue}</p>`;
+
+        let grandTotal = 0;
+        for (let day of dayIds) {
+            const rooms = dayDrinksData[day];
+            const dayTotal = rooms.reduce((sum, r) => sum + r.guests, 0);
+            grandTotal += dayTotal;
+            summaryHtml += `<div class="day"><div class="day-title">${dates[day]}</div>`;
+            summaryHtml += `<table><tr><th>Room</th><th>Guests</th></tr>`;
+            rooms.forEach(r => {
+                summaryHtml += `<tr><td>${r.room}</td><td>${r.guests}</td></tr>`;
+            });
+            summaryHtml += `</table><div class="day-total">🍷 Day total: ${dayTotal}</div></div>`;
+        }
+        summaryHtml += `<div class="grand-total">🍷 Total drinks: ${grandTotal}</div>`;
+        summaryHtml += `</body></html>`;
+
+        const w = window.open('');
+        w.document.write(summaryHtml);
+        w.document.close();
+    };
+
+    // ================== CONSOLIDATED PDF ==================
+    window.downloadConsolidatedPDF = function() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        const dates = getDates();
+
+        doc.setFontSize(18);
+        doc.text('Reggio Calabria Club', 14, 20);
+        doc.setFontSize(11);
+        doc.text(`Week starting ${dates.Tue}`, 14, 28);
+
+        // ---- CLEANING SECTION ----
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text('🧹 Cleaning summary', 14, 40);
+        doc.setFont(undefined, 'normal');
+
+        let y = 48;
+        let cleaningExists = false;
+        for (let day of dayIds) {
+            const tickedRooms = [];
             rows.forEach(row => {
                 const roomName = roomNames[row.id];
                 const checkboxes = row.querySelectorAll('input.clean-check');
                 checkboxes.forEach((cb, index) => {
-                    if (cb.checked) {
-                        dayRoomData[dayIds[index]].push(roomName);
+                    if (cb.checked && dayIds[index] === day) {
+                        tickedRooms.push(roomName);
                     }
                 });
             });
+            if (tickedRooms.length === 0) continue;
+            cleaningExists = true;
 
-            let summaryHtml = `
-            <html>
-            <head><title>Cleaner summary</title>
-            <style>
-                body { font-family: Inter, sans-serif; padding: 2rem; }
-                h1 { color: #1e2b3a; }
-                .day-section { margin-bottom: 2rem; }
-                .day-title { font-size: 1.3rem; background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 30px; display: inline-block; }
-                ul { list-style-type: none; padding-left: 1rem; }
-                li { padding: 0.3rem 0; }
-            </style>
-            </head>
-            <body>
-                <h1>Reggio Calabria Club</h1>
-                <p>🧹 Cleaner summary · week starting ${dates.Tue}</p>
-            `;
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.text(dates[day], 14, y);
+            y += 5;
+            doc.setFont(undefined, 'normal');
+            tickedRooms.forEach(room => {
+                doc.text(`• ${room}`, 18, y);
+                y += 5;
+            });
+            y += 2;
+        }
 
-            for (let day of dayIds) {
-                const rooms = dayRoomData[day];
-                if (rooms.length === 0) continue;
-                summaryHtml += `<div class="day-section"><div class="day-title">${dates[day]}</div><ul>`;
-                rooms.forEach(r => { summaryHtml += `<li>${r}</li>`; });
-                summaryHtml += `</ul></div>`;
-            }
+        if (!cleaningExists) {
+            doc.text('No cleaning scheduled this week.', 14, y);
+            y += 8;
+        } else {
+            y += 4;
+        }
 
-            summaryHtml += `</body></html>`;
-            const w = window.open('');
-            w.document.write(summaryHtml);
-            w.document.close();
-        };
+        // ---- DRINKS SECTION ----
+        // Add a new page if we're near the bottom
+        if (y > 240) {
+            doc.addPage();
+            y = 20;
+        } else {
+            y += 6;
+        }
 
-        // DRINKS SUMMARY (new window)
-        window.openDrinksSheet = function() {
-            const dates = getDates();
-            const dayDrinksData = {};
-            for (let day of dayIds) dayDrinksData[day] = [];
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text('🍷 Drinks summary', 14, y);
+        y += 8;
+        doc.setFont(undefined, 'normal');
 
+        // Prepare drinks data for autoTable
+        const drinksTables = [];
+        let grandTotal = 0;
+        for (let day of dayIds) {
+            const dayRows = [];
+            let dayTotal = 0;
             rows.forEach(row => {
                 const roomName = roomNames[row.id];
                 const guestInputs = row.querySelectorAll('input.guest-count');
                 guestInputs.forEach((input, index) => {
-                    const guestCount = parseInt(input.value, 10) || 0;
-                    dayDrinksData[dayIds[index]].push({ room: roomName, guests: guestCount });
+                    if (dayIds[index] === day) {
+                        const guests = parseInt(input.value, 10) || 0;
+                        dayRows.push([roomName, guests.toString()]);
+                        dayTotal += guests;
+                    }
                 });
             });
+            grandTotal += dayTotal;
+            drinksTables.push({ day, date: dates[day], rows: dayRows, total: dayTotal });
+        }
 
-            let summaryHtml = `
-            <html>
-            <head><title>Drinks summary</title>
-            <style>
-                body { font-family: Inter, sans-serif; padding: 2rem; }
-                h1 { color: #1e2b3a; }
-                .day-section { margin-bottom: 2rem; }
-                .day-title { font-size: 1.3rem; background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 30px; display: inline-block; }
-                table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
-                th { background: #f1f5f9; text-align: left; padding: 0.5rem; }
-                td { padding: 0.5rem; border-bottom: 1px solid #ccc; }
-                .day-total { font-weight: 600; margin-top: 0.5rem; text-align: right; }
-                .grand-total { font-size: 1.2rem; background: #1e2b3a; color: white; padding: 1rem; border-radius: 40px; display: inline-block; }
-            </style>
-            </head>
-            <body>
-                <h1>Reggio Calabria Club</h1>
-                <p>🍷 Drinks summary · week starting ${dates.Tue}</p>
-            `;
-
-            let grandTotal = 0;
-            for (let day of dayIds) {
-                const rooms = dayDrinksData[day];
-                const dayTotal = rooms.reduce((sum, r) => sum + r.guests, 0);
-                grandTotal += dayTotal;
-
-                summaryHtml += `<div class="day-section"><div class="day-title">${dates[day]}</div>`;
-                summaryHtml += `<table><tr><th>Room</th><th>Guests</th></tr>`;
-                rooms.forEach(r => {
-                    summaryHtml += `<tr><td>${r.room}</td><td>${r.guests}</td></tr>`;
-                });
-                summaryHtml += `</table>`;
-                summaryHtml += `<div class="day-total">🍷 Day total: ${dayTotal}</div></div>`;
-            }
-            summaryHtml += `<div class="grand-total">🍷 Total drinks: ${grandTotal}</div>`;
-            summaryHtml += `</body></html>`;
-
-            const w = window.open('');
-            w.document.write(summaryHtml);
-            w.document.close();
-        };
-
-        // PDF DOWNLOAD FUNCTIONS using jsPDF
-        window.downloadCleanerPDF = function() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const dates = getDates();
-
-            doc.setFontSize(18);
-            doc.text('Reggio Calabria Club', 14, 20);
-            doc.setFontSize(11);
-            doc.text(`🧹 Cleaner summary · week starting ${dates.Tue}`, 14, 30);
-
-            let y = 40;
-            for (let day of dayIds) {
-                // collect ticked rooms for this day
-                const tickedRooms = [];
-                rows.forEach(row => {
-                    const roomName = roomNames[row.id];
-                    const checkboxes = row.querySelectorAll('input.clean-check');
-                    checkboxes.forEach((cb, index) => {
-                        if (cb.checked && dayIds[index] === day) {
-                            tickedRooms.push(roomName);
-                        }
-                    });
-                });
-                if (tickedRooms.length === 0) continue;
-
-                // add day header
-                doc.setFontSize(12);
-                doc.setFont(undefined, 'bold');
-                doc.text(dates[day], 14, y);
-                y += 6;
-                doc.setFont(undefined, 'normal');
-                doc.setFontSize(10);
-                tickedRooms.forEach(room => {
-                    doc.text(`• ${room}`, 18, y);
-                    y += 5;
-                });
-                y += 3;
+        // Use autoTable for drinks
+        let first = true;
+        drinksTables.forEach((tab, idx) => {
+            if (!first) {
+                doc.addPage();
+                y = 20;
+            } else {
+                first = false;
             }
 
-            doc.save('cleaner_summary.pdf');
-        };
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.text(tab.date, 14, y);
+            y += 4;
 
-        window.downloadDrinksPDF = function() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const dates = getDates();
-
-            doc.setFontSize(18);
-            doc.text('Reggio Calabria Club', 14, 20);
-            doc.setFontSize(11);
-            doc.text(`🍷 Drinks summary · week starting ${dates.Tue}`, 14, 30);
-
-            let y = 40;
-            const allDayData = [];
-            let grandTotal = 0;
-
-            for (let day of dayIds) {
-                const dayRows = [];
-                let dayTotal = 0;
-                rows.forEach(row => {
-                    const roomName = roomNames[row.id];
-                    const guestInputs = row.querySelectorAll('input.guest-count');
-                    guestInputs.forEach((input, index) => {
-                        if (dayIds[index] === day) {
-                            const guests = parseInt(input.value, 10) || 0;
-                            dayRows.push([roomName, guests.toString()]);
-                            dayTotal += guests;
-                        }
-                    });
-                });
-                grandTotal += dayTotal;
-                allDayData.push({ day, date: dates[day], rows: dayRows, total: dayTotal });
-            }
-
-            // Use autoTable to create nice tables per day
-            allDayData.forEach((dayData, idx) => {
-                if (idx > 0) {
-                    doc.addPage();
-                    y = 20;
+            doc.autoTable({
+                startY: y,
+                head: [['Room', 'Guests']],
+                body: tab.rows,
+                theme: 'striped',
+                headStyles: { fillColor: [43, 122, 75] },
+                margin: { left: 14, right: 14 },
+                didDrawPage: function(data) {
+                    // noop
                 }
-                doc.setFontSize(14);
-                doc.setFont(undefined, 'bold');
-                doc.text(dayData.date, 14, y);
-                y += 6;
-
-                doc.autoTable({
-                    startY: y,
-                    head: [['Room', 'Guests']],
-                    body: dayData.rows,
-                    theme: 'striped',
-                    headStyles: { fillColor: [43, 122, 75] },
-                    margin: { left: 14, right: 14 }
-                });
-                y = doc.lastAutoTable.finalY + 6;
-                doc.setFontSize(11);
-                doc.text(`🍷 Day total: ${dayData.total}`, 14, y);
-                y += 8;
             });
 
-            doc.addPage();
-            doc.setFontSize(16);
-            doc.text(`🍷 Grand total drinks: ${grandTotal}`, 14, 30);
+            y = doc.lastAutoTable.finalY + 4;
+            doc.setFontSize(10);
+            doc.text(`🍷 Day total: ${tab.total}`, 14, y);
+            y += 8;
+        });
 
-            doc.save('drinks_summary.pdf');
-        };
-    })();
+        // Grand total on a new page or same page
+        if (doc.getNumberOfPages() > 0 && y > 260) {
+            doc.addPage();
+            y = 20;
+        } else {
+            y += 4;
+        }
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text(`🍷 Total drinks for the week: ${grandTotal}`, 14, y);
+
+        doc.save('Reggio_Calabria_Club.pdf');
+    };
+})();
 </script>
 </body>
 </html>
