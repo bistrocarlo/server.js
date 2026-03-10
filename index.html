@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Reggio Calabria Club · cleaning & drinks</title>
+    <title>Reggio Calabria Club - cleaning and drinks</title>
     <!-- jsPDF and autoTable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
@@ -239,10 +239,10 @@
 <div class="roster-card">
     <div class="header">
         <div class="club-name">
-            Reggio Calabria Club <span>cleaning & drinks</span>
+            Reggio Calabria Club <span>cleaning and drinks</span>
         </div>
         <div class="date-picker-row">
-            <label for="startDate">📅 Week starting Tuesday:</label>
+            <label for="startDate">Week starting Tuesday:</label>
             <input type="date" id="startDate" value="">
             <div class="legend">
                 <div class="legend-item">✅ cleaned</div>
@@ -321,12 +321,12 @@
     </div>
 
     <div class="footer-bar">
-        <div class="footer-note">🧹 Tick cleaning · 👥 Enter guests</div>
+        <div class="footer-note">Tick cleaning · Enter guests</div>
         <div class="button-group">
-            <button class="btn cleaner" onclick="openCleanerSheet()">🧹 Cleaner summary</button>
-            <button class="btn drinks" onclick="openDrinksSheet()">🍷 Drinks summary</button>
-            <button class="btn consolidated" onclick="downloadConsolidatedPDF()">📄 Cleaning & Drinks PDF</button>
-            <button class="btn" onclick="window.print()">🖨️ Print main</button>
+            <button class="btn cleaner" onclick="openCleanerSheet()">Cleaner summary</button>
+            <button class="btn drinks" onclick="openDrinksSheet()">Drinks summary</button>
+            <button class="btn consolidated" onclick="downloadConsolidatedPDF()">Cleaning & Drinks PDF</button>
+            <button class="btn" onclick="window.print()">Print main</button>
         </div>
     </div>
 </div>
@@ -485,7 +485,7 @@
                 if (cb.checked) dayRoomData[dayIds[index]].push(roomName);
             });
         });
-        let html = `<html><head><title>Cleaner summary</title><meta name="viewport" content="width=device-width, initial-scale=1"><style>body{font-family:system-ui;padding:1rem;}</style></head><body><h1>Reggio Calabria Club</h1><p>🧹 Cleaner summary · week starting ${dates.Tue}</p>`;
+        let html = `<html><head><title>Cleaner summary</title><meta name="viewport" content="width=device-width, initial-scale=1"><style>body{font-family:system-ui;padding:1rem;}</style></head><body><h1>Reggio Calabria Club</h1><p>Cleaner summary - week starting ${dates.Tue}</p>`;
         for (let day of dayIds) {
             if (dayRoomData[day].length) {
                 html += `<h3>${dates[day]}</h3><ul>`;
@@ -511,7 +511,7 @@
                 dayDrinks[dayIds[index]].push({ room: roomName, guests });
             });
         });
-        let html = `<html><head><title>Drinks summary</title><meta name="viewport" content="width=device-width, initial-scale=1"><style>body{font-family:system-ui;padding:1rem;}table{border-collapse:collapse;width:100%;}th{background:#f1f5f9;}</style></head><body><h1>Reggio Calabria Club</h1><p>🍷 Drinks summary · week starting ${dates.Tue}</p>`;
+        let html = `<html><head><title>Drinks summary</title><meta name="viewport" content="width=device-width, initial-scale=1"><style>body{font-family:system-ui;padding:1rem;}table{border-collapse:collapse;width:100%;}th{background:#f1f5f9;}</style></head><body><h1>Reggio Calabria Club</h1><p>Drinks summary - week starting ${dates.Tue}</p>`;
         let grandTotal = 0;
         for (let day of dayIds) {
             const rowsData = dayDrinks[day];
@@ -522,7 +522,7 @@
             rowsData.forEach(r => html += `<tr><td>${r.room}</td><td>${r.guests}</td></tr>`);
             html += `</table><p><strong>Day total: ${dayTotal}</strong></p>`;
         }
-        html += `<h2>🍷 Total guests: ${grandTotal}</h2>`;
+        html += `<h2>Total guests: ${grandTotal}</h2>`;
         html += `</body></html>`;
         const w = window.open('');
         w.document.write(html);
@@ -577,7 +577,7 @@
         // ---- PAGE 1: CLEANING ROSTER (only days with ticks) ----
         doc.setFontSize(14);
         doc.setFont(undefined, 'bold');
-        doc.text('🧹 Cleaning roster', 14, 40);
+        doc.text('Cleaning roster', 14, 40);
         doc.setFont(undefined, 'normal');
         let y = 48;
         let cleaningExists = false;
@@ -608,7 +608,7 @@
             y += 5;
             doc.setFont(undefined, 'normal');
             tickedRooms.forEach(room => {
-                doc.text(`• ${room}`, 18, y);
+                doc.text(`- ${room}`, 18, y);
                 y += 5;
             });
             y += 2;
@@ -634,7 +634,7 @@
 
         doc.setFontSize(16);
         doc.setFont(undefined, 'bold');
-        doc.text('🍷 Drink order', 14, y);
+        doc.text('Drink order', 14, y);
         y += 8;
 
         doc.setFontSize(11);
