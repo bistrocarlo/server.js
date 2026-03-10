@@ -547,7 +547,6 @@
         const breakdown = [];
         for (let [drink, fraction] of Object.entries(pct)) {
             let bottles = Math.round(totalBottles * fraction);
-            // Ensure sum matches totalBottles (adjust last if needed)
             breakdown.push({ drink, bottles });
         }
         // Adjust rounding errors: force sum to equal totalBottles
@@ -575,7 +574,7 @@
         doc.setFontSize(11);
         doc.text(`Week starting ${dates.Tue}`, 14, 28);
 
-        // ---- CLEANING SECTION (only days with ticks) ----
+        // ---- PAGE 1: CLEANING SUMMARY (only days with ticks) ----
         doc.setFontSize(14);
         doc.setFont(undefined, 'bold');
         doc.text('🧹 Cleaning summary', 14, 40);
@@ -597,6 +596,12 @@
             if (tickedRooms.length === 0) continue;
             cleaningExists = true;
 
+            // Check if we need a new page
+            if (y > 260) {
+                doc.addPage();
+                y = 20;
+            }
+
             doc.setFontSize(11);
             doc.setFont(undefined, 'bold');
             doc.text(dates[day], 14, y);
@@ -612,108 +617,39 @@
         if (!cleaningExists) {
             doc.text('No cleaning scheduled this week.', 14, y);
             y += 8;
-        } else {
-            y += 4;
         }
 
-        // ---- DRINKS SECTION (only days with >0 guests) ----
-        if (y > 240) {
-            doc.addPage();
-            y = 20;
-        } else {
-            y += 6;
-        }
+        // ---- PAGE 2: DRINK REQUIREMENTS ----
+        doc.addPage();
+        y = 20;
 
-        doc.setFontSize(14);
-        doc.setFont(undefined, 'bold');
-        doc.text('🍷 Drinks summary', 14, y);
-        y += 8;
-        doc.setFont(undefined, 'normal');
-
-        // Gather drinks data, filter days with total >0
-        const drinksTables = [];
+        // Calculate total guests
         let grandTotal = 0;
-        for (let day of dayIds) {
-            const dayRows = [];
-            let dayTotal = 0;
-            rows.forEach(row => {
-                const roomName = roomNames[row.id];
-                const guestInputs = row.querySelectorAll('input.guest-count');
-                guestInputs.forEach((input, index) => {
-                    if (dayIds[index] === day) {
-                        const guests = parseInt(input.value, 10) || 0;
-                        if (guests > 0) {
-                            dayRows.push([roomName, guests.toString()]);
-                        }
-                        dayTotal += guests;
-                    }
-                });
+        rows.forEach(row => {
+            const guestInputs = row.querySelectorAll('input.guest-count');
+            guestInputs.forEach(input => {
+                grandTotal += parseInt(input.value, 10) || 0;
             });
-            if (dayTotal > 0) {
-                grandTotal += dayTotal;
-                drinksTables.push({ day, date: dates[day], rows: dayRows, total: dayTotal });
-            }
-        }
+        });
 
-        if (drinksTables.length === 0) {
-            doc.text('No drinks scheduled this week.', 14, y);
-        } else {
-            let first = true;
-            drinksTables.forEach((tab, idx) => {
-                if (!first) {
-                    doc.addPage();
-                    y = 20;
-                } else {
-                    first = false;
-                }
-
-                doc.setFontSize(12);
-                doc.setFont(undefined, 'bold');
-                doc.text(tab.date, 14, y);
-                y += 4;
-
-                doc.autoTable({
-                    startY: y,
-                    head: [['Room', 'Guests']],
-                    body: tab.rows,
-                    theme: 'striped',
-                    headStyles: { fillColor: [43, 122, 75] },
-                    margin: { left: 14, right: 14 }
-                });
-
-                y = doc.lastAutoTable.finalY + 4;
-                doc.setFontSize(10);
-                doc.text(`🍷 Day total: ${tab.total}`, 14, y);
-                y += 8;
-            });
-        }
-
-        // Grand total
-        if (doc.getNumberOfPages() > 0 && y > 260) {
-            doc.addPage();
-            y = 20;
-        } else {
-            y += 4;
-        }
-        doc.setFontSize(14);
+        doc.setFontSize(16);
         doc.setFont(undefined, 'bold');
-        doc.text(`🍷 Total guests for the week: ${grandTotal}`, 14, y);
-        y += 10;
+        doc.text('🍷 Drink requirements', 14, y);
+        y += 8;
 
-        // ---- DRINK BREAKDOWN ----
-        const { totalBottles, breakdown } = getDrinkBreakdown(grandTotal);
-        doc.setFontSize(14);
-        doc.setFont(undefined, 'bold');
-        doc.text('Drink requirements (bottles)', 14, y);
-        y += 6;
         doc.setFontSize(11);
         doc.setFont(undefined, 'normal');
-        doc.text(`Based on ${grandTotal} guests (90 bottles per 750 guests)`, 14, y);
-        y += 6;
-        doc.text(`Total bottles: ${totalBottles}`, 14, y);
+        doc.text(`Total guests for the week: ${grandTotal}`, 14, y);
         y += 6;
 
-        // Table for breakdown
+        const { totalBottles, breakdown } = getDrinkBreakdown(grandTotal);
+        doc.text(`Based on 90 bottles per 750 guests`, 14, y);
+        y += 6;
+        doc.setFont(undefined, 'bold');
+        doc.text(`Total bottles needed: ${totalBottles}`, 14, y);
+        y += 8;
+
+        // Breakdown table
         const breakdownRows = breakdown.map(item => [item.drink, item.bottles.toString()]);
         doc.autoTable({
             startY: y,
