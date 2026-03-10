@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reggio Calabria Club · concise roster</title>
+    <title>Reggio Calabria Club · cleaning & drinks</title>
     <style>
         * {
             box-sizing: border-box;
@@ -227,7 +227,7 @@
             font-size: 0.9rem;
             color: #2b3f52;
         }
-        .print-btn {
+        .print-btn, .summary-btn {
             background: #1e2b3a;
             color: white;
             border: none;
@@ -239,9 +239,12 @@
             font-size: 0.9rem;
             border: 1px solid #1e2b3a;
         }
-        .print-btn:hover {
+        .summary-btn {
             background: #8b1e1e;
             border-color: #8b1e1e;
+        }
+        .print-btn:hover, .summary-btn:hover {
+            filter: brightness(1.1);
         }
         @media (max-width: 900px) {
             table, thead, tbody, tr, th, td { display: block; }
@@ -302,6 +305,7 @@
         </div>
     </div>
 
+    <!-- Owner input table -->
     <table id="rosterTable">
         <thead id="tableHeader">
             <tr>
@@ -368,9 +372,9 @@
         </tbody>
     </table>
 
-    <!-- Concise summary: daily guest totals & all-clean badge -->
+    <!-- Live daily totals (owner view) -->
     <div class="summary-section">
-        <span class="summary-title">🍷 Drinks summary — guests per day</span>
+        <span class="summary-title">🍷 Today's drinks summary</span>
         <div class="daily-totals" id="dailyTotals">
             <span><strong>Tue:</strong> <span id="totalTue">0</span></span>
             <span><strong>Wed:</strong> <span id="totalWed">0</span></span>
@@ -383,9 +387,13 @@
         <span id="completeBadge" class="complete-badge" style="display: none;">✅ All cleaning done</span>
     </div>
 
+    <!-- Footer with buttons -->
     <div class="footer-bar">
         <div>🧹 Tick when finished · 👥 Enter guests for drinks</div>
-        <button class="print-btn" onclick="window.print()">🖨️ Print roster</button>
+        <div style="display: flex; gap: 1rem;">
+            <button class="summary-btn" onclick="openCleanerSheet()">🧾 Cleaner summary sheet</button>
+            <button class="print-btn" onclick="window.print()">🖨️ Print this page</button>
+        </div>
     </div>
 </div>
 
@@ -416,10 +424,9 @@
 
         function updateHeaders() {
             if (!startDateInput.value) return;
-            const startDate = new Date(startDateInput.value + 'T12:00:00'); // avoid timezone issues
+            const startDate = new Date(startDateInput.value + 'T12:00:00');
             if (isNaN(startDate)) return;
 
-            // Start date is Tuesday. Generate next days.
             const days = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
             days.forEach((day, index) => {
                 const current = new Date(startDate);
@@ -429,11 +436,10 @@
         }
 
         startDateInput.addEventListener('change', updateHeaders);
-        // Set default to next Tuesday? Maybe leave empty or set a default.
-        // Optionally set a default Tuesday (today + (2 - today.getDay() + 7) % 7)
+        // Set default to next Tuesday
         const today = new Date();
         const dayOfWeek = today.getDay(); // 0 Sun, 1 Mon, 2 Tue, ...
-        const daysUntilTuesday = (2 - dayOfWeek + 7) % 7; // days until next Tue
+        const daysUntilTuesday = (2 - dayOfWeek + 7) % 7;
         const nextTue = new Date(today);
         nextTue.setDate(today.getDate() + daysUntilTuesday);
         const year = nextTue.getFullYear();
@@ -504,6 +510,60 @@
         });
 
         updateSummary();
+
+        // Expose function to open cleaner summary sheet
+        window.openCleanerSheet = function() {
+            // Gather dates from headers
+            const dates = {};
+            for (let day of dayIds) {
+                const headerText = headers[day].textContent; // e.g. "Tue 11/03"
+                dates[day] = headerText;
+            }
+
+            // Build summary HTML
+            let summaryHtml = `
+            <html>
+            <head>
+                <title>Reggio Calabria Club · Cleaner summary</title>
+                <style>
+                    body { font-family: 'Inter', sans-serif; padding: 2rem; background: white; }
+                    h1 { font-size: 2rem; color: #1e2b3a; margin-bottom: 0.5rem; }
+                    .club-sub { color: #8b1e1e; font-weight: 500; margin-bottom: 2rem; }
+                    table { width: 100%; border-collapse: collapse; background: white; }
+                    th { background: #f1f5f9; color: #1e2b3a; padding: 0.8rem; text-align: left; border-bottom: 2px solid #cbd5e1; }
+                    td { padding: 0.8rem; border-bottom: 1px solid #e6edf4; }
+                    .day-row { font-weight: 600; }
+                    .total-row { background: #f0f5fb; font-weight: 600; }
+                    .rooms { color: #2b3f52; font-size: 0.9rem; }
+                    .grand-total { font-size: 1.2rem; margin-top: 2rem; padding: 1rem; background: #1e2b3a; color: white; border-radius: 40px; display: inline-block; }
+                </style>
+            </head>
+            <body>
+                <h1>Reggio Calabria Club</h1>
+                <div class="club-sub">🧹 Cleaner summary · week starting ${dates.Tue}</div>
+                <table>
+                    <tr><th>Day</th><th>Rooms to clean</th><th>Total guests (drinks)</th></tr>
+            `;
+
+            let grandTotal = 0;
+            for (let day of dayIds) {
+                const total = guestTotals[day];
+                grandTotal += total;
+                summaryHtml += `<tr class="day-row"><td>${dates[day]}</td><td class="rooms">Members Lounge, Bistroteca, Ottimo Room, Sala Reggio Ballroom</td><td><strong>${total}</strong></td></tr>`;
+            }
+
+            summaryHtml += `
+                </table>
+                <div class="grand-total">🍷 Total drinks for the week: ${grandTotal}</div>
+                <p style="margin-top: 2rem; color: #5a6f82;">Cleaners: please clean all listed rooms on each day.</p>
+            </body>
+            </html>
+            `;
+
+            const summaryWindow = window.open('', '_blank');
+            summaryWindow.document.write(summaryHtml);
+            summaryWindow.document.close();
+        };
     })();
 </script>
 </body>
