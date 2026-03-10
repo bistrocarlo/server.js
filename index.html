@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Reggio Calabria Club · cleaning & drinks</title>
-    <!-- jsPDF and autoTable for PDF generation -->
+    <!-- jsPDF and autoTable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <style>
@@ -522,12 +522,47 @@
             rowsData.forEach(r => html += `<tr><td>${r.room}</td><td>${r.guests}</td></tr>`);
             html += `</table><p><strong>Day total: ${dayTotal}</strong></p>`;
         }
-        html += `<h2>🍷 Total drinks: ${grandTotal}</h2>`;
+        html += `<h2>🍷 Total guests: ${grandTotal}</h2>`;
         html += `</body></html>`;
         const w = window.open('');
         w.document.write(html);
         w.document.close();
     };
+
+    // ================== DRINK BREAKDOWN FUNCTION ==================
+    function getDrinkBreakdown(totalGuests) {
+        // 90 bottles per 750 guests
+        const bottlesPerPerson = 90 / 750;
+        const totalBottles = Math.round(totalGuests * bottlesPerPerson);
+        // Percentages
+        const pct = {
+            'Cola': 0.4,
+            'Lemon squash': 0.4,
+            'Cola (no sugar)': 0.1,
+            'Lemonade': 0.05,
+            'Soda water': 0.05,
+            'Tonic water': 0.025,
+            'Ginger ale': 0.025
+        };
+        const breakdown = [];
+        for (let [drink, fraction] of Object.entries(pct)) {
+            let bottles = Math.round(totalBottles * fraction);
+            // Ensure sum matches totalBottles (adjust last if needed)
+            breakdown.push({ drink, bottles });
+        }
+        // Adjust rounding errors: force sum to equal totalBottles
+        const sum = breakdown.reduce((acc, item) => acc + item.bottles, 0);
+        if (sum !== totalBottles && breakdown.length > 0) {
+            const diff = totalBottles - sum;
+            // Add diff to the largest category
+            let maxIndex = 0;
+            for (let i = 1; i < breakdown.length; i++) {
+                if (breakdown[i].bottles > breakdown[maxIndex].bottles) maxIndex = i;
+            }
+            breakdown[maxIndex].bottles += diff;
+        }
+        return { totalBottles, breakdown };
+    }
 
     // ================== CONSOLIDATED PDF ==================
     window.downloadConsolidatedPDF = function() {
@@ -662,7 +697,32 @@
         }
         doc.setFontSize(14);
         doc.setFont(undefined, 'bold');
-        doc.text(`🍷 Total drinks for the week: ${grandTotal}`, 14, y);
+        doc.text(`🍷 Total guests for the week: ${grandTotal}`, 14, y);
+        y += 10;
+
+        // ---- DRINK BREAKDOWN ----
+        const { totalBottles, breakdown } = getDrinkBreakdown(grandTotal);
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text('Drink requirements (bottles)', 14, y);
+        y += 6;
+        doc.setFontSize(11);
+        doc.setFont(undefined, 'normal');
+        doc.text(`Based on ${grandTotal} guests (90 bottles per 750 guests)`, 14, y);
+        y += 6;
+        doc.text(`Total bottles: ${totalBottles}`, 14, y);
+        y += 6;
+
+        // Table for breakdown
+        const breakdownRows = breakdown.map(item => [item.drink, item.bottles.toString()]);
+        doc.autoTable({
+            startY: y,
+            head: [['Drink', 'Bottles']],
+            body: breakdownRows,
+            theme: 'striped',
+            headStyles: { fillColor: [139, 30, 30] },
+            margin: { left: 14, right: 14 }
+        });
 
         doc.save('Reggio_Calabria_Club.pdf');
     };
