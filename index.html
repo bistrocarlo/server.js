@@ -403,6 +403,14 @@
         const dayIds = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
         const guestTotals = { Tue:0, Wed:0, Thu:0, Fri:0, Sat:0, Sun:0, Mon:0 };
 
+        // Map row IDs to room names
+        const roomNames = {
+            'row-ML': 'Members Lounge',
+            'row-BT': 'Bistroteca',
+            'row-OR': 'Ottimo Room',
+            'row-SR': 'Sala Reggio Ballroom'
+        };
+
         // Date handling
         const startDateInput = document.getElementById('startDate');
         const headers = {
@@ -516,11 +524,24 @@
             // Gather dates from headers
             const dates = {};
             for (let day of dayIds) {
-                const headerText = headers[day].textContent; // e.g. "Tue 11/03"
-                dates[day] = headerText;
+                dates[day] = headers[day].textContent; // e.g. "Tue 11/03"
             }
 
-            // Build summary HTML
+            // Collect ticked rooms per day
+            const roomsPerDay = {};
+            for (let day of dayIds) roomsPerDay[day] = [];
+
+            rows.forEach(row => {
+                const roomName = roomNames[row.id];
+                const checkboxes = row.querySelectorAll('input.clean-check');
+                checkboxes.forEach((cb, index) => {
+                    if (cb.checked) {
+                        roomsPerDay[dayIds[index]].push(roomName);
+                    }
+                });
+            });
+
+            // Build summary HTML only for days with at least one room ticked
             let summaryHtml = `
             <html>
             <head>
@@ -532,8 +553,6 @@
                     table { width: 100%; border-collapse: collapse; background: white; }
                     th { background: #f1f5f9; color: #1e2b3a; padding: 0.8rem; text-align: left; border-bottom: 2px solid #cbd5e1; }
                     td { padding: 0.8rem; border-bottom: 1px solid #e6edf4; }
-                    .day-row { font-weight: 600; }
-                    .total-row { background: #f0f5fb; font-weight: 600; }
                     .rooms { color: #2b3f52; font-size: 0.9rem; }
                     .grand-total { font-size: 1.2rem; margin-top: 2rem; padding: 1rem; background: #1e2b3a; color: white; border-radius: 40px; display: inline-block; }
                 </style>
@@ -547,15 +566,17 @@
 
             let grandTotal = 0;
             for (let day of dayIds) {
+                if (roomsPerDay[day].length === 0) continue; // skip days with no cleaning
                 const total = guestTotals[day];
                 grandTotal += total;
-                summaryHtml += `<tr class="day-row"><td>${dates[day]}</td><td class="rooms">Members Lounge, Bistroteca, Ottimo Room, Sala Reggio Ballroom</td><td><strong>${total}</strong></td></tr>`;
+                const roomsList = roomsPerDay[day].join(', ');
+                summaryHtml += `<tr><td>${dates[day]}</td><td class="rooms">${roomsList}</td><td><strong>${total}</strong></td></tr>`;
             }
 
             summaryHtml += `
                 </table>
                 <div class="grand-total">🍷 Total drinks for the week: ${grandTotal}</div>
-                <p style="margin-top: 2rem; color: #5a6f82;">Cleaners: please clean all listed rooms on each day.</p>
+                <p style="margin-top: 2rem; color: #5a6f82;">Cleaners: please clean the listed rooms on each day.</p>
             </body>
             </html>
             `;
