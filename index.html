@@ -192,6 +192,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 1rem 1.5rem;
+            align-items: center;
         }
         .daily-totals span {
             background: white;
@@ -204,6 +205,15 @@
             color: #8b1e1e;
             margin-right: 6px;
         }
+        .grand-total-badge {
+            background: #1e2b3a;
+            color: white;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-left: auto;
+        }
         .complete-badge {
             background: #2b7a4b;
             color: white;
@@ -214,7 +224,6 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            margin-left: auto;
         }
         .footer-bar {
             background: #f0f4fa;
@@ -285,6 +294,9 @@
             .daily-totals {
                 flex-direction: column;
                 gap: 0.5rem;
+            }
+            .grand-total-badge {
+                margin-left: 0;
             }
         }
     </style>
@@ -372,9 +384,9 @@
         </tbody>
     </table>
 
-    <!-- OWNER SUMMARY (live daily totals) -->
+    <!-- OWNER SUMMARY: daily drinks + grand total -->
     <div class="summary-section">
-        <span class="summary-title">🍷 Today's drinks summary</span>
+        <span class="summary-title">🍷 Drinks per day</span>
         <div class="daily-totals" id="dailyTotals">
             <span><strong>Tue:</strong> <span id="totalTue">0</span></span>
             <span><strong>Wed:</strong> <span id="totalWed">0</span></span>
@@ -384,6 +396,7 @@
             <span><strong>Sun:</strong> <span id="totalSun">0</span></span>
             <span><strong>Mon:</strong> <span id="totalMon">0</span></span>
         </div>
+        <span id="grandTotalBadge" class="grand-total-badge">🍷 Total: 0</span>
         <span id="completeBadge" class="complete-badge" style="display: none;">✅ All cleaning done</span>
     </div>
 
@@ -482,7 +495,7 @@
                 });
             });
 
-            // Update DOM
+            // Update daily totals
             document.getElementById('totalTue').textContent = guestTotals.Tue;
             document.getElementById('totalWed').textContent = guestTotals.Wed;
             document.getElementById('totalThu').textContent = guestTotals.Thu;
@@ -490,6 +503,10 @@
             document.getElementById('totalSat').textContent = guestTotals.Sat;
             document.getElementById('totalSun').textContent = guestTotals.Sun;
             document.getElementById('totalMon').textContent = guestTotals.Mon;
+
+            // Calculate grand total
+            const grandTotal = Object.values(guestTotals).reduce((a, b) => a + b, 0);
+            document.getElementById('grandTotalBadge').textContent = `🍷 Total: ${grandTotal}`;
 
             // All clean check
             const allCheckboxes = document.querySelectorAll('input.clean-check');
