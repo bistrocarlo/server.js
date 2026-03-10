@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Reggio Calabria Club · cleaning & drinks</title>
-    <!-- jsPDF and autoTable for PDF generation -->
+    <!-- jsPDF and autoTable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <style>
@@ -39,7 +39,6 @@
         .club-name {
             font-size: 1.8rem;
             font-weight: 600;
-            letter-spacing: -0.5px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -88,7 +87,6 @@
             align-items: center;
             gap: 4px;
         }
-        /* Table styles */
         .table-wrapper {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -135,9 +133,6 @@
             font-size: 0.6rem;
             font-weight: 700;
             margin-left: 5px;
-        }
-        .day-cell {
-            min-width: 95px;
         }
         .signoff {
             display: flex;
@@ -275,13 +270,13 @@
             <tbody>
                 <tr id="row-ML">
                     <td class="room-col">Members Lounge <span class="room-code">ML</span></td>
-                    <td data-label="Tue" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                    <td data-label="Wed" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                    <td data-label="Thu" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                    <td data-label="Fri" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                    <td data-label="Sat" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                    <td data-label="Sun" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                    <td data-label="Mon" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
+                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
                     <td class="total-col">0</td>
                 </tr>
                 <tr id="row-BT">
@@ -349,11 +344,9 @@
         'row-SR': 'Sala Reggio Ballroom'
     };
 
-    // Load saved data from localStorage
     function loadFromStorage() {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (!saved) return;
-
         try {
             const data = JSON.parse(saved);
             rows.forEach(row => {
@@ -373,16 +366,12 @@
                     });
                 }
             });
-            // Also load start date if saved
             if (data.startDate) {
                 document.getElementById('startDate').value = data.startDate;
             }
-        } catch (e) {
-            console.warn('Failed to load saved data', e);
-        }
+        } catch (e) {}
     }
 
-    // Save current data to localStorage
     function saveToStorage() {
         const data = { startDate: document.getElementById('startDate').value };
         rows.forEach(row => {
@@ -418,19 +407,17 @@
         if (!startDateInput.value) return;
         const startDate = new Date(startDateInput.value + 'T12:00:00');
         if (isNaN(startDate)) return;
-
-        const days = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
-        days.forEach((day, index) => {
+        dayIds.forEach((day, index) => {
             const current = new Date(startDate);
             current.setDate(startDate.getDate() + index);
             headers[day].textContent = `${day} ${formatDate(current)}`;
         });
-        saveToStorage(); // save date
+        saveToStorage();
     }
 
     startDateInput.addEventListener('change', updateHeaders);
 
-    // Set default to next Tuesday if not saved
+    // Default to next Tuesday
     const today = new Date();
     const dayOfWeek = today.getDay();
     const daysUntilTuesday = (2 - dayOfWeek + 7) % 7;
@@ -440,7 +427,6 @@
     const month = (nextTue.getMonth() + 1).toString().padStart(2,'0');
     const day = nextTue.getDate().toString().padStart(2,'0');
     const defaultDate = `${year}-${month}-${day}`;
-
     if (!startDateInput.value) {
         startDateInput.value = defaultDate;
     }
@@ -450,11 +436,9 @@
         const guestInputs = row.querySelectorAll('input.guest-count');
         let total = 0;
         guestInputs.forEach(input => {
-            const val = parseInt(input.value, 10);
-            if (!isNaN(val)) total += val;
+            total += parseInt(input.value, 10) || 0;
         });
-        const totalCell = row.querySelector('.total-col');
-        if (totalCell) totalCell.textContent = total;
+        row.querySelector('.total-col').textContent = total;
     }
 
     function updateBadge() {
@@ -463,34 +447,21 @@
         document.getElementById('completeBadge').style.display = allChecked ? 'inline-flex' : 'none';
     }
 
-    // Attach listeners and load data
     rows.forEach(row => {
         const guestInputs = row.querySelectorAll('input.guest-count');
         guestInputs.forEach(input => {
-            input.addEventListener('input', () => {
-                updateRowTotal(row);
-                saveToStorage();
-            });
-            input.addEventListener('blur', () => {
-                updateRowTotal(row);
-                saveToStorage();
-            });
+            input.addEventListener('input', () => { updateRowTotal(row); saveToStorage(); });
+            input.addEventListener('blur', () => { updateRowTotal(row); saveToStorage(); });
         });
-
         const checkboxes = row.querySelectorAll('input.clean-check');
         checkboxes.forEach(cb => {
-            cb.addEventListener('change', () => {
-                updateBadge();
-                saveToStorage();
-            });
+            cb.addEventListener('change', () => { updateBadge(); saveToStorage(); });
         });
-
         updateRowTotal(row);
     });
 
-    // Load from storage after listeners are set
     loadFromStorage();
-    updateHeaders(); // ensure headers match saved date
+    updateHeaders();
     updateBadge();
 
     // ================== HELPER ==================
@@ -507,90 +478,54 @@
         const dates = getDates();
         const dayRoomData = {};
         for (let day of dayIds) dayRoomData[day] = [];
-
         rows.forEach(row => {
             const roomName = roomNames[row.id];
             const checkboxes = row.querySelectorAll('input.clean-check');
             checkboxes.forEach((cb, index) => {
-                if (cb.checked) {
-                    dayRoomData[dayIds[index]].push(roomName);
-                }
+                if (cb.checked) dayRoomData[dayIds[index]].push(roomName);
             });
         });
-
-        let summaryHtml = `
-        <html><head><title>Cleaner summary</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-            body { font-family: system-ui, sans-serif; padding: 1rem; }
-            h1 { font-size: 1.8rem; color: #1e2b3a; }
-            .day { margin-bottom: 1.5rem; }
-            .day-title { font-size: 1.3rem; background: #f1f5f9; padding: 0.4rem 1rem; border-radius: 30px; display: inline-block; }
-            ul { list-style: none; padding-left: 1rem; }
-            li { padding: 0.3rem 0; font-size: 1rem; }
-        </style></head>
-        <body><h1>Reggio Calabria Club</h1><p>🧹 Cleaner summary · week starting ${dates.Tue}</p>`;
-
+        let html = `<html><head><title>Cleaner summary</title><meta name="viewport" content="width=device-width, initial-scale=1"><style>body{font-family:system-ui;padding:1rem;}</style></head><body><h1>Reggio Calabria Club</h1><p>🧹 Cleaner summary · week starting ${dates.Tue}</p>`;
         for (let day of dayIds) {
-            const rooms = dayRoomData[day];
-            if (rooms.length === 0) continue;
-            summaryHtml += `<div class="day"><div class="day-title">${dates[day]}</div><ul>`;
-            rooms.forEach(r => { summaryHtml += `<li>${r}</li>`; });
-            summaryHtml += `</ul></div>`;
+            if (dayRoomData[day].length) {
+                html += `<h3>${dates[day]}</h3><ul>`;
+                dayRoomData[day].forEach(r => html += `<li>${r}</li>`);
+                html += `</ul>`;
+            }
         }
-        summaryHtml += `</body></html>`;
+        html += `</body></html>`;
         const w = window.open('');
-        w.document.write(summaryHtml);
+        w.document.write(html);
         w.document.close();
     };
 
     window.openDrinksSheet = function() {
         const dates = getDates();
-        const dayDrinksData = {};
-        for (let day of dayIds) dayDrinksData[day] = [];
-
+        const dayDrinks = {};
+        for (let day of dayIds) dayDrinks[day] = [];
         rows.forEach(row => {
             const roomName = roomNames[row.id];
             const guestInputs = row.querySelectorAll('input.guest-count');
             guestInputs.forEach((input, index) => {
                 const guests = parseInt(input.value, 10) || 0;
-                dayDrinksData[dayIds[index]].push({ room: roomName, guests });
+                dayDrinks[dayIds[index]].push({ room: roomName, guests });
             });
         });
-
-        let summaryHtml = `
-        <html><head><title>Drinks summary</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-            body { font-family: system-ui, sans-serif; padding: 1rem; }
-            h1 { color: #1e2b3a; }
-            .day { margin-bottom: 1.5rem; }
-            .day-title { font-size: 1.3rem; background: #f1f5f9; padding: 0.4rem 1rem; border-radius: 30px; display: inline-block; }
-            table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
-            th { background: #f1f5f9; text-align: left; padding: 0.5rem; }
-            td { padding: 0.5rem; border-bottom: 1px solid #ccc; }
-            .day-total { font-weight: 600; margin-top: 0.3rem; text-align: right; }
-            .grand-total { font-size: 1.2rem; background: #1e2b3a; color: white; padding: 1rem; border-radius: 40px; display: inline-block; }
-        </style></head>
-        <body><h1>Reggio Calabria Club</h1><p>🍷 Drinks summary · week starting ${dates.Tue}</p>`;
-
+        let html = `<html><head><title>Drinks summary</title><meta name="viewport" content="width=device-width, initial-scale=1"><style>body{font-family:system-ui;padding:1rem;}table{border-collapse:collapse;width:100%;}th{background:#f1f5f9;}</style></head><body><h1>Reggio Calabria Club</h1><p>🍷 Drinks summary · week starting ${dates.Tue}</p>`;
         let grandTotal = 0;
         for (let day of dayIds) {
-            const rooms = dayDrinksData[day];
-            const dayTotal = rooms.reduce((sum, r) => sum + r.guests, 0);
+            const rowsData = dayDrinks[day];
+            const dayTotal = rowsData.reduce((acc, r) => acc + r.guests, 0);
+            if (dayTotal === 0) continue;
             grandTotal += dayTotal;
-            summaryHtml += `<div class="day"><div class="day-title">${dates[day]}</div>`;
-            summaryHtml += `<table><tr><th>Room</th><th>Guests</th></tr>`;
-            rooms.forEach(r => {
-                summaryHtml += `<tr><td>${r.room}</td><td>${r.guests}</td></tr>`;
-            });
-            summaryHtml += `</table><div class="day-total">🍷 Day total: ${dayTotal}</div></div>`;
+            html += `<h3>${dates[day]}</h3><table><tr><th>Room</th><th>Guests</th></tr>`;
+            rowsData.forEach(r => html += `<tr><td>${r.room}</td><td>${r.guests}</td></tr>`);
+            html += `</table><p><strong>Day total: ${dayTotal}</strong></p>`;
         }
-        summaryHtml += `<div class="grand-total">🍷 Total drinks: ${grandTotal}</div>`;
-        summaryHtml += `</body></html>`;
-
+        html += `<h2>🍷 Total drinks: ${grandTotal}</h2>`;
+        html += `</body></html>`;
         const w = window.open('');
-        w.document.write(summaryHtml);
+        w.document.write(html);
         w.document.close();
     };
 
@@ -605,14 +540,14 @@
         doc.setFontSize(11);
         doc.text(`Week starting ${dates.Tue}`, 14, 28);
 
-        // ---- CLEANING SECTION ----
+        // ---- CLEANING SECTION (only days with ticks) ----
         doc.setFontSize(14);
         doc.setFont(undefined, 'bold');
         doc.text('🧹 Cleaning summary', 14, 40);
         doc.setFont(undefined, 'normal');
-
         let y = 48;
         let cleaningExists = false;
+
         for (let day of dayIds) {
             const tickedRooms = [];
             rows.forEach(row => {
@@ -646,8 +581,7 @@
             y += 4;
         }
 
-        // ---- DRINKS SECTION ----
-        // Add a new page if we're near the bottom
+        // ---- DRINKS SECTION (only days with >0 guests) ----
         if (y > 240) {
             doc.addPage();
             y = 20;
@@ -661,7 +595,7 @@
         y += 8;
         doc.setFont(undefined, 'normal');
 
-        // Prepare drinks data for autoTable
+        // Gather drinks data, filter days with total >0
         const drinksTables = [];
         let grandTotal = 0;
         for (let day of dayIds) {
@@ -673,49 +607,53 @@
                 guestInputs.forEach((input, index) => {
                     if (dayIds[index] === day) {
                         const guests = parseInt(input.value, 10) || 0;
-                        dayRows.push([roomName, guests.toString()]);
+                        if (guests > 0) {
+                            dayRows.push([roomName, guests.toString()]);
+                        }
                         dayTotal += guests;
                     }
                 });
             });
-            grandTotal += dayTotal;
-            drinksTables.push({ day, date: dates[day], rows: dayRows, total: dayTotal });
+            if (dayTotal > 0) {
+                grandTotal += dayTotal;
+                drinksTables.push({ day, date: dates[day], rows: dayRows, total: dayTotal });
+            }
         }
 
-        // Use autoTable for drinks
-        let first = true;
-        drinksTables.forEach((tab, idx) => {
-            if (!first) {
-                doc.addPage();
-                y = 20;
-            } else {
-                first = false;
-            }
-
-            doc.setFontSize(12);
-            doc.setFont(undefined, 'bold');
-            doc.text(tab.date, 14, y);
-            y += 4;
-
-            doc.autoTable({
-                startY: y,
-                head: [['Room', 'Guests']],
-                body: tab.rows,
-                theme: 'striped',
-                headStyles: { fillColor: [43, 122, 75] },
-                margin: { left: 14, right: 14 },
-                didDrawPage: function(data) {
-                    // noop
+        if (drinksTables.length === 0) {
+            doc.text('No drinks scheduled this week.', 14, y);
+        } else {
+            let first = true;
+            drinksTables.forEach((tab, idx) => {
+                if (!first) {
+                    doc.addPage();
+                    y = 20;
+                } else {
+                    first = false;
                 }
+
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'bold');
+                doc.text(tab.date, 14, y);
+                y += 4;
+
+                doc.autoTable({
+                    startY: y,
+                    head: [['Room', 'Guests']],
+                    body: tab.rows,
+                    theme: 'striped',
+                    headStyles: { fillColor: [43, 122, 75] },
+                    margin: { left: 14, right: 14 }
+                });
+
+                y = doc.lastAutoTable.finalY + 4;
+                doc.setFontSize(10);
+                doc.text(`🍷 Day total: ${tab.total}`, 14, y);
+                y += 8;
             });
+        }
 
-            y = doc.lastAutoTable.finalY + 4;
-            doc.setFontSize(10);
-            doc.text(`🍷 Day total: ${tab.total}`, 14, y);
-            y += 8;
-        });
-
-        // Grand total on a new page or same page
+        // Grand total
         if (doc.getNumberOfPages() > 0 && y > 260) {
             doc.addPage();
             y = 20;
