@@ -325,7 +325,7 @@
         <div class="button-group">
             <button class="btn cleaner" onclick="openCleanerSheet()">🧹 Cleaner summary</button>
             <button class="btn drinks" onclick="openDrinksSheet()">🍷 Drinks summary</button>
-            <button class="btn consolidated" onclick="downloadConsolidatedPDF()">📄 Consolidated PDF</button>
+            <button class="btn consolidated" onclick="downloadConsolidatedPDF()">📄 Cleaning & Drinks PDF</button>
             <button class="btn" onclick="window.print()">🖨️ Print main</button>
         </div>
     </div>
@@ -574,10 +574,10 @@
         doc.setFontSize(11);
         doc.text(`Week starting ${dates.Tue}`, 14, 28);
 
-        // ---- PAGE 1: CLEANING SUMMARY (only days with ticks) ----
+        // ---- PAGE 1: CLEANING ROSTER (only days with ticks) ----
         doc.setFontSize(14);
         doc.setFont(undefined, 'bold');
-        doc.text('🧹 Cleaning summary', 14, 40);
+        doc.text('🧹 Cleaning roster', 14, 40);
         doc.setFont(undefined, 'normal');
         let y = 48;
         let cleaningExists = false;
@@ -619,7 +619,7 @@
             y += 8;
         }
 
-        // ---- PAGE 2: DRINK REQUIREMENTS ----
+        // ---- PAGE 2: DRINK ORDER ----
         doc.addPage();
         y = 20;
 
@@ -634,7 +634,7 @@
 
         doc.setFontSize(16);
         doc.setFont(undefined, 'bold');
-        doc.text('🍷 Drink requirements', 14, y);
+        doc.text('🍷 Drink order', 14, y);
         y += 8;
 
         doc.setFontSize(11);
