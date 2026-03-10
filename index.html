@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reggio Calabria Club · cleaning & drinks</title>
+    <!-- jsPDF and autoTable for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -205,7 +208,7 @@
             font-size: 0.9rem;
             color: #2b3f52;
         }
-        .print-btn, .summary-btn, .drinks-btn {
+        .print-btn, .summary-btn, .drinks-btn, .pdf-btn {
             background: #1e2b3a;
             color: white;
             border: none;
@@ -225,7 +228,11 @@
             background: #2b7a4b;
             border-color: #2b7a4b;
         }
-        .print-btn:hover, .summary-btn:hover, .drinks-btn:hover {
+        .pdf-btn {
+            background: #1e2b3a;
+            border-color: #1e2b3a;
+        }
+        .print-btn:hover, .summary-btn:hover, .drinks-btn:hover, .pdf-btn:hover {
             filter: brightness(1.1);
         }
         .button-group {
@@ -367,13 +374,15 @@
         <span id="completeBadge" class="complete-badge" style="display: none;">✅ All cleaning done</span>
     </div>
 
-    <!-- FOOTER BUTTONS: two separate summaries -->
+    <!-- FOOTER BUTTONS: two separate summaries + PDF downloads -->
     <div class="footer-bar">
         <div>🧹 Tick cleaning · 👥 Enter guests</div>
         <div class="button-group">
             <button class="summary-btn" onclick="openCleanerSheet()">🧹 Cleaner summary</button>
             <button class="drinks-btn" onclick="openDrinksSheet()">🍷 Drinks summary</button>
-            <button class="print-btn" onclick="window.print()">🖨️ Print this page</button>
+            <button class="pdf-btn" onclick="downloadCleanerPDF()">📥 Cleaner PDF</button>
+            <button class="pdf-btn" onclick="downloadDrinksPDF()">📥 Drinks PDF</button>
+            <button class="print-btn" onclick="window.print()">🖨️ Print main</button>
         </div>
     </div>
 </div>
@@ -475,87 +484,65 @@
 
         updateBadge();
 
-        // CLEANER SUMMARY (only ticked rooms)
-        window.openCleanerSheet = function() {
-            // Gather dates from headers
+        // Helper to get dates with formatting
+        function getDates() {
             const dates = {};
             for (let day of dayIds) {
                 dates[day] = headers[day].textContent; // e.g. "Tue 11/03"
             }
+            return dates;
+        }
 
-            // Collect ticked rooms with their guest counts per day
+        // CLEANER SUMMARY (new window)
+        window.openCleanerSheet = function() {
+            const dates = getDates();
             const dayRoomData = {};
             for (let day of dayIds) dayRoomData[day] = [];
 
             rows.forEach(row => {
                 const roomName = roomNames[row.id];
                 const checkboxes = row.querySelectorAll('input.clean-check');
-                const guestInputs = row.querySelectorAll('input.guest-count');
                 checkboxes.forEach((cb, index) => {
                     if (cb.checked) {
-                        const guestCount = parseInt(guestInputs[index].value, 10) || 0;
-                        dayRoomData[dayIds[index]].push({ room: roomName, guests: guestCount });
+                        dayRoomData[dayIds[index]].push(roomName);
                     }
                 });
             });
 
-            // Build summary HTML (only days with at least one room ticked)
             let summaryHtml = `
             <html>
-            <head>
-                <title>Reggio Calabria Club · Cleaner summary</title>
-                <style>
-                    body { font-family: 'Inter', sans-serif; padding: 2rem; background: white; }
-                    h1 { font-size: 2rem; color: #1e2b3a; margin-bottom: 0.2rem; }
-                    .week-info { color: #8b1e1e; font-weight: 500; margin-bottom: 2rem; }
-                    .day-section { margin-bottom: 2rem; }
-                    .day-title { font-size: 1.3rem; font-weight: 600; background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 30px; display: inline-block; margin-bottom: 0.8rem; }
-                    table { width: 100%; border-collapse: collapse; background: white; margin-bottom: 1rem; }
-                    th { background: #f1f5f9; color: #1e2b3a; padding: 0.8rem; text-align: left; border-bottom: 2px solid #cbd5e1; }
-                    td { padding: 0.8rem; border-bottom: 1px solid #e6edf4; }
-                    .room-name { font-weight: 500; }
-                    .guest-number { font-weight: 600; color: #8b1e1e; }
-                </style>
+            <head><title>Cleaner summary</title>
+            <style>
+                body { font-family: Inter, sans-serif; padding: 2rem; }
+                h1 { color: #1e2b3a; }
+                .day-section { margin-bottom: 2rem; }
+                .day-title { font-size: 1.3rem; background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 30px; display: inline-block; }
+                ul { list-style-type: none; padding-left: 1rem; }
+                li { padding: 0.3rem 0; }
+            </style>
             </head>
             <body>
                 <h1>Reggio Calabria Club</h1>
-                <div class="week-info">🧹 Cleaner summary · week starting ${dates.Tue}</div>
+                <p>🧹 Cleaner summary · week starting ${dates.Tue}</p>
             `;
 
             for (let day of dayIds) {
                 const rooms = dayRoomData[day];
-                if (rooms.length === 0) continue; // skip days with no cleaning
-
-                summaryHtml += `<div class="day-section">`;
-                summaryHtml += `<div class="day-title">${dates[day]}</div>`;
-                summaryHtml += `<table><tr><th>Room</th></tr>`;
-                rooms.forEach(r => {
-                    summaryHtml += `<tr><td class="room-name">${r.room}</td></tr>`;
-                });
-                summaryHtml += `</table>`;
-                summaryHtml += `</div>`;
+                if (rooms.length === 0) continue;
+                summaryHtml += `<div class="day-section"><div class="day-title">${dates[day]}</div><ul>`;
+                rooms.forEach(r => { summaryHtml += `<li>${r}</li>`; });
+                summaryHtml += `</ul></div>`;
             }
 
-            summaryHtml += `
-                <p style="margin-top: 2rem; color: #5a6f82;">Cleaners: please clean the listed rooms on each day.</p>
-            </body>
-            </html>
-            `;
-
-            const summaryWindow = window.open('', '_blank');
-            summaryWindow.document.write(summaryHtml);
-            summaryWindow.document.close();
+            summaryHtml += `</body></html>`;
+            const w = window.open('');
+            w.document.write(summaryHtml);
+            w.document.close();
         };
 
-        // DRINKS SUMMARY (all guest counts, ignoring checkboxes)
+        // DRINKS SUMMARY (new window)
         window.openDrinksSheet = function() {
-            // Gather dates from headers
-            const dates = {};
-            for (let day of dayIds) {
-                dates[day] = headers[day].textContent;
-            }
-
-            // Collect all guest counts per day per room
+            const dates = getDates();
             const dayDrinksData = {};
             for (let day of dayIds) dayDrinksData[day] = [];
 
@@ -568,29 +555,24 @@
                 });
             });
 
-            // Build drinks summary HTML (all days)
             let summaryHtml = `
             <html>
-            <head>
-                <title>Reggio Calabria Club · Drinks summary</title>
-                <style>
-                    body { font-family: 'Inter', sans-serif; padding: 2rem; background: white; }
-                    h1 { font-size: 2rem; color: #1e2b3a; margin-bottom: 0.2rem; }
-                    .week-info { color: #2b7a4b; font-weight: 500; margin-bottom: 2rem; }
-                    .day-section { margin-bottom: 2rem; }
-                    .day-title { font-size: 1.3rem; font-weight: 600; background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 30px; display: inline-block; margin-bottom: 0.8rem; }
-                    table { width: 100%; border-collapse: collapse; background: white; margin-bottom: 1rem; }
-                    th { background: #f1f5f9; color: #1e2b3a; padding: 0.8rem; text-align: left; border-bottom: 2px solid #cbd5e1; }
-                    td { padding: 0.8rem; border-bottom: 1px solid #e6edf4; }
-                    .room-name { font-weight: 500; }
-                    .guest-number { font-weight: 600; color: #2b7a4b; }
-                    .day-total { font-size: 1rem; font-weight: 600; margin-top: 0.3rem; text-align: right; }
-                    .grand-total { font-size: 1.3rem; margin-top: 2rem; padding: 1rem; background: #1e2b3a; color: white; border-radius: 40px; display: inline-block; }
-                </style>
+            <head><title>Drinks summary</title>
+            <style>
+                body { font-family: Inter, sans-serif; padding: 2rem; }
+                h1 { color: #1e2b3a; }
+                .day-section { margin-bottom: 2rem; }
+                .day-title { font-size: 1.3rem; background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 30px; display: inline-block; }
+                table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+                th { background: #f1f5f9; text-align: left; padding: 0.5rem; }
+                td { padding: 0.5rem; border-bottom: 1px solid #ccc; }
+                .day-total { font-weight: 600; margin-top: 0.5rem; text-align: right; }
+                .grand-total { font-size: 1.2rem; background: #1e2b3a; color: white; padding: 1rem; border-radius: 40px; display: inline-block; }
+            </style>
             </head>
             <body>
                 <h1>Reggio Calabria Club</h1>
-                <div class="week-info">🍷 Drinks summary · week starting ${dates.Tue}</div>
+                <p>🍷 Drinks summary · week starting ${dates.Tue}</p>
             `;
 
             let grandTotal = 0;
@@ -599,26 +581,127 @@
                 const dayTotal = rooms.reduce((sum, r) => sum + r.guests, 0);
                 grandTotal += dayTotal;
 
-                summaryHtml += `<div class="day-section">`;
-                summaryHtml += `<div class="day-title">${dates[day]}</div>`;
-                summaryHtml += `<table><tr><th>Room</th><th>Guests (drinks)</th></tr>`;
+                summaryHtml += `<div class="day-section"><div class="day-title">${dates[day]}</div>`;
+                summaryHtml += `<table><tr><th>Room</th><th>Guests</th></tr>`;
                 rooms.forEach(r => {
-                    summaryHtml += `<tr><td class="room-name">${r.room}</td><td class="guest-number">${r.guests}</td></tr>`;
+                    summaryHtml += `<tr><td>${r.room}</td><td>${r.guests}</td></tr>`;
                 });
                 summaryHtml += `</table>`;
-                summaryHtml += `<div class="day-total">🍷 Day total: <strong>${dayTotal}</strong></div>`;
-                summaryHtml += `</div>`;
+                summaryHtml += `<div class="day-total">🍷 Day total: ${dayTotal}</div></div>`;
+            }
+            summaryHtml += `<div class="grand-total">🍷 Total drinks: ${grandTotal}</div>`;
+            summaryHtml += `</body></html>`;
+
+            const w = window.open('');
+            w.document.write(summaryHtml);
+            w.document.close();
+        };
+
+        // PDF DOWNLOAD FUNCTIONS using jsPDF
+        window.downloadCleanerPDF = function() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const dates = getDates();
+
+            doc.setFontSize(18);
+            doc.text('Reggio Calabria Club', 14, 20);
+            doc.setFontSize(11);
+            doc.text(`🧹 Cleaner summary · week starting ${dates.Tue}`, 14, 30);
+
+            let y = 40;
+            for (let day of dayIds) {
+                // collect ticked rooms for this day
+                const tickedRooms = [];
+                rows.forEach(row => {
+                    const roomName = roomNames[row.id];
+                    const checkboxes = row.querySelectorAll('input.clean-check');
+                    checkboxes.forEach((cb, index) => {
+                        if (cb.checked && dayIds[index] === day) {
+                            tickedRooms.push(roomName);
+                        }
+                    });
+                });
+                if (tickedRooms.length === 0) continue;
+
+                // add day header
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'bold');
+                doc.text(dates[day], 14, y);
+                y += 6;
+                doc.setFont(undefined, 'normal');
+                doc.setFontSize(10);
+                tickedRooms.forEach(room => {
+                    doc.text(`• ${room}`, 18, y);
+                    y += 5;
+                });
+                y += 3;
             }
 
-            summaryHtml += `
-                <div class="grand-total">🍷 Total drinks for the week: ${grandTotal}</div>
-            </body>
-            </html>
-            `;
+            doc.save('cleaner_summary.pdf');
+        };
 
-            const drinksWindow = window.open('', '_blank');
-            drinksWindow.document.write(summaryHtml);
-            drinksWindow.document.close();
+        window.downloadDrinksPDF = function() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const dates = getDates();
+
+            doc.setFontSize(18);
+            doc.text('Reggio Calabria Club', 14, 20);
+            doc.setFontSize(11);
+            doc.text(`🍷 Drinks summary · week starting ${dates.Tue}`, 14, 30);
+
+            let y = 40;
+            const allDayData = [];
+            let grandTotal = 0;
+
+            for (let day of dayIds) {
+                const dayRows = [];
+                let dayTotal = 0;
+                rows.forEach(row => {
+                    const roomName = roomNames[row.id];
+                    const guestInputs = row.querySelectorAll('input.guest-count');
+                    guestInputs.forEach((input, index) => {
+                        if (dayIds[index] === day) {
+                            const guests = parseInt(input.value, 10) || 0;
+                            dayRows.push([roomName, guests.toString()]);
+                            dayTotal += guests;
+                        }
+                    });
+                });
+                grandTotal += dayTotal;
+                allDayData.push({ day, date: dates[day], rows: dayRows, total: dayTotal });
+            }
+
+            // Use autoTable to create nice tables per day
+            allDayData.forEach((dayData, idx) => {
+                if (idx > 0) {
+                    doc.addPage();
+                    y = 20;
+                }
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'bold');
+                doc.text(dayData.date, 14, y);
+                y += 6;
+
+                doc.autoTable({
+                    startY: y,
+                    head: [['Room', 'Guests']],
+                    body: dayData.rows,
+                    theme: 'striped',
+                    headStyles: { fillColor: [43, 122, 75] },
+                    margin: { left: 14, right: 14 }
+                });
+                y = doc.lastAutoTable.finalY + 6;
+                doc.setFontSize(11);
+                doc.text(`🍷 Day total: ${dayData.total}`, 14, y);
+                y += 8;
+            });
+
+            doc.addPage();
+            doc.setFontSize(16);
+            doc.text(`🍷 Grand total drinks: ${grandTotal}`, 14, 30);
+
+            doc.save('drinks_summary.pdf');
         };
     })();
 </script>
