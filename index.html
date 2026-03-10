@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reggio Calabria Club · cleaning & guest summary</title>
+    <title>Reggio Calabria Club · concise roster</title>
     <style>
         * {
             box-sizing: border-box;
@@ -30,7 +30,7 @@
         }
         .header {
             background: #1e2b3a;
-            padding: 1.8rem 2rem 1.4rem 2rem;
+            padding: 1.5rem 2rem;
             color: white;
         }
         .club-name {
@@ -49,43 +49,38 @@
             font-weight: 600;
             padding: 0.2rem 1rem;
             border-radius: 30px;
-            letter-spacing: 0.3px;
         }
-        .sub-header {
+        .date-picker-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
             gap: 1.5rem;
-            margin-top: 1.2rem;
-        }
-        .date-block {
+            margin-top: 1rem;
+            flex-wrap: wrap;
             background: #2a3a4b;
-            padding: 0.5rem 1.2rem;
+            padding: 0.7rem 1.5rem;
             border-radius: 40px;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            font-size: 1rem;
-            font-weight: 400;
-            color: #e0edf5;
         }
-        .date-block input {
+        .date-picker-row label {
+            color: #e0edf5;
+            font-weight: 400;
+            font-size: 0.95rem;
+        }
+        .date-picker-row input[type="date"] {
             background: white;
             border: none;
             padding: 0.4rem 1rem;
             border-radius: 30px;
             font-size: 0.9rem;
-            width: 170px;
             color: #0b1a26;
             font-weight: 500;
+            border: 1px solid #b9c9da;
         }
         .legend {
             display: flex;
             gap: 1.5rem;
             color: #ccdbe9;
             font-size: 0.85rem;
-            flex-wrap: wrap;
+            margin-left: auto;
         }
         .legend-item {
             display: flex;
@@ -102,7 +97,7 @@
             background: #f1f5f9;
             color: #1e2b3a;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             padding: 0.8rem 0.2rem;
             text-align: center;
             border-bottom: 2px solid #cbd5e1;
@@ -135,7 +130,6 @@
             font-weight: 700;
             margin-left: 6px;
             color: #14222e;
-            letter-spacing: 0.3px;
         }
         .day-cell {
             min-width: 100px;
@@ -181,34 +175,32 @@
         }
         .summary-section {
             background: #f8fafd;
-            padding: 1.5rem 2rem;
+            padding: 1.2rem 2rem;
             border-top: 2px solid #d9e2ec;
             border-bottom: 1px solid #d9e2ec;
-        }
-        .summary-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #1e2b3a;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .summary-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 1.2rem 2rem;
             align-items: center;
+            gap: 1rem 2rem;
         }
-        .summary-day {
+        .summary-title {
+            font-weight: 600;
+            color: #1e2b3a;
+            font-size: 1rem;
+        }
+        .daily-totals {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 1.5rem;
+        }
+        .daily-totals span {
             background: white;
-            border-radius: 40px;
-            padding: 0.5rem 1.2rem;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            border-radius: 30px;
+            padding: 0.3rem 1.2rem;
             border: 1px solid #d0ddee;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
-        .summary-day strong {
+        .daily-totals strong {
             color: #8b1e1e;
             margin-right: 6px;
         }
@@ -287,9 +279,9 @@
                 border-left: none;
                 background: #f0f5fb;
             }
-            .summary-grid {
+            .daily-totals {
                 flex-direction: column;
-                align-items: flex-start;
+                gap: 0.5rem;
             }
         }
     </style>
@@ -298,13 +290,11 @@
 <div class="roster-card">
     <div class="header">
         <div class="club-name">
-            Reggio Calabria Club <span>cleaning & guests</span>
+            Reggio Calabria Club <span>cleaning & drinks</span>
         </div>
-        <div class="sub-header">
-            <div class="date-block">
-                <span>📅 Week starting Tuesday</span>
-                <input type="text" placeholder="DD / MM / YYYY" id="startDate" value="__ / __ / ____">
-            </div>
+        <div class="date-picker-row">
+            <label for="startDate">📅 Week starting Tuesday:</label>
+            <input type="date" id="startDate" value="">
             <div class="legend">
                 <div class="legend-item">✅ cleaned</div>
                 <div class="legend-item">👥 guests</div>
@@ -313,16 +303,16 @@
     </div>
 
     <table id="rosterTable">
-        <thead>
+        <thead id="tableHeader">
             <tr>
                 <th>Room</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-                <th>Sunday</th>
-                <th>Monday</th>
+                <th id="headTue">Tuesday</th>
+                <th id="headWed">Wednesday</th>
+                <th id="headThu">Thursday</th>
+                <th id="headFri">Friday</th>
+                <th id="headSat">Saturday</th>
+                <th id="headSun">Sunday</th>
+                <th id="headMon">Monday</th>
                 <th>Total guests</th>
             </tr>
         </thead>
@@ -330,90 +320,129 @@
             <!-- Members Lounge -->
             <tr id="row-ML">
                 <td class="room-col" data-label="Room">Members Lounge <span class="room-code">ML</span></td>
-                <td data-label="Tuesday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Wednesday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Thursday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Friday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Saturday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Sunday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Monday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Tue" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Wed" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Thu" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Fri" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Sat" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Sun" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Mon" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
                 <td class="total-col" data-label="Total guests">0</td>
             </tr>
             <!-- Bistroteca -->
             <tr id="row-BT">
                 <td class="room-col" data-label="Room">Bistroteca <span class="room-code">BT</span></td>
-                <td data-label="Tuesday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Wednesday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Thursday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Friday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Saturday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Sunday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Monday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Tue" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Wed" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Thu" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Fri" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Sat" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Sun" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Mon" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
                 <td class="total-col" data-label="Total guests">0</td>
             </tr>
             <!-- Ottimo Room -->
             <tr id="row-OR">
                 <td class="room-col" data-label="Room">Ottimo Room <span class="room-code">OR</span></td>
-                <td data-label="Tuesday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Wednesday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Thursday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Friday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Saturday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Sunday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Monday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Tue" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Wed" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Thu" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Fri" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Sat" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Sun" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Mon" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
                 <td class="total-col" data-label="Total guests">0</td>
             </tr>
             <!-- Sala Reggio Ballroom -->
             <tr id="row-SR">
                 <td class="room-col" data-label="Room">Sala Reggio Ballroom <span class="room-code">SR</span></td>
-                <td data-label="Tuesday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Wednesday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Thursday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Friday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Saturday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Sunday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
-                <td data-label="Monday" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Tue" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Wed" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Thu" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Fri" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Sat" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Sun" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
+                <td data-label="Mon" class="day-cell"><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count" step="1"></div></td>
                 <td class="total-col" data-label="Total guests">0</td>
             </tr>
         </tbody>
     </table>
 
-    <!-- Summary Section (guests per day + all-clean badge) -->
-    <div class="summary-section" id="summarySection">
-        <div class="summary-title">
-            📋 Daily guest totals
-            <span id="completeBadge" class="complete-badge" style="display: none;">✅ All cleaning complete</span>
+    <!-- Concise summary: daily guest totals & all-clean badge -->
+    <div class="summary-section">
+        <span class="summary-title">🍷 Drinks summary — guests per day</span>
+        <div class="daily-totals" id="dailyTotals">
+            <span><strong>Tue:</strong> <span id="totalTue">0</span></span>
+            <span><strong>Wed:</strong> <span id="totalWed">0</span></span>
+            <span><strong>Thu:</strong> <span id="totalThu">0</span></span>
+            <span><strong>Fri:</strong> <span id="totalFri">0</span></span>
+            <span><strong>Sat:</strong> <span id="totalSat">0</span></span>
+            <span><strong>Sun:</strong> <span id="totalSun">0</span></span>
+            <span><strong>Mon:</strong> <span id="totalMon">0</span></span>
         </div>
-        <div class="summary-grid" id="summaryGrid">
-            <div class="summary-day"><strong>Tuesday:</strong> <span id="totalTue">0</span></div>
-            <div class="summary-day"><strong>Wednesday:</strong> <span id="totalWed">0</span></div>
-            <div class="summary-day"><strong>Thursday:</strong> <span id="totalThu">0</span></div>
-            <div class="summary-day"><strong>Friday:</strong> <span id="totalFri">0</span></div>
-            <div class="summary-day"><strong>Saturday:</strong> <span id="totalSat">0</span></div>
-            <div class="summary-day"><strong>Sunday:</strong> <span id="totalSun">0</span></div>
-            <div class="summary-day"><strong>Monday:</strong> <span id="totalMon">0</span></div>
-        </div>
+        <span id="completeBadge" class="complete-badge" style="display: none;">✅ All cleaning done</span>
     </div>
 
     <div class="footer-bar">
-        <div class="footer-note">
-            <span>🧹 Tick the box when room is cleaned</span>
-            <span>👥 Enter guest numbers for drink planning</span>
-        </div>
+        <div>🧹 Tick when finished · 👥 Enter guests for drinks</div>
         <button class="print-btn" onclick="window.print()">🖨️ Print roster</button>
     </div>
 </div>
 
 <script>
     (function() {
-        // Get all rows
         const rows = document.querySelectorAll('tbody tr');
         const dayIds = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
-        const guestTotals = {
-            Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0, Mon: 0
+        const guestTotals = { Tue:0, Wed:0, Thu:0, Fri:0, Sat:0, Sun:0, Mon:0 };
+
+        // Date handling
+        const startDateInput = document.getElementById('startDate');
+        const headers = {
+            Tue: document.getElementById('headTue'),
+            Wed: document.getElementById('headWed'),
+            Thu: document.getElementById('headThu'),
+            Fri: document.getElementById('headFri'),
+            Sat: document.getElementById('headSat'),
+            Sun: document.getElementById('headSun'),
+            Mon: document.getElementById('headMon')
         };
 
-        // Helper to update per-room total
+        function formatDate(date) {
+            const d = new Date(date);
+            const day = d.getDate().toString().padStart(2,'0');
+            const month = (d.getMonth()+1).toString().padStart(2,'0');
+            return `${day}/${month}`;
+        }
+
+        function updateHeaders() {
+            if (!startDateInput.value) return;
+            const startDate = new Date(startDateInput.value + 'T12:00:00'); // avoid timezone issues
+            if (isNaN(startDate)) return;
+
+            // Start date is Tuesday. Generate next days.
+            const days = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
+            days.forEach((day, index) => {
+                const current = new Date(startDate);
+                current.setDate(startDate.getDate() + index);
+                headers[day].textContent = `${day} ${formatDate(current)}`;
+            });
+        }
+
+        startDateInput.addEventListener('change', updateHeaders);
+        // Set default to next Tuesday? Maybe leave empty or set a default.
+        // Optionally set a default Tuesday (today + (2 - today.getDay() + 7) % 7)
+        const today = new Date();
+        const dayOfWeek = today.getDay(); // 0 Sun, 1 Mon, 2 Tue, ...
+        const daysUntilTuesday = (2 - dayOfWeek + 7) % 7; // days until next Tue
+        const nextTue = new Date(today);
+        nextTue.setDate(today.getDate() + daysUntilTuesday);
+        const year = nextTue.getFullYear();
+        const month = (nextTue.getMonth() + 1).toString().padStart(2,'0');
+        const day = nextTue.getDate().toString().padStart(2,'0');
+        startDateInput.value = `${year}-${month}-${day}`;
+        updateHeaders();
+
+        // Update row total and daily summary
         function updateRowTotal(row) {
             const guestInputs = row.querySelectorAll('input.guest-count');
             let total = 0;
@@ -425,12 +454,10 @@
             if (totalCell) totalCell.textContent = total;
         }
 
-        // Helper to update daily summary and all-clean badge
         function updateSummary() {
             // Reset daily totals
             for (let day in guestTotals) guestTotals[day] = 0;
 
-            // Accumulate guest counts per day
             rows.forEach(row => {
                 const guestInputs = row.querySelectorAll('input.guest-count');
                 guestInputs.forEach((input, index) => {
@@ -450,41 +477,32 @@
             document.getElementById('totalSun').textContent = guestTotals.Sun;
             document.getElementById('totalMon').textContent = guestTotals.Mon;
 
-            // Check if all checkboxes are checked
+            // All clean check
             const allCheckboxes = document.querySelectorAll('input.clean-check');
             const allChecked = Array.from(allCheckboxes).every(cb => cb.checked);
-            const badge = document.getElementById('completeBadge');
-            if (allChecked) {
-                badge.style.display = 'inline-flex';
-            } else {
-                badge.style.display = 'none';
-            }
+            document.getElementById('completeBadge').style.display = allChecked ? 'inline-flex' : 'none';
         }
 
-        // Attach event listeners to all guest-count inputs and checkboxes
+        // Attach listeners
         rows.forEach(row => {
             const guestInputs = row.querySelectorAll('input.guest-count');
             guestInputs.forEach(input => {
-                input.addEventListener('input', function() {
+                input.addEventListener('input', () => {
                     updateRowTotal(row);
                     updateSummary();
                 });
-                input.addEventListener('blur', function() {
+                input.addEventListener('blur', () => {
                     updateRowTotal(row);
                     updateSummary();
                 });
             });
 
             const checkboxes = row.querySelectorAll('input.clean-check');
-            checkboxes.forEach(cb => {
-                cb.addEventListener('change', updateSummary);
-            });
+            checkboxes.forEach(cb => cb.addEventListener('change', updateSummary));
 
-            // Initial row total
             updateRowTotal(row);
         });
 
-        // Initial summary
         updateSummary();
     })();
 </script>
