@@ -1,668 +1,1272 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Reggio Calabria Club - cleaning and drinks</title>
-    <!-- jsPDF and autoTable -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        body {
-            background: #e8ecf2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 1rem;
-            margin: 0;
-        }
-        .roster-card {
-            max-width: 1400px;
-            width: 100%;
-            background: #ffffff;
-            border-radius: 24px;
-            box-shadow: 0 20px 35px -8px rgba(0, 20, 30, 0.25);
-            overflow: hidden;
-            border: 1px solid #d6dee7;
-        }
-        .header {
-            background: #1e2b3a;
-            padding: 1.2rem 1.5rem;
-            color: white;
-        }
-        .club-name {
-            font-size: 1.8rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .club-name span {
-            background: #c49a2b;
-            color: #1e2b3a;
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 0.2rem 1rem;
-            border-radius: 30px;
-        }
-        .date-picker-row {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 0.8rem;
-            flex-wrap: wrap;
-            background: #2a3a4b;
-            padding: 0.6rem 1.2rem;
-            border-radius: 40px;
-        }
-        .date-picker-row label {
-            color: #e0edf5;
-            font-size: 0.9rem;
-        }
-        .date-picker-row input[type="date"] {
-            background: white;
-            border: none;
-            padding: 0.4rem 0.8rem;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            color: #0b1a26;
-            border: 1px solid #b9c9da;
-        }
-        .legend {
-            display: flex;
-            gap: 1.2rem;
-            color: #ccdbe9;
-            font-size: 0.8rem;
-            margin-left: auto;
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .table-wrapper {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            min-width: 800px;
-        }
-        th {
-            background: #f1f5f9;
-            color: #1e2b3a;
-            font-weight: 600;
-            font-size: 0.85rem;
-            padding: 0.7rem 0.2rem;
-            text-align: center;
-            border-bottom: 2px solid #cbd5e1;
-            border-right: 1px solid #dde5ed;
-        }
-        th:last-child { border-right: none; }
-        td {
-            padding: 0.5rem 0.2rem;
-            border-bottom: 1px solid #e6edf4;
-            text-align: center;
-            vertical-align: middle;
-            background: white;
-        }
-        .room-col {
-            background: #f9fcff;
-            font-weight: 600;
-            color: #14222e;
-            text-align: left;
-            padding-left: 0.8rem;
-            font-size: 0.9rem;
-            border-right: 1px solid #d2dde9;
-            width: 130px;
-        }
-        .room-code {
-            display: inline-block;
-            background: #dde5f0;
-            border-radius: 30px;
-            padding: 0.1rem 0.5rem;
-            font-size: 0.6rem;
-            font-weight: 700;
-            margin-left: 5px;
-        }
-        .signoff {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-        .signoff input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #8b1e1e;
-        }
-        .signoff input[type="number"] {
-            width: 65px;
-            padding: 4px;
-            border: 1px solid #b9c9da;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            text-align: center;
-        }
-        .total-col {
-            font-weight: 600;
-            background: #f0f5fb;
-            width: 70px;
-            border-left: 1px solid #d2dde9;
-        }
-        .badge-section {
-            background: #f8fafd;
-            padding: 0.8rem 1.5rem;
-            border-top: 2px solid #d9e2ec;
-            border-bottom: 1px solid #d9e2ec;
-        }
-        .complete-badge {
-            background: #2b7a4b;
-            color: white;
-            padding: 0.3rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .footer-bar {
-            background: #f0f4fa;
-            padding: 1rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .footer-note {
-            font-size: 0.85rem;
-            color: #2b3f52;
-        }
-        .button-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-        }
-        .btn {
-            background: #1e2b3a;
-            color: white;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 40px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            cursor: pointer;
-            border: 1px solid #1e2b3a;
-            flex: 1 0 auto;
-            min-width: 120px;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .btn.cleaner {
-            background: #8b1e1e;
-            border-color: #8b1e1e;
-        }
-        .btn.drinks {
-            background: #2b7a4b;
-            border-color: #2b7a4b;
-        }
-        .btn.consolidated {
-            background: #1e2b3a;
-            border-color: #1e2b3a;
-        }
-        .btn:active {
-            filter: brightness(0.9);
-        }
-        @media (max-width: 600px) {
-            .button-group .btn {
-                flex: 1 1 100%;
-            }
-            .date-picker-row {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .legend {
-                margin-left: 0;
-                justify-content: center;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Members Lounge | Event Signature Selection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#0b0c10;
+      --muted:#4b5563;
+      --line:rgba(0,0,0,.10);
+      --gold:#b08d2a;
+      --goldSoft:rgba(176,141,42,.10);
+      --shadow:0 2px 10px rgba(0,0,0,.1);
+      --radius:8px;
+      --ok:#0f7a3a;
+      --warn:#b45309;
+      --bad:#b91c1c;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:'Roboto', sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    header{
+      padding:20px;
+      text-align:center;
+      border-bottom:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow);
+    }
+    .brandline{display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap;}
+    .logoWrap{
+      display:flex; align-items:center; justify-content:center;
+      padding:10px 14px;
+      border:1px solid var(--line);
+      border-radius:50%;
+      background:#fff;
+      box-shadow:var(--shadow);
+      gap:10px;
+    }
+    .logoImg{max-height:80px; width:auto; display:block;}
+    .logoFallback{
+      display:inline-flex; align-items:center; gap:10px;
+      font-weight:700; letter-spacing:.1em; font-size:14px;
+    }
+
+    h1{margin:12px 0 6px; font-size:28px; font-family:'Montserrat', sans-serif;}
+    .sub{color:var(--muted); font-size:14px}
+    .gold{color:var(--gold)}
+    main{max-width:1200px; margin:0 auto; padding:20px;}
+
+    .tabs-wrap{
+      position:sticky; top:0; z-index:10;
+      padding:10px 0;
+      background:#fff;
+      box-shadow:var(--shadow);
+    }
+    .tabs{display:flex; flex-wrap:wrap; gap:10px; justify-content:center;}
+    .tab{
+      cursor:pointer; user-select:none;
+      border:1px solid var(--line);
+      background:#fff; color:var(--text);
+      padding:8px 16px; border-radius:8px;
+      font-size:14px; display:flex; gap:8px; align-items:center;
+      transition:background .15s ease, border-color .15s ease;
+      box-shadow:var(--shadow);
+      white-space:nowrap;
+    }
+    .tab:hover{background:var(--goldSoft)}
+    .tab.active{border-color:var(--gold); background:var(--goldSoft); font-weight:700;}
+    .tab.nextTab{border-color:var(--gold); background:var(--goldSoft); font-weight:700;}
+
+    .page{display:none}
+    .page.active{display:block}
+
+    .grid{display:grid; grid-template-columns:1fr; gap:20px; margin-top:20px;}
+    @media(min-width:920px){ .grid{grid-template-columns:1fr 1fr;} }
+
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+    .card h2{margin:0 0 10px; font-size:18px; font-family:'Montserrat', sans-serif;}
+    .hint{color:var(--muted); font-size:13px}
+
+    label{display:block; font-size:13px; color:var(--muted); margin:10px 0 6px;}
+    input, select, textarea{
+      width:100%;
+      padding:10px;
+      border-radius:8px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      outline:none;
+      font-size:16px;
+    }
+    textarea{min-height:100px; resize:vertical}
+    input::placeholder, textarea::placeholder{color:var(--muted)}
+
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:15px;}
+    .divider{height:1px; background:var(--line); margin:15px 0}
+    .small{font-size:13px; color:var(--muted)}
+    .mono{font-family:monospace;}
+
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:15px;}
+    .btn{
+      cursor:pointer;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      padding:10px 16px;
+      border-radius:8px;
+      font-size:14px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow:var(--shadow);
+      transition:background .15s ease;
+      min-width:120px;
+      justify-content:center;
+    }
+    .btn:hover{background:var(--goldSoft)}
+    .btn.primary{border-color:var(--gold); background:var(--goldSoft); font-weight:700;}
+    .btn.ghost{border-color:var(--gold); background:var(--goldSoft); font-weight:700;}
+
+    .table{width:100%; border-collapse:collapse; font-size:14px;}
+    .table td{padding:10px; border-bottom:1px solid var(--line); vertical-align:top;}
+    .table td:last-child{text-align:right; font-weight:700;}
+
+    .total{
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+      padding:12px;
+      border-radius:8px;
+      border:1px solid var(--goldSoft);
+      background:var(--goldSoft);
+      margin-top:15px;
+      font-weight:700;
+    }
+
+    .course{margin-top:15px; border-top:1px solid var(--line); padding-top:15px;}
+    .course h3{margin:0 0 10px; font-size:16px; font-family:'Montserrat', sans-serif;}
+    .count{color:var(--muted); font-size:13px; margin-top:10px;}
+    .warnBox{
+      margin-top:10px;
+      padding:10px;
+      border-radius:8px;
+      border:1px solid rgba(180,83,9,.35);
+      background: rgba(180,83,9,.08);
+      color:#47370a;
+      display:none;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .statusRow{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:10px;}
+    .badge{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:6px 12px;
+      border-radius:8px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:13px;
+      font-weight:700;
+    }
+    .badge.ok{border-color: rgba(15,122,58,.35); background: rgba(15,122,58,.08); color: var(--ok);}
+    .badge.warn{border-color: rgba(180,83,9,.35); background: rgba(180,83,9,.08); color: var(--warn);}
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 12px; border-radius:8px;
+      background:var(--goldSoft);
+      border:1px solid var(--goldSoft);
+      color:var(--text);
+      font-size:13px;
+      margin:6px 6px 0 0;
+    }
+
+    .hotTag{
+      display:inline-flex;
+      align-items:center;
+      margin-left:8px;
+      padding:2px 8px;
+      border-radius:8px;
+      border:1px solid rgba(180,83,9,.35);
+      background: rgba(180,83,9,.08);
+      color: var(--warn);
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .kpi{display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px;}
+    @media(min-width:920px){ .kpi{grid-template-columns:1fr 1fr 1fr 1fr;} }
+    .kpi .box{border:1px solid var(--line); background:#fff; border-radius:8px; padding:12px; box-shadow:var(--shadow);}
+    .kpi .box .label{font-size:12px; color:var(--muted)}
+    .kpi .box .value{font-size:18px; font-weight:700; margin-top:4px}
+
+    footer{
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      padding:20px 0;
+      border-top:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--shadow);
+    }
+
+    @media print{
+      .tabs-wrap, .actions, .btn { display:none !important; }
+      .card{ box-shadow:none; }
+    }
+
+    @media (max-width: 768px) {
+      main { padding: 10px; }
+      .grid { gap: 15px; }
+      .row { grid-template-columns: 1fr; gap: 10px; }
+      .tabs { overflow-x:auto; justify-content:flex-start; padding: 0 10px; }
+      .tab { font-size: 13px; padding: 8px 12px; }
+      .card { padding: 15px; }
+      h1 { font-size: 24px; }
+      .card h2 { font-size: 16px; }
+      .btn { min-width: 100%; margin-bottom: 10px; }
+      .actions { flex-direction: column; }
+      .logoImg { max-height: 60px; }
+    }
+
+    /* Menu option layout */
+    .optionsGrid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    @media(min-width:920px){ .optionsGrid{ grid-template-columns: 1fr 1fr; } }
+
+    .opt{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#fff;
+      box-shadow: var(--shadow);
+    }
+    .opt input[type="checkbox"]{
+      width:auto;
+      margin-top:3px;
+      transform: scale(1.2);
+      flex:0 0 auto;
+    }
+    .optNum{
+      flex:0 0 auto;
+      min-width:26px;
+      height:26px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:8px;
+      border:1px solid var(--line);
+      background: var(--goldSoft);
+      font-weight:700;
+      font-size:13px;
+    }
+    .optLabel{
+      flex:1 1 auto;
+      line-height:1.25;
+      font-size:14px;
+      color:var(--text);
+      font-weight:600;
+      margin:0;
+      cursor:pointer;
+    }
+
+    /* Summary table */
+    .summary-section {
+      margin: 15px 0;
+    }
+    .summary-section h3 {
+      font-size: 16px;
+      margin: 10px 0 5px;
+      font-family: 'Montserrat', sans-serif;
+      border-bottom: 1px dashed var(--line);
+      padding-bottom: 4px;
+    }
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 4px 0;
+    }
+    .summary-line.total {
+      font-weight: 700;
+      border-top: 2px solid var(--gold);
+      margin-top: 10px;
+      padding-top: 10px;
+    }
+    .summary-items {
+      list-style: none;
+      padding: 0;
+      margin: 5px 0 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .summary-items li {
+      padding: 2px 0;
+    }
+  </style>
 </head>
+
 <body>
-<div class="roster-card">
-    <div class="header">
-        <div class="club-name">
-            Reggio Calabria Club <span>cleaning and drinks</span>
-        </div>
-        <div class="date-picker-row">
-            <label for="startDate">Week starting Tuesday:</label>
-            <input type="date" id="startDate" value="">
-            <div class="legend">
-                <div class="legend-item">✅ cleaned</div>
-                <div class="legend-item">👥 guests</div>
+  <header>
+    <div class="brandline">
+      <div class="logoWrap">
+        <img class="logoImg" id="brandLogo" src="members_lounge_logo.png" alt="Brand Logo"
+             onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='inline-flex';">
+        <span class="logoFallback" id="logoFallback" style="display:none;">
+          <span>THE MEMBERS LOUNGE</span>
+        </span>
+      </div>
+    </div>
+
+    <h1><span class="gold" id="brandTitle">Event Signature Selection</span></h1>
+    <div class="sub" id="brandSubtitle">Reggio Calabria Club, Parkville</div>
+  </header>
+
+  <div class="tabs-wrap">
+    <div class="tabs" role="tablist" aria-label="Event signature tabs">
+      <div class="tab active" data-page="quote" role="tab" aria-selected="true">Quote</div>
+      <div class="tab" data-page="couple" role="tab" aria-selected="false">Couple</div>
+      <div class="tab" data-page="food" role="tab" aria-selected="false">Food</div>
+      <div class="tab" data-page="drinks" role="tab" aria-selected="false">Drinks</div>
+      <div class="tab" data-page="summary" role="tab" aria-selected="false">Summary</div>
+      <div class="tab nextTab" id="nextTab" title="Move to next tab">Next →</div>
+    </div>
+  </div>
+
+  <main>
+    <!-- PAGE 1 -->
+    <section class="page active" id="page-quote">
+      <div class="grid">
+        <div class="card">
+          <h2>Indicative Quote (Live)</h2>
+          <div class="hint">Room hire + dry hire + security + selected food courses + selected drinks = estimate.</div>
+
+          <div class="divider"></div>
+
+          <div class="row">
+            <div>
+              <label for="adults">Adults</label>
+              <input id="adults" type="number" min="0" step="1" value="120">
             </div>
-        </div>
-    </div>
+            <div>
+              <label for="children">Children (Under 12)</label>
+              <input id="children" type="number" min="0" step="1" value="20">
+            </div>
+          </div>
 
-    <!-- Input table -->
-    <div class="table-wrapper">
-        <table id="rosterTable">
-            <thead id="tableHeader">
-                <tr>
-                    <th>Room</th>
-                    <th id="headTue">Tuesday</th>
-                    <th id="headWed">Wednesday</th>
-                    <th id="headThu">Thursday</th>
-                    <th id="headFri">Friday</th>
-                    <th id="headSat">Saturday</th>
-                    <th id="headSun">Sunday</th>
-                    <th id="headMon">Monday</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
+          <label for="roomHire">Room Hire (AUD)</label>
+          <input id="roomHire" type="number" min="0" step="50" value="0">
+
+          <div class="row">
+            <div>
+              <label for="dryHire">Dry Hire (AUD)</label>
+              <input id="dryHire" type="number" min="0" step="50" value="0">
+            </div>
+            <div>
+              <label for="security">Security (AUD)</label>
+              <input id="security" type="number" min="0" step="50" value="0">
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <table class="table" aria-label="Quote breakdown">
             <tbody>
-                <tr id="row-ML">
-                    <td class="room-col">Members Lounge <span class="room-code">ML</span></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td class="total-col">0</td>
-                </tr>
-                <tr id="row-BT">
-                    <td class="room-col">Bistroteca <span class="room-code">BT</span></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td class="total-col">0</td>
-                </tr>
-                <tr id="row-OR">
-                    <td class="room-col">Ottimo Room <span class="room-code">OR</span></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td class="total-col">0</td>
-                </tr>
-                <tr id="row-SR">
-                    <td class="room-col">Sala Reggio Ballroom <span class="room-code">SR</span></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td><div class="signoff"><input type="checkbox" class="clean-check"><input type="number" min="0" value="0" class="guest-count"></div></td>
-                    <td class="total-col">0</td>
-                </tr>
+              <tr><td>Room hire</td><td id="qRoom">$0.00</td></tr>
+              <tr><td>Food (course-driven)</td><td id="qFood">$0.00</td></tr>
+              <tr><td>Drinks</td><td id="qDrinks">$0.00</td></tr>
+              <tr><td>Dry hire</td><td id="qDry">$0.00</td></tr>
+              <tr><td>Security</td><td id="qSec">$0.00</td></tr>
             </tbody>
-        </table>
-    </div>
+          </table>
 
-    <div class="badge-section">
-        <span id="completeBadge" class="complete-badge" style="display: none;">✅ All cleaning done</span>
-    </div>
+          <div class="total">
+            <div>Total Estimated Cost</div>
+            <div id="qTotal" class="mono">$0.00</div>
+          </div>
 
-    <div class="footer-bar">
-        <div class="footer-note">Tick cleaning · Enter guests</div>
-        <div class="button-group">
-            <button class="btn cleaner" onclick="openCleanerSheet()">Cleaner summary</button>
-            <button class="btn drinks" onclick="openDrinksSheet()">Drinks summary</button>
-            <button class="btn consolidated" onclick="downloadConsolidatedPDF()">Cleaning & Drinks PDF</button>
-            <button class="btn" onclick="window.print()">Print main</button>
+          <div class="actions">
+            <button class="btn" id="resetAll" type="button">Reset</button>
+            <button class="btn" id="printQuote" type="button">Print</button>
+            <button class="btn primary" id="nextQ" type="button">Next →</button>
+          </div>
         </div>
-    </div>
-</div>
+
+        <div class="card">
+          <h2>Quick Snapshot</h2>
+
+          <div class="statusRow">
+            <span class="badge" id="foodCompleteBadge">Menu: Custom</span>
+            <span class="badge" id="drinksCompleteBadge">Drinks: Draft</span>
+          </div>
+
+          <div class="kpi">
+            <div class="box"><div class="label">Adults</div><div class="value" id="kpiAdults">120</div></div>
+            <div class="box"><div class="label">Children</div><div class="value" id="kpiChildren">20</div></div>
+            <div class="box"><div class="label">Food subtotal</div><div class="value mono" id="kpiFood">$0.00</div></div>
+            <div class="box"><div class="label">Avg per guest</div><div class="value mono" id="kpiAvg">$0.00</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2 -->
+    <section class="page" id="page-couple">
+      <div class="grid">
+        <div class="card">
+          <h2>Couple Details</h2>
+
+          <label for="coupleName">Couple Name</label>
+          <input id="coupleName" placeholder="e.g., Laura & Daniel">
+
+          <div class="row">
+            <div>
+              <label for="weddingDate">Date of Choice</label>
+              <input id="weddingDate" type="date">
+            </div>
+            <div>
+              <label for="venueSpace">Venue Space</label>
+              <select id="venueSpace">
+                <option value="sala">Sala Reggio Ballroom</option>
+                <option value="members">Members Lounge Restaurant</option>
+                <option value="fior">FIOR Parkville</option>
+                <option value="alora">ALORA Macedon</option>
+              </select>
+              <div class="small">Venue selection switches branding automatically.</div>
+            </div>
+          </div>
+
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="name@email.com">
+
+          <label for="phone">Phone</label>
+          <input id="phone" type="tel" placeholder="04xx xxx xxx">
+
+          <label for="notes">Notes / Requirements</label>
+          <textarea id="notes" placeholder="Dietary notes, timing, styling, music, special requests…"></textarea>
+
+          <div class="actions">
+            <button class="btn ghost" id="backC" type="button">← Back</button>
+            <button class="btn primary" id="nextC" type="button">Next →</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Venue Profile</h2>
+          <div class="small" id="venueProfileText">
+            Select a venue to apply branding + default costing (only fills if your cost fields are still $0).
+          </div>
+          <div class="divider"></div>
+          <div class="small">If you want different menus per venue later (FIOR vs ALORA), we can also do that.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 3 -->
+    <section class="page" id="page-food">
+      <div class="card">
+        <h2>Food Builder (Course-Driven)</h2>
+        <div class="hint">
+          Select items. Each course adds its course price if at least one item is selected in that course.
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="actions">
+          <button class="btn" type="button" onclick="selectAll(true)">Select All (up to max)</button>
+          <button class="btn" type="button" onclick="selectAll(false)">Deselect All</button>
+        </div>
+
+        <div class="course" data-course="canapes">
+          <h3>Canapés (choose up to 3)</h3>
+          <div class="optionsGrid" id="list-canapes"></div>
+          <div class="count" id="count-canapes">0 selected</div>
+          <div class="warnBox" id="warn-canapes"></div>
+        </div>
+
+        <div class="course" data-course="antipasto">
+          <h3>Antipasto Plates (max 2 hot, max 5 non‑hot)</h3>
+          <div class="small">Hot items are marked. You may select up to 2 hot and up to 5 cold items.</div>
+          <div class="optionsGrid" id="list-antipasto"></div>
+          <div class="count" id="count-antipasto">Hot: 0/2 · Cold: 0/5</div>
+          <div class="warnBox" id="warn-antipasto"></div>
+        </div>
+
+        <div class="course" data-course="pasta">
+          <h3>Entrée / Pasta (choose up to 2)</h3>
+          <div class="optionsGrid" id="list-pasta"></div>
+          <div class="count" id="count-pasta">0 selected</div>
+          <div class="warnBox" id="warn-pasta"></div>
+        </div>
+
+        <div class="course" data-course="mains">
+          <h3>Mains (choose up to 2)</h3>
+          <div class="optionsGrid" id="list-mains"></div>
+          <div class="count" id="count-mains">0 selected</div>
+          <div class="warnBox" id="warn-mains"></div>
+        </div>
+
+        <div class="course" data-course="dessert">
+          <h3>Dessert (choose up to 1)</h3>
+          <div class="optionsGrid" id="list-dessert"></div>
+          <div class="count" id="count-dessert">0 selected</div>
+          <div class="warnBox" id="warn-dessert"></div>
+        </div>
+
+        <div class="course">
+          <h3>Supper / Late Night (fixed)</h3>
+          <div class="small">Pizza only (fixed). No selection required.</div>
+          <div class="count">Included: Pizza</div>
+
+          <div class="divider"></div>
+          <h3 style="margin-top:0;">Optional Add-on: Fruit Platter</h3>
+          <label style="display:flex; align-items:center; gap:10px; color:var(--text); font-weight:700;">
+            <input id="fruitPlatter" type="checkbox" style="width:auto;"> Add Fruit Platter (per table)
+          </label>
+          <div class="row">
+            <div>
+              <label for="tables">Estimated Tables</label>
+              <input id="tables" type="number" min="0" step="1" value="10">
+            </div>
+            <div>
+              <label for="fruitPerTable">Fruit platter per table (AUD)</label>
+              <input id="fruitPerTable" type="number" min="0" step="1" value="35" readonly>
+            </div>
+          </div>
+          <div class="small">This add-on is added to food total when checked.</div>
+        </div>
+
+        <div class="actions">
+          <button class="btn ghost" id="backF2" type="button">← Back</button>
+          <button class="btn primary" id="nextF2" type="button">Next →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4 -->
+    <section class="page" id="page-drinks">
+      <div class="grid">
+        <div class="card">
+          <h2>Drinks</h2>
+          <div class="hint">Choose drinks. Quote updates live.</div>
+
+          <label for="drinkMode">Drinks Option</label>
+          <select id="drinkMode">
+            <option value="bar">Bar Prices (no package)</option>
+            <option value="custom">Custom per Adult (set price)</option>
+          </select>
+
+          <div class="row" id="customDrinkRow" style="display:none">
+            <div>
+              <label for="customDrinkPrice">Custom drink price per adult (AUD)</label>
+              <input id="customDrinkPrice" type="number" min="0" step="1" value="0">
+            </div>
+            <div>
+              <label for="customDrinkNote">Custom drink notes</label>
+              <input id="customDrinkNote" placeholder="e.g., beer/wine/spirits, 4hrs, premium…">
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="small" id="drinkInfo"></div>
+
+          <div class="actions">
+            <button class="btn ghost" id="backD" type="button">← Back</button>
+            <button class="btn primary" id="nextD" type="button">Next →</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Status</h2>
+          <div class="statusRow">
+            <span class="badge" id="drinksCompleteBadge2">Drinks: Draft</span>
+          </div>
+          <div class="divider"></div>
+          <div class="small">Bar prices show $0 for drinks (indicative). Custom adds into the quote.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 5 -->
+    <section class="page" id="page-summary">
+      <div class="grid">
+        <div class="card">
+          <h2>Final Summary</h2>
+          <div id="finalSummary" class="small">Complete the steps to see your summary.</div>
+
+          <div class="divider"></div>
+          <div class="actions">
+            <button class="btn" id="copySummary" type="button">Copy</button>
+            <button class="btn" id="printSummary" type="button">Print</button>
+          </div>
+
+          <div class="actions" style="margin-top:14px">
+            <button class="btn ghost" id="backS" type="button">← Back</button>
+            <button class="btn primary" id="toQuote" type="button">Back to Quote</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Selected Items</h2>
+          <div id="chips"></div>
+          <div class="divider"></div>
+          <div class="small" id="summaryCourseCounts"></div>
+          <div class="divider"></div>
+          <div class="small">Save 'members_lounge_logo.png' in the same folder as this file.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="brandFooter">Members Lounge | Reggio Calabria Club, Parkville</footer>
 
 <script>
-(function() {
-    // ================== DATA PERSISTENCE ==================
-    const STORAGE_KEY = 'reggioCalabriaData';
-    const rows = document.querySelectorAll('tbody tr');
-    const dayIds = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
-    const roomNames = {
-        'row-ML': 'Members Lounge',
-        'row-BT': 'Bistroteca',
-        'row-OR': 'Ottimo Room',
-        'row-SR': 'Sala Reggio Ballroom'
+  function escapeHtml(str){
+    return String(str || "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+  const $ = (id) => document.getElementById(id);
+  function on(el, ev, fn){ if(el) el.addEventListener(ev, fn); }
+
+  const VENUE_PROFILES = {
+    sala: {
+      label: "Sala Reggio Ballroom (Parkville)",
+      logo: "members_lounge_logo.png",
+      subtitle: "Reggio Calabria Club, Parkville",
+      footer: "Members Lounge | Reggio Calabria Club, Parkville",
+      defaults: { roomHire: 0, dryHire: 0, security: 0 }
+    },
+    members: {
+      label: "Members Lounge Restaurant (Parkville)",
+      logo: "members_lounge_logo.png",
+      subtitle: "Reggio Calabria Club, Parkville",
+      footer: "Members Lounge | Reggio Calabria Club, Parkville",
+      defaults: { roomHire: 0, dryHire: 0, security: 0 }
+    },
+    fior: {
+      label: "FIOR Parkville",
+      logo: "fior.png",
+      subtitle: "FIOR, Parkville",
+      footer: "FIOR | Parkville",
+      defaults: { roomHire: 0, dryHire: 0, security: 0 }
+    },
+    alora: {
+      label: "ALORA Macedon",
+      logo: "alora.png",
+      subtitle: "ALORA, Macedon",
+      footer: "ALORA | Macedon",
+      defaults: { roomHire: 0, dryHire: 0, security: 0 }
+    }
+  };
+
+  function safeSetLogo(src){
+    const img = $("brandLogo");
+    const fallback = $("logoFallback");
+    if(!img) return;
+
+    img.style.display = "block";
+    if(fallback) fallback.style.display = "none";
+
+    img.onerror = function(){
+      if(src !== "members_lounge_logo.png"){
+        safeSetLogo("members_lounge_logo.png");
+        return;
+      }
+      img.style.display = "none";
+      if(fallback) fallback.style.display = "inline-flex";
     };
+    img.src = src;
+  }
 
-    function loadFromStorage() {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (!saved) return;
-        try {
-            const data = JSON.parse(saved);
-            rows.forEach(row => {
-                const checkboxes = row.querySelectorAll('input.clean-check');
-                const guestInputs = row.querySelectorAll('input.guest-count');
-                const rowId = row.id;
-                if (data[rowId]) {
-                    checkboxes.forEach((cb, idx) => {
-                        if (data[rowId].checks && data[rowId].checks[idx] !== undefined) {
-                            cb.checked = data[rowId].checks[idx];
-                        }
-                    });
-                    guestInputs.forEach((inp, idx) => {
-                        if (data[rowId].guests && data[rowId].guests[idx] !== undefined) {
-                            inp.value = data[rowId].guests[idx];
-                        }
-                    });
-                }
-            });
-            if (data.startDate) {
-                document.getElementById('startDate').value = data.startDate;
-            }
-        } catch (e) {}
+  function applyVenueProfile(profileKey){
+    const key = profileKey || "members";
+    const p = VENUE_PROFILES[key] || VENUE_PROFILES.members;
+
+    const subtitleEl = $("brandSubtitle");
+    const footerEl = $("brandFooter");
+    if(subtitleEl) subtitleEl.textContent = p.subtitle;
+    if(footerEl) footerEl.textContent = p.footer;
+
+    safeSetLogo(p.logo);
+
+    const info = $("venueProfileText");
+    if(info){
+      info.innerHTML = "<b>Active venue:</b> " + escapeHtml(p.label) + "<br>Branding switches automatically.";
     }
 
-    function saveToStorage() {
-        const data = { startDate: document.getElementById('startDate').value };
-        rows.forEach(row => {
-            const checkboxes = row.querySelectorAll('input.clean-check');
-            const guestInputs = row.querySelectorAll('input.guest-count');
-            const checks = Array.from(checkboxes).map(cb => cb.checked);
-            const guests = Array.from(guestInputs).map(inp => parseInt(inp.value, 10) || 0);
-            data[row.id] = { checks, guests };
-        });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    }
+    const roomHireEl = $("roomHire");
+    const dryHireEl = $("dryHire");
+    const securityEl = $("security");
 
-    // ================== DATE HANDLING ==================
-    const startDateInput = document.getElementById('startDate');
-    const headers = {
-        Tue: document.getElementById('headTue'),
-        Wed: document.getElementById('headWed'),
-        Thu: document.getElementById('headThu'),
-        Fri: document.getElementById('headFri'),
-        Sat: document.getElementById('headSat'),
-        Sun: document.getElementById('headSun'),
-        Mon: document.getElementById('headMon')
-    };
+    const r = Number(roomHireEl?.value || 0);
+    const d = Number(dryHireEl?.value || 0);
+    const s = Number(securityEl?.value || 0);
 
-    function formatDate(date) {
-        const d = new Date(date);
-        const day = d.getDate().toString().padStart(2,'0');
-        const month = (d.getMonth()+1).toString().padStart(2,'0');
-        return `${day}/${month}`;
-    }
+    if(roomHireEl && r === 0) roomHireEl.value = p.defaults.roomHire;
+    if(dryHireEl && d === 0)  dryHireEl.value  = p.defaults.dryHire;
+    if(securityEl && s === 0) securityEl.value = p.defaults.security;
+  }
 
-    function updateHeaders() {
-        if (!startDateInput.value) return;
-        const startDate = new Date(startDateInput.value + 'T12:00:00');
-        if (isNaN(startDate)) return;
-        dayIds.forEach((day, index) => {
-            const current = new Date(startDate);
-            current.setDate(startDate.getDate() + index);
-            headers[day].textContent = `${day} ${formatDate(current)}`;
-        });
-        saveToStorage();
-    }
+  const COURSE_LABEL = {
+    canapes: "Canapés",
+    antipasto: "Antipasto",
+    pasta: "Entrée / Pasta",
+    mains: "Mains",
+    dessert: "Dessert"
+  };
 
-    startDateInput.addEventListener('change', updateHeaders);
+  const MENU = {
+    canapes: [
+      "Arancini",
+      "Focaccia Pugliese",
+      "Prawn roll",
+      "Parmesan bites with honey drizzle",
+      "Corn empanadas",
+      "Croquettes"
+    ],
+    antipasto: [
+      "Bruschettta di pomodoro",
+      "Salumi selection",
+      "Feta & Kefalograviera",
+      "Tiropita",
+      "Trio of dips with pita",
+      "Grilled & pickled vegetables",
+      "Eggplant parmigiana",
+      "Bocconcini & ricotta",
+      "Calamari fritti",
+      "Meatballs in sugo",
+      "Cevape",
+      "Italian pork sausages"
+    ],
+    pasta: [
+      "Pasta al Ragú (four meat sauce)",
+      "Gnocchi Pesto (vegetarian)",
+      "Gnocchi Gorgonzola (blue vein cheese sauce)",
+      "Pasta Napoli (tomato & basil)"
+    ],
+    mains: [
+      "Chargrilled chicken breast with a chimichurri dressing",
+      "Italian herb crumbed barramundi fillet",
+      "Lamb shank with white wine and tomato",
+      "Braised beef short ribs in a red wine jus",
+      "Bondiola, pork fillet with a salmoriglio sauce",
+      "Stuffed pepper with seasonal vegetables and cauliflower steak"
+    ],
+    dessert: [
+      "Roaming assorted desserts (mini cannoli & baklava)",
+      "Tiramisu & cheese cake (alternating)",
+      "Gelato dessert (cassata, tartufo, baci)"
+    ]
+  };
 
-    // Default to next Tuesday
-    const today = new Date();
-    const dayOfWeek = today.getDay();
-    const daysUntilTuesday = (2 - dayOfWeek + 7) % 7;
-    const nextTue = new Date(today);
-    nextTue.setDate(today.getDate() + daysUntilTuesday);
-    const year = nextTue.getFullYear();
-    const month = (nextTue.getMonth() + 1).toString().padStart(2,'0');
-    const day = nextTue.getDate().toString().padStart(2,'0');
-    const defaultDate = `${year}-${month}-${day}`;
-    if (!startDateInput.value) {
-        startDateInput.value = defaultDate;
-    }
+  const HOT_ANTIPASTO = {
+    "Calamari fritti": true,
+    "Cevape": true,
+    "Meatballs in sugo": true,
+    "Italian pork sausages": true
+  };
 
-    // ================== UPDATE TOTALS & BADGE ==================
-    function updateRowTotal(row) {
-        const guestInputs = row.querySelectorAll('input.guest-count');
-        let total = 0;
-        guestInputs.forEach(input => {
-            total += parseInt(input.value, 10) || 0;
-        });
-        row.querySelector('.total-col').textContent = total;
-    }
+  const RULES = {
+    canapes:   { max: 3 },
+    antipasto: { max: 7 },          // overall max not used directly now, but kept for reference
+    pasta:     { max: 2 },
+    mains:     { max: 2 },
+    dessert:   { max: 1 }
+  };
 
-    function updateBadge() {
-        const allCheckboxes = document.querySelectorAll('input.clean-check');
-        const allChecked = Array.from(allCheckboxes).every(cb => cb.checked);
-        document.getElementById('completeBadge').style.display = allChecked ? 'inline-flex' : 'none';
-    }
+  const FIXED_PRICES = {
+    canapes: 12,
+    antipasto: 28,
+    pasta: 15,
+    mains: 34,
+    dessert: 10
+  };
 
-    rows.forEach(row => {
-        const guestInputs = row.querySelectorAll('input.guest-count');
-        guestInputs.forEach(input => {
-            input.addEventListener('input', () => { updateRowTotal(row); saveToStorage(); });
-            input.addEventListener('blur', () => { updateRowTotal(row); saveToStorage(); });
-        });
-        const checkboxes = row.querySelectorAll('input.clean-check');
-        checkboxes.forEach(cb => {
-            cb.addEventListener('change', () => { updateBadge(); saveToStorage(); });
-        });
-        updateRowTotal(row);
+  const TAB_ORDER = ["quote","couple","food","drinks","summary"];
+
+  function setActivePage(page){
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    const target = document.getElementById("page-" + page);
+    if(target) target.classList.add("active");
+
+    document.querySelectorAll(".tab[data-page]").forEach(t => {
+      const active = t.dataset.page === page;
+      t.classList.toggle("active", active);
+      t.setAttribute("aria-selected", active ? "true" : "false");
     });
 
-    loadFromStorage();
-    updateHeaders();
-    updateBadge();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    renderAll();
+  }
+  function nextPage(){
+    const current = document.querySelector(".tab[data-page].active")?.dataset.page || "quote";
+    const idx = TAB_ORDER.indexOf(current);
+    setActivePage(TAB_ORDER[(idx + 1) % TAB_ORDER.length]);
+  }
+  function prevPage(){
+    const current = document.querySelector(".tab[data-page].active")?.dataset.page || "quote";
+    const idx = TAB_ORDER.indexOf(current);
+    setActivePage(TAB_ORDER[(idx - 1 + TAB_ORDER.length) % TAB_ORDER.length]);
+  }
 
-    // ================== HELPER ==================
-    function getDates() {
-        const dates = {};
-        for (let day of dayIds) {
-            dates[day] = headers[day].textContent;
-        }
-        return dates;
+  document.querySelectorAll(".tab[data-page]").forEach(tab => on(tab, "click", () => setActivePage(tab.dataset.page)));
+  on($("nextTab"), "click", nextPage);
+
+  on($("nextQ"), "click", nextPage);
+  on($("backC"), "click", prevPage);
+  on($("nextC"), "click", nextPage);
+  on($("backF2"), "click", prevPage);
+  on($("nextF2"), "click", nextPage);
+  on($("backD"), "click", prevPage);
+  on($("nextD"), "click", nextPage);
+  on($("backS"), "click", prevPage);
+  on($("toQuote"), "click", () => setActivePage("quote"));
+
+  const adultsEl   = $("adults");
+  const childrenEl = $("children");
+  const roomHireEl = $("roomHire");
+  const dryHireEl  = $("dryHire");
+  const securityEl = $("security");
+
+  const fruitPlatterEl = $("fruitPlatter");
+  const tablesEl = $("tables");
+  const fruitPerTableEl = $("fruitPerTable");
+
+  const drinkModeEl = $("drinkMode");
+  const customDrinkRow = $("customDrinkRow");
+  const customDrinkPriceEl = $("customDrinkPrice");
+  const customDrinkNoteEl = $("customDrinkNote");
+  const drinkInfoEl = $("drinkInfo");
+
+  const coupleNameEl = $("coupleName");
+  const weddingDateEl = $("weddingDate");
+
+  const qRoomEl   = $("qRoom");
+  const qFoodEl   = $("qFood");
+  const qDrinksEl = $("qDrinks");
+  const qDryEl    = $("qDry");
+  const qSecEl    = $("qSec");
+  const qTotalEl  = $("qTotal");
+
+  const kpiAdultsEl  = $("kpiAdults");
+  const kpiChildrenEl= $("kpiChildren");
+  const kpiFoodEl    = $("kpiFood");
+  const kpiAvgEl     = $("kpiAvg");
+
+  const finalSummaryEl = $("finalSummary");
+  const chipsEl = $("chips");
+  const summaryCourseCountsEl = $("summaryCourseCounts");
+
+  const foodCompleteBadgeEl = $("foodCompleteBadge");
+  const drinksCompleteBadgeEl = $("drinksCompleteBadge");
+
+  function aud(n){
+    const x = Number(n || 0);
+    return x.toLocaleString("en-AU", { style:"currency", currency:"AUD" });
+  }
+
+  function setBadge(el, state, text){
+    if(!el) return;
+    el.classList.remove("ok","warn");
+    if(state) el.classList.add(state);
+    el.textContent = text;
+  }
+
+  function updateDrinkUI(){
+    const mode = drinkModeEl.value;
+    if(customDrinkRow) customDrinkRow.style.display = (mode === "custom") ? "grid" : "none";
+    if(drinkInfoEl){
+      drinkInfoEl.textContent = (mode === "bar")
+        ? "Bar pricing is indicative only (drinks = $0 in the quote)."
+        : "Custom price adds your set amount per adult into the quote.";
+    }
+    renderAll();
+  }
+
+  function addCheckboxList(courseKey, listId){
+    const wrap = document.getElementById(listId);
+    if(!wrap) return;
+    wrap.innerHTML = "";
+
+    (MENU[courseKey] || []).forEach((item, idx) => {
+      const div = document.createElement("div");
+      div.className = "opt";
+
+      const isHot = (courseKey === "antipasto" && HOT_ANTIPASTO[item]);
+      const id = "cb-" + courseKey + "-" + idx;
+
+      div.innerHTML =
+        '<input type="checkbox" data-course="' + courseKey + '" value="' + escapeHtml(item) + '" id="' + id + '">' +
+        '<span class="optNum">' + (idx + 1) + '</span>' +
+        '<label for="' + id + '" class="optLabel">' +
+          escapeHtml(item) +
+          (isHot ? '<span class="hotTag">HOT</span>' : '') +
+        '</label>';
+
+      wrap.appendChild(div);
+    });
+  }
+
+  function getSelections(){
+    const out = { canapes:[], antipasto:[], pasta:[], mains:[], dessert:[] };
+    document.querySelectorAll('input[type="checkbox"][data-course]:checked').forEach(cb => {
+      const c = cb.dataset.course;
+      if(out[c]) out[c].push(cb.value);
+    });
+    return out;
+  }
+
+  // Enhanced limit enforcement for antipasto (hot/cold)
+  function enforceAntipastoLimit() {
+    const course = 'antipasto';
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][data-course="' + course + '"]');
+    let hotChecked = [], coldChecked = [];
+    checkboxes.forEach(cb => {
+      if (!cb.checked) return;
+      if (HOT_ANTIPASTO[cb.value]) hotChecked.push(cb);
+      else coldChecked.push(cb);
+    });
+
+    const hotOver = hotChecked.length > 2;
+    const coldOver = coldChecked.length > 5;
+
+    // If either limit exceeded, we need to uncheck some.
+    // We'll uncheck the last checked in the offending category (by DOM order, not perfect but simple)
+    if (hotOver) {
+      // uncheck the last hot item (closest to bottom)
+      const lastHot = hotChecked[hotChecked.length - 1];
+      if (lastHot) lastHot.checked = false;
+    }
+    if (coldOver) {
+      const lastCold = coldChecked[coldChecked.length - 1];
+      if (lastCold) lastCold.checked = false;
     }
 
-    // ================== SUMMARY WINDOWS (optional) ==================
-    window.openCleanerSheet = function() {
-        const dates = getDates();
-        const dayRoomData = {};
-        for (let day of dayIds) dayRoomData[day] = [];
-        rows.forEach(row => {
-            const roomName = roomNames[row.id];
-            const checkboxes = row.querySelectorAll('input.clean-check');
-            checkboxes.forEach((cb, index) => {
-                if (cb.checked) dayRoomData[dayIds[index]].push(roomName);
-            });
-        });
-        let html = `<html><head><title>Cleaner summary</title><meta name="viewport" content="width=device-width, initial-scale=1"><style>body{font-family:system-ui;padding:1rem;}</style></head><body><h1>Reggio Calabria Club</h1><p>Cleaner summary - week starting ${dates.Tue}</p>`;
-        for (let day of dayIds) {
-            if (dayRoomData[day].length) {
-                html += `<h3>${dates[day]}</h3><ul>`;
-                dayRoomData[day].forEach(r => html += `<li>${r}</li>`);
-                html += `</ul>`;
-            }
-        }
-        html += `</body></html>`;
-        const w = window.open('');
-        w.document.write(html);
-        w.document.close();
-    };
+    // Recount after potential unchecks
+    hotChecked = []; coldChecked = [];
+    checkboxes.forEach(cb => {
+      if (!cb.checked) return;
+      if (HOT_ANTIPASTO[cb.value]) hotChecked.push(cb);
+      else coldChecked.push(cb);
+    });
 
-    window.openDrinksSheet = function() {
-        const dates = getDates();
-        const dayDrinks = {};
-        for (let day of dayIds) dayDrinks[day] = [];
-        rows.forEach(row => {
-            const roomName = roomNames[row.id];
-            const guestInputs = row.querySelectorAll('input.guest-count');
-            guestInputs.forEach((input, index) => {
-                const guests = parseInt(input.value, 10) || 0;
-                dayDrinks[dayIds[index]].push({ room: roomName, guests });
-            });
-        });
-        let html = `<html><head><title>Drinks summary</title><meta name="viewport" content="width=device-width, initial-scale=1"><style>body{font-family:system-ui;padding:1rem;}table{border-collapse:collapse;width:100%;}th{background:#f1f5f9;}</style></head><body><h1>Reggio Calabria Club</h1><p>Drinks summary - week starting ${dates.Tue}</p>`;
-        let grandTotal = 0;
-        for (let day of dayIds) {
-            const rowsData = dayDrinks[day];
-            const dayTotal = rowsData.reduce((acc, r) => acc + r.guests, 0);
-            if (dayTotal === 0) continue;
-            grandTotal += dayTotal;
-            html += `<h3>${dates[day]}</h3><table><tr><th>Room</th><th>Guests</th></tr>`;
-            rowsData.forEach(r => html += `<tr><td>${r.room}</td><td>${r.guests}</td></tr>`);
-            html += `</table><p><strong>Day total: ${dayTotal}</strong></p>`;
-        }
-        html += `<h2>Total guests: ${grandTotal}</h2>`;
-        html += `</body></html>`;
-        const w = window.open('');
-        w.document.write(html);
-        w.document.close();
-    };
-
-    // ================== DRINK BREAKDOWN FUNCTION ==================
-    function getDrinkBreakdown(totalGuests) {
-        // 90 bottles per 750 guests
-        const bottlesPerPerson = 90 / 750;
-        const totalBottles = Math.round(totalGuests * bottlesPerPerson);
-        // Percentages
-        const pct = {
-            'Cola': 0.4,
-            'Lemon squash': 0.4,
-            'Cola (no sugar)': 0.1,
-            'Lemonade': 0.05,
-            'Soda water': 0.05,
-            'Tonic water': 0.025,
-            'Ginger ale': 0.025
-        };
-        const breakdown = [];
-        for (let [drink, fraction] of Object.entries(pct)) {
-            let bottles = Math.round(totalBottles * fraction);
-            breakdown.push({ drink, bottles });
-        }
-        // Adjust rounding errors: force sum to equal totalBottles
-        const sum = breakdown.reduce((acc, item) => acc + item.bottles, 0);
-        if (sum !== totalBottles && breakdown.length > 0) {
-            const diff = totalBottles - sum;
-            // Add diff to the largest category
-            let maxIndex = 0;
-            for (let i = 1; i < breakdown.length; i++) {
-                if (breakdown[i].bottles > breakdown[maxIndex].bottles) maxIndex = i;
-            }
-            breakdown[maxIndex].bottles += diff;
-        }
-        return { totalBottles, breakdown };
+    const countEl = document.getElementById("count-antipasto");
+    if (countEl) {
+      countEl.textContent = `Hot: ${hotChecked.length}/2 · Cold: ${coldChecked.length}/5`;
     }
 
-    // ================== CONSOLIDATED PDF ==================
-    window.downloadConsolidatedPDF = function() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        const dates = getDates();
+    const warnEl = document.getElementById("warn-antipasto");
+    if (warnEl) {
+      if (hotChecked.length === 2 || coldChecked.length === 5) {
+        warnEl.style.display = "block";
+        warnEl.textContent = "Maximum selections reached for one or both categories.";
+      } else {
+        warnEl.style.display = "none";
+      }
+    }
+  }
 
-        doc.setFontSize(18);
-        doc.text('Reggio Calabria Club', 14, 20);
-        doc.setFontSize(11);
-        doc.text(`Week starting ${dates.Tue}`, 14, 28);
+  function enforceLimit(courseKey){
+    if (courseKey === 'antipasto') {
+      enforceAntipastoLimit();
+      return;
+    }
+    const rule = RULES[courseKey];
+    if(!rule) return;
 
-        // ---- PAGE 1: CLEANING ROSTER (only days with ticks) ----
-        doc.setFontSize(14);
-        doc.setFont(undefined, 'bold');
-        doc.text('Cleaning roster', 14, 40);
-        doc.setFont(undefined, 'normal');
-        let y = 48;
-        let cleaningExists = false;
+    const checked = Array.from(document.querySelectorAll('input[type="checkbox"][data-course="' + courseKey + '"]:checked'));
+    if(checked.length > rule.max){
+      checked[checked.length - 1].checked = false;
+    }
 
-        for (let day of dayIds) {
-            const tickedRooms = [];
-            rows.forEach(row => {
-                const roomName = roomNames[row.id];
-                const checkboxes = row.querySelectorAll('input.clean-check');
-                checkboxes.forEach((cb, index) => {
-                    if (cb.checked && dayIds[index] === day) {
-                        tickedRooms.push(roomName);
-                    }
-                });
-            });
-            if (tickedRooms.length === 0) continue;
-            cleaningExists = true;
+    const now = Array.from(document.querySelectorAll('input[type="checkbox"][data-course="' + courseKey + '"]:checked'));
+    const countEl = document.getElementById("count-" + courseKey);
+    const warnEl  = document.getElementById("warn-" + courseKey);
 
-            // Check if we need a new page
-            if (y > 260) {
-                doc.addPage();
-                y = 20;
-            }
+    if(countEl) countEl.textContent = now.length + " selected (max " + rule.max + ")";
 
-            doc.setFontSize(11);
-            doc.setFont(undefined, 'bold');
-            doc.text(dates[day], 14, y);
-            y += 5;
-            doc.setFont(undefined, 'normal');
-            tickedRooms.forEach(room => {
-                doc.text(`- ${room}`, 18, y);
-                y += 5;
-            });
-            y += 2;
+    if(warnEl){
+      if(now.length >= rule.max){
+        warnEl.style.display = "block";
+        warnEl.textContent = "Maximum " + rule.max + " selections for " + COURSE_LABEL[courseKey] + ".";
+      }else{
+        warnEl.style.display = "none";
+        warnEl.textContent = "";
+      }
+    }
+  }
+
+  function attachLimitListeners(){
+    document.querySelectorAll('input[type="checkbox"][data-course]').forEach(cb=>{
+      cb.addEventListener("change", ()=>{
+        enforceLimit(cb.dataset.course);
+        renderAll();
+      });
+    });
+  }
+
+  window.selectAll = function(checked){
+    // For antipasto, we must respect hot/cold limits. Select up to 2 hot and 5 cold.
+    if (checked) {
+      // Canapés, pasta, mains, dessert: select up to max
+      ['canapes', 'pasta', 'mains', 'dessert'].forEach(courseKey => {
+        const items = document.querySelectorAll('input[type="checkbox"][data-course="' + courseKey + '"]');
+        for(let i=0;i<Math.min(items.length, RULES[courseKey].max); i++){
+          items[i].checked = true;
         }
+        enforceLimit(courseKey);
+      });
 
-        if (!cleaningExists) {
-            doc.text('No cleaning scheduled this week.', 14, y);
-            y += 8;
-        }
+      // Antipasto: select first 2 hot, first 5 cold
+      const hotItems = Array.from(document.querySelectorAll('input[type="checkbox"][data-course="antipasto"]')).filter(cb => HOT_ANTIPASTO[cb.value]);
+      const coldItems = Array.from(document.querySelectorAll('input[type="checkbox"][data-course="antipasto"]')).filter(cb => !HOT_ANTIPASTO[cb.value]);
+      hotItems.slice(0,2).forEach(cb => cb.checked = true);
+      coldItems.slice(0,5).forEach(cb => cb.checked = true);
+      enforceAntipastoLimit();
+    } else {
+      document.querySelectorAll('input[type="checkbox"][data-course]').forEach(i => i.checked = false);
+      // re-enforce limits to update UI
+      Object.keys(RULES).forEach(enforceLimit);
+      enforceAntipastoLimit();
+    }
+    renderAll();
+  };
 
-        // ---- PAGE 2: DRINK ORDER ----
-        doc.addPage();
-        y = 20;
+  function calculateFood(){
+    const adults = Number(adultsEl.value||0);
+    const children = Number(childrenEl.value||0);
 
-        // Calculate total guests
-        let grandTotal = 0;
-        rows.forEach(row => {
-            const guestInputs = row.querySelectorAll('input.guest-count');
-            guestInputs.forEach(input => {
-                grandTotal += parseInt(input.value, 10) || 0;
-            });
-        });
+    const sel = getSelections();
+    let perAdult = 0;
 
-        doc.setFontSize(16);
-        doc.setFont(undefined, 'bold');
-        doc.text('Drink order', 14, y);
-        y += 8;
+    if(sel.canapes.length) perAdult += FIXED_PRICES.canapes;
+    if(sel.antipasto.length) perAdult += FIXED_PRICES.antipasto;
+    if(sel.pasta.length) perAdult += FIXED_PRICES.pasta;
+    if(sel.mains.length) perAdult += FIXED_PRICES.mains;
+    if(sel.dessert.length) perAdult += FIXED_PRICES.dessert;
 
-        doc.setFontSize(11);
-        doc.setFont(undefined, 'normal');
-        doc.text(`Total guests for the week: ${grandTotal}`, 14, y);
-        y += 6;
+    const adultTotal = adults * perAdult;
+    const childTotal = children * perAdult * 0.3;
 
-        const { totalBottles, breakdown } = getDrinkBreakdown(grandTotal);
-        doc.text(`Based on 90 bottles per 750 guests`, 14, y);
-        y += 6;
-        doc.setFont(undefined, 'bold');
-        doc.text(`Total bottles needed: ${totalBottles}`, 14, y);
-        y += 8;
+    let fruitTotal = 0;
+    if(fruitPlatterEl && fruitPlatterEl.checked){
+      fruitTotal = Number(tablesEl.value||0) * Number(fruitPerTableEl.value||0);
+    }
 
-        // Breakdown table
-        const breakdownRows = breakdown.map(item => [item.drink, item.bottles.toString()]);
-        doc.autoTable({
-            startY: y,
-            head: [['Drink', 'Bottles']],
-            body: breakdownRows,
-            theme: 'striped',
-            headStyles: { fillColor: [139, 30, 30] },
-            margin: { left: 14, right: 14 }
-        });
+    return adultTotal + childTotal + fruitTotal;
+  }
 
-        doc.save('Reggio_Calabria_Club.pdf');
-    };
-})();
+  function calculateDrinks(){
+    const adults = Number(adultsEl.value||0);
+    const mode = drinkModeEl.value;
+    if(mode === "custom") return adults * Number(customDrinkPriceEl.value||0);
+    return 0;
+  }
+
+  function renderAll(){
+    const adults = Number(adultsEl.value||0);
+    const children = Number(childrenEl.value||0);
+    const totalGuests = adults + children;
+
+    const room = Number(roomHireEl.value||0);
+    const dry = Number(dryHireEl.value||0);
+    const sec = Number(securityEl.value||0);
+
+    const food = calculateFood();
+    const drinks = calculateDrinks();
+    const total = room + dry + sec + food + drinks;
+
+    // Update quote page fields
+    qRoomEl.textContent = aud(room);
+    qDryEl.textContent  = aud(dry);
+    qSecEl.textContent  = aud(sec);
+    qFoodEl.textContent = aud(food);
+    qDrinksEl.textContent = aud(drinks);
+    qTotalEl.textContent = aud(total);
+
+    kpiAdultsEl.textContent = adults;
+    kpiChildrenEl.textContent = children;
+    kpiFoodEl.textContent = aud(food);
+    kpiAvgEl.textContent = totalGuests ? aud(total/totalGuests) : aud(0);
+
+    const sel = getSelections();
+    const anyFood = Object.values(sel).some(a=>a.length);
+    setBadge(foodCompleteBadgeEl, anyFood ? "ok":"warn", anyFood ? "Menu Ready" : "Menu Empty");
+    setBadge(drinksCompleteBadgeEl, (drinkModeEl.value==="bar") ? "warn":"ok",
+      (drinkModeEl.value==="bar") ? "Bar Pricing" : "Custom Drinks");
+
+    // Also update the drinks badge on the drinks page
+    const drinksBadge2 = $("drinksCompleteBadge2");
+    if(drinksBadge2) setBadge(drinksBadge2, (drinkModeEl.value==="bar") ? "warn":"ok",
+      (drinkModeEl.value==="bar") ? "Bar Pricing" : "Custom Drinks");
+
+    // ---- Build detailed summary for the Summary page ----
+    const coupleName = coupleNameEl.value.trim() || "Event";
+    const weddingDate = weddingDateEl.value || "Not set";
+    const venueSelect = $("venueSpace");
+    const venueText = venueSelect.options[venueSelect.selectedIndex]?.text || "Not selected";
+
+    // Food items per course
+    const foodItemsHtml = Object.keys(COURSE_LABEL).map(courseKey => {
+      const items = sel[courseKey];
+      if(items.length === 0) return '';
+      return `<li><strong>${COURSE_LABEL[courseKey]}:</strong> ${items.map(escapeHtml).join(', ')}</li>`;
+    }).filter(s => s).join('');
+
+    const fruitHtml = fruitPlatterEl.checked
+      ? `<li><strong>Fruit platter:</strong> ${tablesEl.value} tables x $35 = ${aud(Number(tablesEl.value)*35)}</li>`
+      : '';
+
+    // Drink mode details
+    let drinkDetails = '';
+    if(drinkModeEl.value === 'bar') {
+      drinkDetails = 'Bar prices (no package cost)';
+    } else {
+      const price = Number(customDrinkPriceEl.value || 0);
+      const note = customDrinkNoteEl.value.trim();
+      drinkDetails = `Custom package: ${aud(price)} per adult × ${adults} = ${aud(price * adults)}`;
+      if(note) drinkDetails += ` (${escapeHtml(note)})`;
+    }
+
+    // Build the summary HTML
+    const summaryHtml = `
+      <div class="summary-section">
+        <div class="summary-line"><span>Event:</span> <span>${escapeHtml(coupleName)}</span></div>
+        <div class="summary-line"><span>Date:</span> <span>${escapeHtml(weddingDate)}</span></div>
+        <div class="summary-line"><span>Venue:</span> <span>${escapeHtml(venueText)}</span></div>
+        <div class="summary-line"><span>Guests:</span> <span>${adults} adults, ${children} children</span></div>
+      </div>
+
+      <div class="summary-section">
+        <h3>🍽️ Food</h3>
+        ${foodItemsHtml ? `<ul class="summary-items">${foodItemsHtml}${fruitHtml}</ul>` : '<p>No food items selected</p>'}
+        <div class="summary-line"><span>Food subtotal:</span> <span>${aud(food)}</span></div>
+      </div>
+
+      <div class="summary-section">
+        <h3>🥂 Drinks</h3>
+        <div class="summary-line"><span>Mode:</span> <span>${drinkDetails}</span></div>
+        <div class="summary-line"><span>Drinks total:</span> <span>${aud(drinks)}</span></div>
+      </div>
+
+      <div class="summary-section">
+        <h3>🏛️ Other costs</h3>
+        <div class="summary-line"><span>Room hire:</span> <span>${aud(room)}</span></div>
+        <div class="summary-line"><span>Dry hire:</span> <span>${aud(dry)}</span></div>
+        <div class="summary-line"><span>Security:</span> <span>${aud(sec)}</span></div>
+      </div>
+
+      <div class="summary-line total">
+        <span>Grand total</span>
+        <span>${aud(total)}</span>
+      </div>
+    `;
+
+    finalSummaryEl.innerHTML = summaryHtml;
+
+    // Update chips and course counts
+    chipsEl.innerHTML = '';
+    Object.entries(sel).forEach(([course, items]) => {
+      items.forEach(item => {
+        const chip = document.createElement("span");
+        chip.className = "pill";
+        chip.textContent = item;
+        chipsEl.appendChild(chip);
+      });
+    });
+    if(fruitPlatterEl.checked) {
+      const chip = document.createElement("span");
+      chip.className = "pill";
+      chip.textContent = `Fruit platter (${tablesEl.value} tables)`;
+      chipsEl.appendChild(chip);
+    }
+
+    // Show counts per course
+    const counts = Object.keys(COURSE_LABEL).map(c => {
+      if (c === 'antipasto') {
+        const hot = (sel.antipasto.filter(i => HOT_ANTIPASTO[i])).length;
+        const cold = sel.antipasto.length - hot;
+        return `Antipasto: ${hot} hot, ${cold} cold`;
+      } else {
+        return `${COURSE_LABEL[c]}: ${sel[c].length}`;
+      }
+    }).join(' · ');
+    summaryCourseCountsEl.textContent = counts;
+  }
+
+  function resetAll(){
+    if(!confirm("Reset everything?")) return;
+
+    document.querySelectorAll('input[type="checkbox"][data-course]').forEach(cb => cb.checked = false);
+
+    adultsEl.value = 120;
+    childrenEl.value = 20;
+    roomHireEl.value = 0;
+    dryHireEl.value = 0;
+    securityEl.value = 0;
+
+    tablesEl.value = 10;
+    if(fruitPlatterEl) fruitPlatterEl.checked = false;
+
+    drinkModeEl.value = "bar";
+    customDrinkPriceEl.value = 0;
+    customDrinkNoteEl.value = "";
+
+    // Re-enforce limits to reset UI
+    Object.keys(RULES).forEach(enforceLimit);
+    enforceAntipastoLimit();
+    updateDrinkUI();
+    renderAll();
+  }
+
+  on($("copySummary"), "click", async ()=>{
+    const text = finalSummaryEl.innerText;
+    try{ await navigator.clipboard.writeText(text); alert("Summary copied"); }
+    catch(e){ alert("Copy failed (browser blocked clipboard)."); }
+  });
+  on($("printSummary"), "click", ()=>window.print());
+
+  // INIT
+  addCheckboxList("canapes","list-canapes");
+  addCheckboxList("antipasto","list-antipasto");
+  addCheckboxList("pasta","list-pasta");
+  addCheckboxList("mains","list-mains");
+  addCheckboxList("dessert","list-dessert");
+
+  attachLimitListeners();
+  // Initial enforcement for antipasto to set correct count display
+  enforceAntipastoLimit();
+  Object.keys(RULES).forEach(enforceLimit);
+
+  document.querySelectorAll("input,select,textarea").forEach(el=>{
+    el.addEventListener("input", renderAll);
+    el.addEventListener("change", renderAll);
+  });
+
+  on($("resetAll"), "click", resetAll);
+  on($("printQuote"), "click", ()=>window.print());
+
+  on(drinkModeEl, "change", updateDrinkUI);
+  on($("venueSpace"), "change", ()=> applyVenueProfile($("venueSpace").value));
+
+  applyVenueProfile("members");
+  updateDrinkUI();
+  renderAll();
 </script>
 </body>
 </html>
