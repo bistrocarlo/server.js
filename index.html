@@ -4,315 +4,581 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The Members Lounge | Event Signature Selection</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet">
+  <!-- Elegant fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons (optional, but adds polish) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
-    :root{
-      --bg:#ffffff;
-      --text:#0b0c10;
-      --muted:#4b5563;
-      --line:rgba(0,0,0,.10);
-      --gold:#b08d2a;
-      --goldSoft:rgba(176,141,42,.10);
-      --shadow:0 2px 10px rgba(0,0,0,.1);
-      --radius:8px;
-      --ok:#0f7a3a;
-      --warn:#b45309;
-      --bad:#b91c1c;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:'Roboto', sans-serif;
-      background:var(--bg);
-      color:var(--text);
-    }
-    header{
-      padding:20px;
-      text-align:center;
-      border-bottom:1px solid var(--line);
-      background:#fff;
-      box-shadow:var(--shadow);
-    }
-    .brandline{display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap;}
-    .logoWrap{
-      display:flex; align-items:center; justify-content:center;
-      padding:10px 14px;
-      border:1px solid var(--line);
-      border-radius:50%;
-      background:#fff;
-      box-shadow:var(--shadow);
-      gap:10px;
-    }
-    .logoImg{max-height:80px; width:auto; display:block;}
-    .logoFallback{
-      display:inline-flex; align-items:center; gap:10px;
-      font-weight:700; letter-spacing:.1em; font-size:14px;
+    /* ===== RESET & VARIABLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    h1{margin:12px 0 6px; font-size:28px; font-family:'Montserrat', sans-serif;}
-    .sub{color:var(--muted); font-size:14px}
-    .gold{color:var(--gold)}
-    main{max-width:1200px; margin:0 auto; padding:20px;}
-
-    .tabs-wrap{
-      position:sticky; top:0; z-index:10;
-      padding:10px 0;
-      background:#fff;
-      box-shadow:var(--shadow);
-    }
-    .tabs{display:flex; flex-wrap:wrap; gap:10px; justify-content:center;}
-    .tab{
-      cursor:pointer; user-select:none;
-      border:1px solid var(--line);
-      background:#fff; color:var(--text);
-      padding:8px 16px; border-radius:8px;
-      font-size:14px; display:flex; gap:8px; align-items:center;
-      transition:background .15s ease, border-color .15s ease;
-      box-shadow:var(--shadow);
-      white-space:nowrap;
-    }
-    .tab:hover{background:var(--goldSoft)}
-    .tab.active{border-color:var(--gold); background:var(--goldSoft); font-weight:700;}
-    .tab.nextTab{border-color:var(--gold); background:var(--goldSoft); font-weight:700;}
-
-    .page{display:none}
-    .page.active{display:block}
-
-    .grid{display:grid; grid-template-columns:1fr; gap:20px; margin-top:20px;}
-    @media(min-width:920px){ .grid{grid-template-columns:1fr 1fr;} }
-
-    .card{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:20px;
-      box-shadow:var(--shadow);
-    }
-    .card h2{margin:0 0 10px; font-size:18px; font-family:'Montserrat', sans-serif;}
-    .hint{color:var(--muted); font-size:13px}
-
-    label{display:block; font-size:13px; color:var(--muted); margin:10px 0 6px;}
-    input, select, textarea{
-      width:100%;
-      padding:10px;
-      border-radius:8px;
-      border:1px solid var(--line);
-      background:#fff;
-      color:var(--text);
-      outline:none;
-      font-size:16px;
-    }
-    textarea{min-height:100px; resize:vertical}
-    input::placeholder, textarea::placeholder{color:var(--muted)}
-
-    .row{display:grid; grid-template-columns:1fr 1fr; gap:15px;}
-    .divider{height:1px; background:var(--line); margin:15px 0}
-    .small{font-size:13px; color:var(--muted)}
-    .mono{font-family:monospace;}
-
-    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:15px;}
-    .btn{
-      cursor:pointer;
-      border:1px solid var(--line);
-      background:#fff;
-      color:var(--text);
-      padding:10px 16px;
-      border-radius:8px;
-      font-size:14px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      box-shadow:var(--shadow);
-      transition:background .15s ease;
-      min-width:120px;
-      justify-content:center;
-    }
-    .btn:hover{background:var(--goldSoft)}
-    .btn.primary{border-color:var(--gold); background:var(--goldSoft); font-weight:700;}
-    .btn.ghost{border-color:var(--gold); background:var(--goldSoft); font-weight:700;}
-
-    .table{width:100%; border-collapse:collapse; font-size:14px;}
-    .table td{padding:10px; border-bottom:1px solid var(--line); vertical-align:top;}
-    .table td:last-child{text-align:right; font-weight:700;}
-
-    .total{
-      display:flex; justify-content:space-between; align-items:center; gap:12px;
-      padding:12px;
-      border-radius:8px;
-      border:1px solid var(--goldSoft);
-      background:var(--goldSoft);
-      margin-top:15px;
-      font-weight:700;
+    :root {
+      --deep-charcoal: #1E1E1E;
+      --warm-gold: #C6A43F;
+      --soft-gold: rgba(198, 164, 63, 0.15);
+      --cream: #FAF7F2;
+      --pure-white: #FFFFFF;
+      --light-gray: #F0F0F0;
+      --muted-text: #6B6B6B;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.12);
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --transition: all 0.2s ease;
     }
 
-    .course{margin-top:15px; border-top:1px solid var(--line); padding-top:15px;}
-    .course h3{margin:0 0 10px; font-size:16px; font-family:'Montserrat', sans-serif;}
-    .count{color:var(--muted); font-size:13px; margin-top:10px;}
-    .warnBox{
-      margin-top:10px;
-      padding:10px;
-      border-radius:8px;
-      border:1px solid rgba(180,83,9,.35);
-      background: rgba(180,83,9,.08);
-      color:#47370a;
-      display:none;
-      font-size:13px;
-      font-weight:700;
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--cream);
+      color: var(--deep-charcoal);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .statusRow{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:10px;}
-    .badge{
-      display:inline-flex; gap:8px; align-items:center;
-      padding:6px 12px;
-      border-radius:8px;
-      border:1px solid var(--line);
-      background:#fff;
-      font-size:13px;
-      font-weight:700;
-    }
-    .badge.ok{border-color: rgba(15,122,58,.35); background: rgba(15,122,58,.08); color: var(--ok);}
-    .badge.warn{border-color: rgba(180,83,9,.35); background: rgba(180,83,9,.08); color: var(--warn);}
-
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 12px; border-radius:8px;
-      background:var(--goldSoft);
-      border:1px solid var(--goldSoft);
-      color:var(--text);
-      font-size:13px;
-      margin:6px 6px 0 0;
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
 
-    .hotTag{
-      display:inline-flex;
-      align-items:center;
-      margin-left:8px;
-      padding:2px 8px;
-      border-radius:8px;
-      border:1px solid rgba(180,83,9,.35);
-      background: rgba(180,83,9,.08);
-      color: var(--warn);
-      font-size:12px;
-      font-weight:700;
-      white-space:nowrap;
+    .gold {
+      color: var(--warm-gold);
     }
 
-    .kpi{display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px;}
-    @media(min-width:920px){ .kpi{grid-template-columns:1fr 1fr 1fr 1fr;} }
-    .kpi .box{border:1px solid var(--line); background:#fff; border-radius:8px; padding:12px; box-shadow:var(--shadow);}
-    .kpi .box .label{font-size:12px; color:var(--muted)}
-    .kpi .box .value{font-size:18px; font-weight:700; margin-top:4px}
-
-    footer{
-      text-align:center;
-      color:var(--muted);
-      font-size:13px;
-      padding:20px 0;
-      border-top:1px solid var(--line);
-      background:#fff;
-      box-shadow:var(--shadow);
+    /* ===== HEADER ===== */
+    header {
+      background: var(--pure-white);
+      padding: 30px 20px;
+      text-align: center;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      box-shadow: var(--shadow-sm);
+      position: relative;
     }
 
-    @media print{
-      .tabs-wrap, .actions, .btn { display:none !important; }
-      .card{ box-shadow:none; }
+    .brandline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
-    @media (max-width: 768px) {
-      main { padding: 10px; }
-      .grid { gap: 15px; }
-      .row { grid-template-columns: 1fr; gap: 10px; }
-      .tabs { overflow-x:auto; justify-content:flex-start; padding: 0 10px; }
-      .tab { font-size: 13px; padding: 8px 12px; }
-      .card { padding: 15px; }
-      h1 { font-size: 24px; }
-      .card h2 { font-size: 16px; }
-      .btn { min-width: 100%; margin-bottom: 10px; }
-      .actions { flex-direction: column; }
-      .logoImg { max-height: 60px; }
+    .logoWrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 20px;
+      background: var(--pure-white);
+      border-radius: 60px;
+      box-shadow: var(--shadow-sm);
     }
 
-    /* Menu option layout */
-    .optionsGrid{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:10px;
-      margin-top:10px;
-    }
-    @media(min-width:920px){ .optionsGrid{ grid-template-columns: 1fr 1fr; } }
-
-    .opt{
-      display:flex;
-      align-items:flex-start;
-      gap:12px;
-      padding:10px 12px;
-      border:1px solid var(--line);
-      border-radius:10px;
-      background:#fff;
-      box-shadow: var(--shadow);
-    }
-    .opt input[type="checkbox"]{
-      width:auto;
-      margin-top:3px;
-      transform: scale(1.2);
-      flex:0 0 auto;
-    }
-    .optNum{
-      flex:0 0 auto;
-      min-width:26px;
-      height:26px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      border-radius:8px;
-      border:1px solid var(--line);
-      background: var(--goldSoft);
-      font-weight:700;
-      font-size:13px;
-    }
-    .optLabel{
-      flex:1 1 auto;
-      line-height:1.25;
-      font-size:14px;
-      color:var(--text);
-      font-weight:600;
-      margin:0;
-      cursor:pointer;
+    .logoImg {
+      max-height: 70px;
+      width: auto;
+      display: block;
     }
 
-    /* Summary table */
-    .summary-section {
+    .logoFallback {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      font-size: 14px;
+      color: var(--deep-charcoal);
+    }
+
+    h1 {
+      margin: 15px 0 5px;
+      font-size: 2.2rem;
+      font-weight: 900;
+    }
+
+    .sub {
+      color: var(--muted-text);
+      font-size: 1rem;
+      font-weight: 300;
+    }
+
+    /* ===== TABS ===== */
+    .tabs-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      padding: 15px 0;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .tab {
+      cursor: pointer;
+      user-select: none;
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: transparent;
+      color: var(--muted-text);
+      border: 1px solid transparent;
+      transition: var(--transition);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+    }
+
+    .tab:hover {
+      color: var(--warm-gold);
+      background: var(--soft-gold);
+      border-color: var(--soft-gold);
+    }
+
+    .tab.active {
+      background: var(--warm-gold);
+      color: white;
+      border-color: var(--warm-gold);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tab.nextTab {
+      background: var(--soft-gold);
+      color: var(--warm-gold);
+      border-color: var(--warm-gold);
+      font-weight: 700;
+    }
+
+    .tab.nextTab:hover {
+      background: var(--warm-gold);
+      color: white;
+    }
+
+    /* ===== MAIN CONTAINER ===== */
+    main {
+      max-width: 1400px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--pure-white);
+      border: none;
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--deep-charcoal);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hint {
+      color: var(--muted-text);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    /* ===== FORM ELEMENTS ===== */
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--muted-text);
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid #E5E5E5;
+      background: var(--pure-white);
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition);
+      margin-bottom: 20px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--warm-gold);
+      box-shadow: 0 0 0 3px var(--soft-gold);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    /* ===== BUTTONS ===== */
+    .actions {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+
+    .btn {
+      cursor: pointer;
+      border: none;
+      background: var(--pure-white);
+      color: var(--deep-charcoal);
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 1px solid #E5E5E5;
+      min-width: 140px;
+    }
+
+    .btn:hover {
+      background: var(--soft-gold);
+      border-color: var(--warm-gold);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn.primary {
+      background: var(--warm-gold);
+      color: white;
+      border-color: var(--warm-gold);
+    }
+
+    .btn.primary:hover {
+      background: #b18f35;
+      border-color: #b18f35;
+    }
+
+    .btn.ghost {
+      background: transparent;
+      border: 1px solid var(--warm-gold);
+      color: var(--warm-gold);
+    }
+
+    .btn.ghost:hover {
+      background: var(--warm-gold);
+      color: white;
+    }
+
+    /* ===== TABLES ===== */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1rem;
+      margin: 20px 0;
+    }
+
+    .table td {
+      padding: 12px 0;
+      border-bottom: 1px solid #F0F0F0;
+    }
+
+    .table td:last-child {
+      text-align: right;
+      font-weight: 700;
+      color: var(--warm-gold);
+    }
+
+    .total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: var(--soft-gold);
+      border-radius: var(--radius-md);
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-top: 20px;
+    }
+
+    .total div:last-child {
+      color: var(--warm-gold);
+      font-size: 1.5rem;
+    }
+
+    /* ===== KPI CARDS ===== */
+    .kpi {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 20px;
+      margin-top: 25px;
+    }
+
+    .kpi .box {
+      background: var(--pure-white);
+      border: 1px solid #F0F0F0;
+      border-radius: var(--radius-md);
+      padding: 18px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .kpi .box .label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: var(--muted-text);
+      margin-bottom: 8px;
+    }
+
+    .kpi .box .value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--deep-charcoal);
+    }
+
+    /* ===== FOOD BUILDER ===== */
+    .course {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px dashed #F0F0F0;
+    }
+
+    .course h3 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .optionsGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 15px;
       margin: 15px 0;
     }
-    .summary-section h3 {
-      font-size: 16px;
-      margin: 10px 0 5px;
-      font-family: 'Montserrat', sans-serif;
-      border-bottom: 1px dashed var(--line);
-      padding-bottom: 4px;
+
+    .opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 16px;
+      background: var(--pure-white);
+      border: 1px solid #F0F0F0;
+      border-radius: var(--radius-md);
+      transition: var(--transition);
+      cursor: pointer;
     }
+
+    .opt:hover {
+      border-color: var(--warm-gold);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .opt input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--warm-gold);
+      transform: scale(1.1);
+      flex-shrink: 0;
+    }
+
+    .optNum {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--soft-gold);
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--warm-gold);
+    }
+
+    .optLabel {
+      flex: 1;
+      font-weight: 600;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .hotTag {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 2px 10px;
+      background: rgba(198, 164, 63, 0.15);
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--warm-gold);
+    }
+
+    .count {
+      font-size: 0.9rem;
+      color: var(--muted-text);
+      margin: 10px 0 5px;
+    }
+
+    .warnBox {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: var(--radius-md);
+      background: #fff3e0;
+      border-left: 4px solid #f5a623;
+      color: #8a6d2b;
+      display: none;
+      font-weight: 600;
+    }
+
+    /* ===== BADGES & PILLS ===== */
+    .statusRow {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: var(--soft-gold);
+      color: var(--warm-gold);
+    }
+
+    .badge.ok {
+      background: #e3f5e9;
+      color: #1e7b4c;
+    }
+
+    .badge.warn {
+      background: #fff3e0;
+      color: #b45b0a;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 40px;
+      background: var(--soft-gold);
+      color: var(--deep-charcoal);
+      font-size: 0.9rem;
+      margin: 0 8px 8px 0;
+      font-weight: 500;
+    }
+
+    /* ===== SUMMARY PAGE ===== */
+    .summary-section {
+      margin: 20px 0;
+    }
+
+    .summary-section h3 {
+      font-size: 1.2rem;
+      margin: 20px 0 10px;
+      color: var(--warm-gold);
+      border-bottom: 1px dashed #E5E5E5;
+      padding-bottom: 5px;
+    }
+
     .summary-line {
       display: flex;
       justify-content: space-between;
-      font-size: 14px;
-      padding: 4px 0;
+      font-size: 1rem;
+      padding: 8px 0;
     }
+
     .summary-line.total {
       font-weight: 700;
-      border-top: 2px solid var(--gold);
-      margin-top: 10px;
-      padding-top: 10px;
+      border-top: 2px solid var(--warm-gold);
+      margin-top: 20px;
+      padding-top: 20px;
+      font-size: 1.3rem;
     }
+
     .summary-items {
       list-style: none;
       padding: 0;
-      margin: 5px 0 10px;
-      font-size: 13px;
-      color: var(--muted);
+      margin: 10px 0;
     }
+
     .summary-items li {
-      padding: 2px 0;
+      padding: 4px 0;
+      color: var(--muted-text);
+    }
+
+    #chips {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 15px 0;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--muted-text);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      background: var(--pure-white);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      h1 { font-size: 1.8rem; }
+      .tabs { overflow-x: auto; justify-content: flex-start; padding-bottom: 5px; }
+      .row { grid-template-columns: 1fr; gap: 10px; }
+      .card { padding: 20px; }
+      .btn { min-width: 100%; }
+      .optionsGrid { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      .tabs-wrap, .actions, .btn { display: none !important; }
+      body { background: white; }
+      .card { box-shadow: none; border: 1px solid #ddd; }
     }
   </style>
 </head>
@@ -324,23 +590,23 @@
         <img class="logoImg" id="brandLogo" src="members_lounge_logo.png" alt="Brand Logo"
              onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='inline-flex';">
         <span class="logoFallback" id="logoFallback" style="display:none;">
+          <i class="fas fa-crown" style="color: var(--warm-gold);"></i>
           <span>THE MEMBERS LOUNGE</span>
         </span>
       </div>
     </div>
-
     <h1><span class="gold" id="brandTitle">Event Signature Selection</span></h1>
     <div class="sub" id="brandSubtitle">Reggio Calabria Club, Parkville</div>
   </header>
 
   <div class="tabs-wrap">
     <div class="tabs" role="tablist" aria-label="Event signature tabs">
-      <div class="tab active" data-page="quote" role="tab" aria-selected="true">Quote</div>
-      <div class="tab" data-page="couple" role="tab" aria-selected="false">Couple</div>
-      <div class="tab" data-page="food" role="tab" aria-selected="false">Food</div>
-      <div class="tab" data-page="drinks" role="tab" aria-selected="false">Drinks</div>
-      <div class="tab" data-page="summary" role="tab" aria-selected="false">Summary</div>
-      <div class="tab nextTab" id="nextTab" title="Move to next tab">Next →</div>
+      <div class="tab active" data-page="quote" role="tab" aria-selected="true"><i class="fas fa-file-invoice"></i> Quote</div>
+      <div class="tab" data-page="couple" role="tab" aria-selected="false"><i class="fas fa-heart"></i> Couple</div>
+      <div class="tab" data-page="food" role="tab" aria-selected="false"><i class="fas fa-utensils"></i> Food</div>
+      <div class="tab" data-page="drinks" role="tab" aria-selected="false"><i class="fas fa-wine-glass-alt"></i> Drinks</div>
+      <div class="tab" data-page="summary" role="tab" aria-selected="false"><i class="fas fa-clipboard-list"></i> Summary</div>
+      <div class="tab nextTab" id="nextTab" title="Move to next tab">Next <i class="fas fa-arrow-right"></i></div>
     </div>
   </div>
 
@@ -349,10 +615,8 @@
     <section class="page active" id="page-quote">
       <div class="grid">
         <div class="card">
-          <h2>Indicative Quote (Live)</h2>
+          <h2><i class="fas fa-calculator gold"></i> Indicative Quote (Live)</h2>
           <div class="hint">Room hire + dry hire + security + selected food courses + selected drinks = estimate.</div>
-
-          <div class="divider"></div>
 
           <div class="row">
             <div>
@@ -379,8 +643,6 @@
             </div>
           </div>
 
-          <div class="divider"></div>
-
           <table class="table" aria-label="Quote breakdown">
             <tbody>
               <tr><td>Room hire</td><td id="qRoom">$0.00</td></tr>
@@ -397,25 +659,25 @@
           </div>
 
           <div class="actions">
-            <button class="btn" id="resetAll" type="button">Reset</button>
-            <button class="btn" id="printQuote" type="button">Print</button>
-            <button class="btn primary" id="nextQ" type="button">Next →</button>
+            <button class="btn" id="resetAll" type="button"><i class="fas fa-undo-alt"></i> Reset</button>
+            <button class="btn" id="printQuote" type="button"><i class="fas fa-print"></i> Print</button>
+            <button class="btn primary" id="nextQ" type="button">Next <i class="fas fa-arrow-right"></i></button>
           </div>
         </div>
 
         <div class="card">
-          <h2>Quick Snapshot</h2>
+          <h2><i class="fas fa-chart-pie gold"></i> Quick Snapshot</h2>
 
           <div class="statusRow">
-            <span class="badge" id="foodCompleteBadge">Menu: Custom</span>
-            <span class="badge" id="drinksCompleteBadge">Drinks: Draft</span>
+            <span class="badge" id="foodCompleteBadge"><i class="fas fa-utensils"></i> Menu: Custom</span>
+            <span class="badge" id="drinksCompleteBadge"><i class="fas fa-wine-glass-alt"></i> Drinks: Draft</span>
           </div>
 
           <div class="kpi">
             <div class="box"><div class="label">Adults</div><div class="value" id="kpiAdults">120</div></div>
             <div class="box"><div class="label">Children</div><div class="value" id="kpiChildren">20</div></div>
-            <div class="box"><div class="label">Food subtotal</div><div class="value mono" id="kpiFood">$0.00</div></div>
-            <div class="box"><div class="label">Avg per guest</div><div class="value mono" id="kpiAvg">$0.00</div></div>
+            <div class="box"><div class="label">Food subtotal</div><div class="value" id="kpiFood">$0.00</div></div>
+            <div class="box"><div class="label">Avg per guest</div><div class="value" id="kpiAvg">$0.00</div></div>
           </div>
         </div>
       </div>
@@ -425,7 +687,7 @@
     <section class="page" id="page-couple">
       <div class="grid">
         <div class="card">
-          <h2>Couple Details</h2>
+          <h2><i class="fas fa-user-friends gold"></i> Couple Details</h2>
 
           <label for="coupleName">Couple Name</label>
           <input id="coupleName" placeholder="e.g., Laura & Daniel">
@@ -443,7 +705,7 @@
                 <option value="fior">FIOR Parkville</option>
                 <option value="alora">ALORA Macedon</option>
               </select>
-              <div class="small">Venue selection switches branding automatically.</div>
+              <div class="hint">Venue selection switches branding automatically.</div>
             </div>
           </div>
 
@@ -457,18 +719,18 @@
           <textarea id="notes" placeholder="Dietary notes, timing, styling, music, special requests…"></textarea>
 
           <div class="actions">
-            <button class="btn ghost" id="backC" type="button">← Back</button>
-            <button class="btn primary" id="nextC" type="button">Next →</button>
+            <button class="btn ghost" id="backC" type="button"><i class="fas fa-arrow-left"></i> Back</button>
+            <button class="btn primary" id="nextC" type="button">Next <i class="fas fa-arrow-right"></i></button>
           </div>
         </div>
 
         <div class="card">
-          <h2>Venue Profile</h2>
+          <h2><i class="fas fa-map-marker-alt gold"></i> Venue Profile</h2>
           <div class="small" id="venueProfileText">
             Select a venue to apply branding + default costing (only fills if your cost fields are still $0).
           </div>
           <div class="divider"></div>
-          <div class="small">If you want different menus per venue later (FIOR vs ALORA), we can also do that.</div>
+          <div class="hint">If you want different menus per venue later (FIOR vs ALORA), we can also do that.</div>
         </div>
       </div>
     </section>
@@ -476,49 +738,46 @@
     <!-- PAGE 3 -->
     <section class="page" id="page-food">
       <div class="card">
-        <h2>Food Builder (Course-Driven)</h2>
+        <h2><i class="fas fa-utensils gold"></i> Food Builder (Course-Driven)</h2>
         <div class="hint">
           Select items. Each course adds its course price if at least one item is selected in that course.
         </div>
 
-        <div class="divider"></div>
-
         <div class="actions">
-          <button class="btn" type="button" onclick="selectAll(true)">Select All (up to max)</button>
-          <button class="btn" type="button" onclick="selectAll(false)">Deselect All</button>
+          <button class="btn" type="button" onclick="selectAll(true)"><i class="fas fa-check-double"></i> Select All (up to max)</button>
+          <button class="btn" type="button" onclick="selectAll(false)"><i class="fas fa-times"></i> Deselect All</button>
         </div>
 
         <div class="course" data-course="canapes">
-          <h3>Canapés (choose up to 3)</h3>
+          <h3>Canapés <span class="badge">choose up to 3</span></h3>
           <div class="optionsGrid" id="list-canapes"></div>
           <div class="count" id="count-canapes">0 selected</div>
           <div class="warnBox" id="warn-canapes"></div>
         </div>
 
         <div class="course" data-course="antipasto">
-          <h3>Antipasto Plates (max 2 hot, max 5 non‑hot)</h3>
-          <div class="small">Hot items are marked. You may select up to 2 hot and up to 5 cold items.</div>
+          <h3>Antipasto Plates <span class="badge">max 2 hot, max 5 non‑hot</span></h3>
           <div class="optionsGrid" id="list-antipasto"></div>
           <div class="count" id="count-antipasto">Hot: 0/2 · Cold: 0/5</div>
           <div class="warnBox" id="warn-antipasto"></div>
         </div>
 
         <div class="course" data-course="pasta">
-          <h3>Entrée / Pasta (choose up to 2)</h3>
+          <h3>Entrée / Pasta <span class="badge">choose up to 2</span></h3>
           <div class="optionsGrid" id="list-pasta"></div>
           <div class="count" id="count-pasta">0 selected</div>
           <div class="warnBox" id="warn-pasta"></div>
         </div>
 
         <div class="course" data-course="mains">
-          <h3>Mains (choose up to 2)</h3>
+          <h3>Mains <span class="badge">choose up to 2</span></h3>
           <div class="optionsGrid" id="list-mains"></div>
           <div class="count" id="count-mains">0 selected</div>
           <div class="warnBox" id="warn-mains"></div>
         </div>
 
         <div class="course" data-course="dessert">
-          <h3>Dessert (choose up to 1)</h3>
+          <h3>Dessert <span class="badge">choose up to 1</span></h3>
           <div class="optionsGrid" id="list-dessert"></div>
           <div class="count" id="count-dessert">0 selected</div>
           <div class="warnBox" id="warn-dessert"></div>
@@ -526,13 +785,12 @@
 
         <div class="course">
           <h3>Supper / Late Night (fixed)</h3>
-          <div class="small">Pizza only (fixed). No selection required.</div>
+          <div class="hint">Pizza only (fixed). No selection required.</div>
           <div class="count">Included: Pizza</div>
 
-          <div class="divider"></div>
-          <h3 style="margin-top:0;">Optional Add-on: Fruit Platter</h3>
-          <label style="display:flex; align-items:center; gap:10px; color:var(--text); font-weight:700;">
-            <input id="fruitPlatter" type="checkbox" style="width:auto;"> Add Fruit Platter (per table)
+          <h3 style="margin-top:20px;">Optional Add-on: Fruit Platter</h3>
+          <label style="display:flex; align-items:center; gap:10px; font-weight:600; margin-bottom:15px;">
+            <input id="fruitPlatter" type="checkbox" style="width:20px; height:20px;"> Add Fruit Platter (per table)
           </label>
           <div class="row">
             <div>
@@ -544,12 +802,12 @@
               <input id="fruitPerTable" type="number" min="0" step="1" value="35" readonly>
             </div>
           </div>
-          <div class="small">This add-on is added to food total when checked.</div>
+          <div class="hint">This add-on is added to food total when checked.</div>
         </div>
 
         <div class="actions">
-          <button class="btn ghost" id="backF2" type="button">← Back</button>
-          <button class="btn primary" id="nextF2" type="button">Next →</button>
+          <button class="btn ghost" id="backF2" type="button"><i class="fas fa-arrow-left"></i> Back</button>
+          <button class="btn primary" id="nextF2" type="button">Next <i class="fas fa-arrow-right"></i></button>
         </div>
       </div>
     </section>
@@ -558,7 +816,7 @@
     <section class="page" id="page-drinks">
       <div class="grid">
         <div class="card">
-          <h2>Drinks</h2>
+          <h2><i class="fas fa-wine-glass-alt gold"></i> Drinks</h2>
           <div class="hint">Choose drinks. Quote updates live.</div>
 
           <label for="drinkMode">Drinks Option</label>
@@ -578,22 +836,20 @@
             </div>
           </div>
 
-          <div class="divider"></div>
-          <div class="small" id="drinkInfo"></div>
+          <div class="hint" id="drinkInfo"></div>
 
           <div class="actions">
-            <button class="btn ghost" id="backD" type="button">← Back</button>
-            <button class="btn primary" id="nextD" type="button">Next →</button>
+            <button class="btn ghost" id="backD" type="button"><i class="fas fa-arrow-left"></i> Back</button>
+            <button class="btn primary" id="nextD" type="button">Next <i class="fas fa-arrow-right"></i></button>
           </div>
         </div>
 
         <div class="card">
-          <h2>Status</h2>
+          <h2><i class="fas fa-info-circle gold"></i> Status</h2>
           <div class="statusRow">
-            <span class="badge" id="drinksCompleteBadge2">Drinks: Draft</span>
+            <span class="badge" id="drinksCompleteBadge2"><i class="fas fa-wine-glass-alt"></i> Drinks: Draft</span>
           </div>
-          <div class="divider"></div>
-          <div class="small">Bar prices show $0 for drinks (indicative). Custom adds into the quote.</div>
+          <div class="hint">Bar prices show $0 for drinks (indicative). Custom adds into the quote.</div>
         </div>
       </div>
     </section>
@@ -602,23 +858,22 @@
     <section class="page" id="page-summary">
       <div class="grid">
         <div class="card">
-          <h2>Final Summary</h2>
+          <h2><i class="fas fa-clipboard-check gold"></i> Final Summary</h2>
           <div id="finalSummary" class="small">Complete the steps to see your summary.</div>
 
-          <div class="divider"></div>
           <div class="actions">
-            <button class="btn" id="copySummary" type="button">Copy</button>
-            <button class="btn" id="printSummary" type="button">Print</button>
+            <button class="btn" id="copySummary" type="button"><i class="fas fa-copy"></i> Copy</button>
+            <button class="btn" id="printSummary" type="button"><i class="fas fa-print"></i> Print</button>
           </div>
 
           <div class="actions" style="margin-top:14px">
-            <button class="btn ghost" id="backS" type="button">← Back</button>
-            <button class="btn primary" id="toQuote" type="button">Back to Quote</button>
+            <button class="btn ghost" id="backS" type="button"><i class="fas fa-arrow-left"></i> Back</button>
+            <button class="btn primary" id="toQuote" type="button"><i class="fas fa-home"></i> Back to Quote</button>
           </div>
         </div>
 
         <div class="card">
-          <h2>Selected Items</h2>
+          <h2><i class="fas fa-tags gold"></i> Selected Items</h2>
           <div id="chips"></div>
           <div class="divider"></div>
           <div class="small" id="summaryCourseCounts"></div>
@@ -632,6 +887,8 @@
   <footer id="brandFooter">Members Lounge | Reggio Calabria Club, Parkville</footer>
 
 <script>
+  // (All original JavaScript remains exactly the same – I've preserved it below)
+  // ... (the entire script from the original, unchanged)
   function escapeHtml(str){
     return String(str || "")
       .replace(/&/g,"&amp;")
