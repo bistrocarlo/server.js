@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome for icons (optional, but adds polish) -->
+  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
@@ -61,7 +61,6 @@
       text-align: center;
       border-bottom: 1px solid rgba(0,0,0,0.05);
       box-shadow: var(--shadow-sm);
-      position: relative;
     }
 
     .brandline {
@@ -110,14 +109,9 @@
       font-weight: 300;
     }
 
-    /* ===== TABS ===== */
+    /* ===== TABS (no longer sticky) ===== */
     .tabs-wrap {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.95);
       border-bottom: 1px solid rgba(0,0,0,0.05);
       padding: 15px 0;
     }
@@ -147,7 +141,6 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      position: relative;
     }
 
     .tab:hover {
