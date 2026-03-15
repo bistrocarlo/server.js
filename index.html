@@ -179,7 +179,7 @@
       color: white;
     }
 
-    /* ===== PAGE VISIBILITY (FIXED) ===== */
+    /* ===== PAGE VISIBILITY ===== */
     .page {
       display: none;
     }
@@ -736,7 +736,7 @@
                 <option value="fior">FIOR Parkville</option>
                 <option value="alora">ALORA Macedon</option>
               </select>
-              <div class="hint">Venue selection switches branding automatically.</div>
+              <div class="hint">Venue selection switches branding and menu items automatically.</div>
             </div>
           </div>
 
@@ -758,10 +758,11 @@
         <div class="card">
           <h2><i class="fas fa-map-marker-alt gold"></i> Venue Profile</h2>
           <div class="small" id="venueProfileText">
-            Select a venue to apply branding + default costing (only fills if your cost fields are still $0).
+            Select a venue to apply branding + default costing (only fills if your cost fields are still $0).<br>
+            <strong>ALORA</strong> features a special menu (no deep fryer): Caprese skewers (instead of prawn roll) and Chargrilled prawns (instead of calamari).
           </div>
           <div class="divider"></div>
-          <div class="hint">If you want different menus per venue later (FIOR vs ALORA), we can also do that.</div>
+          <div class="hint">Menus adapt automatically to the venue.</div>
         </div>
       </div>
     </section>
@@ -918,7 +919,6 @@
   <footer id="brandFooter">Members Lounge | Reggio Calabria Club, Parkville</footer>
 
 <script>
-  // (All JavaScript remains exactly the same – fully functional)
   function escapeHtml(str){
     return String(str || "")
       .replace(/&/g,"&amp;")
@@ -961,70 +961,15 @@
     }
   };
 
-  function safeSetLogo(src){
-    const img = $("brandLogo");
-    const fallback = $("logoFallback");
-    if(!img) return;
-
-    img.style.display = "block";
-    if(fallback) fallback.style.display = "none";
-
-    img.onerror = function(){
-      if(src !== "members_lounge_logo.png"){
-        safeSetLogo("members_lounge_logo.png");
-        return;
-      }
-      img.style.display = "none";
-      if(fallback) fallback.style.display = "inline-flex";
-    };
-    img.src = src;
-  }
-
-  function applyVenueProfile(profileKey){
-    const key = profileKey || "members";
-    const p = VENUE_PROFILES[key] || VENUE_PROFILES.members;
-
-    const subtitleEl = $("brandSubtitle");
-    const footerEl = $("brandFooter");
-    if(subtitleEl) subtitleEl.textContent = p.subtitle;
-    if(footerEl) footerEl.textContent = p.footer;
-
-    safeSetLogo(p.logo);
-
-    const info = $("venueProfileText");
-    if(info){
-      info.innerHTML = "<b>Active venue:</b> " + escapeHtml(p.label) + "<br>Branding switches automatically.";
-    }
-
-    const roomHireEl = $("roomHire");
-    const dryHireEl = $("dryHire");
-    const securityEl = $("security");
-
-    const r = Number(roomHireEl?.value || 0);
-    const d = Number(dryHireEl?.value || 0);
-    const s = Number(securityEl?.value || 0);
-
-    if(roomHireEl && r === 0) roomHireEl.value = p.defaults.roomHire;
-    if(dryHireEl && d === 0)  dryHireEl.value  = p.defaults.dryHire;
-    if(securityEl && s === 0) securityEl.value = p.defaults.security;
-  }
-
-  const COURSE_LABEL = {
-    canapes: "Canapés",
-    antipasto: "Antipasto",
-    pasta: "Entrée / Pasta",
-    mains: "Mains",
-    dessert: "Dessert"
-  };
-
-  const MENU = {
+  // Base menu (used for all venues except ALORA)
+  const BASE_MENU = {
     canapes: [
-      "Arancini tomato",
-      "Arancini ragú",
-      "Prawn spring rolls",
-      "Beef empanadas",
-      "Caprese empanadas",
-      "Croquette - potato"
+      "Arancini",
+      "Focaccia Pugliese",
+      "Prawn roll",
+      "Parmesan bites with honey drizzle",
+      "Corn empanadas",
+      "Croquettes"
     ],
     antipasto: [
       "Bruschettta di pomodoro",
@@ -1032,18 +977,18 @@
       "Feta & Kefalograviera",
       "Tiropita",
       "Trio of dips with pita",
-      "Mixed olives with focaccia",
+      "Grilled & pickled vegetables",
       "Eggplant parmigiana",
       "Bocconcini & ricotta",
       "Calamari fritti",
       "Meatballs in sugo",
       "Cevapi",
-      "Italian mild sausages"
+      "Italian pork sausages"
     ],
     pasta: [
       "Pasta al Ragú (four meat sauce)",
-      "Gnocchi Pesto (nut free)",
-      "Gnocchi Porcini (mushroom)",
+      "Gnocchi Pesto (vegetarian)",
+      "Gnocchi Gorgonzola (blue vein cheese sauce)",
       "Pasta Napoli (tomato & basil)"
     ],
     mains: [
@@ -1061,11 +1006,39 @@
     ]
   };
 
+  // ALORA-specific menu (with replacements)
+  const ALORA_MENU = {
+    canapes: BASE_MENU.canapes.map(item => 
+      item === "Prawn roll" ? "Caprese skewers" : item
+    ),
+    antipasto: BASE_MENU.antipasto.map(item => 
+      item === "Calamari fritti" ? "Chargrilled prawns" : item
+    ),
+    pasta: BASE_MENU.pasta.slice(),
+    mains: BASE_MENU.mains.slice(),
+    dessert: BASE_MENU.dessert.slice()
+  };
+
+  // Return the appropriate menu based on selected venue
+  function getMenuForVenue(venueKey) {
+    return venueKey === 'alora' ? ALORA_MENU : BASE_MENU;
+  }
+
+  // Hot items mapping (updated for ALORA items)
   const HOT_ANTIPASTO = {
     "Calamari fritti": true,
+    "Chargrilled prawns": true,   // grilled = hot
     "Cevapi": true,
     "Meatballs in sugo": true,
-    "Italian mild sausages": true
+    "Italian pork sausages": true
+  };
+
+  const COURSE_LABEL = {
+    canapes: "Canapés",
+    antipasto: "Antipasto",
+    pasta: "Entrée / Pasta",
+    mains: "Mains",
+    dessert: "Dessert"
   };
 
   const RULES = {
@@ -1097,7 +1070,6 @@
       t.setAttribute("aria-selected", active ? "true" : "false");
     });
 
-    // Scroll main container to top when changing pages
     document.querySelector('main').scrollTop = 0;
     renderAll();
   }
@@ -1191,12 +1163,29 @@
     renderAll();
   }
 
-  function addCheckboxList(courseKey, listId){
+  // Rebuild all food checkboxes based on current venue
+  function rebuildFoodLists() {
+    const venue = $("venueSpace").value;
+    const menu = getMenuForVenue(venue);
+
+    addCheckboxList("canapes", "list-canapes", menu.canapes);
+    addCheckboxList("antipasto", "list-antipasto", menu.antipasto);
+    addCheckboxList("pasta", "list-pasta", menu.pasta);
+    addCheckboxList("mains", "list-mains", menu.mains);
+    addCheckboxList("dessert", "list-dessert", menu.dessert);
+
+    attachLimitListeners();
+    enforceAntipastoLimit();
+    Object.keys(RULES).forEach(enforceLimit);
+    renderAll();
+  }
+
+  function addCheckboxList(courseKey, listId, items){
     const wrap = document.getElementById(listId);
     if(!wrap) return;
     wrap.innerHTML = "";
 
-    (MENU[courseKey] || []).forEach((item, idx) => {
+    items.forEach((item, idx) => {
       const div = document.createElement("div");
       div.className = "opt";
 
@@ -1301,11 +1290,14 @@
 
   function attachLimitListeners(){
     document.querySelectorAll('input[type="checkbox"][data-course]').forEach(cb=>{
-      cb.addEventListener("change", ()=>{
-        enforceLimit(cb.dataset.course);
-        renderAll();
-      });
+      cb.removeEventListener("change", limitHandler);
+      cb.addEventListener("change", limitHandler);
     });
+  }
+
+  function limitHandler(e) {
+    enforceLimit(e.target.dataset.course);
+    renderAll();
   }
 
   window.selectAll = function(checked){
@@ -1509,6 +1501,57 @@
     renderAll();
   }
 
+  function safeSetLogo(src){
+    const img = $("brandLogo");
+    const fallback = $("logoFallback");
+    if(!img) return;
+
+    img.style.display = "block";
+    if(fallback) fallback.style.display = "none";
+
+    img.onerror = function(){
+      if(src !== "members_lounge_logo.png"){
+        safeSetLogo("members_lounge_logo.png");
+        return;
+      }
+      img.style.display = "none";
+      if(fallback) fallback.style.display = "inline-flex";
+    };
+    img.src = src;
+  }
+
+  function applyVenueProfile(profileKey){
+    const key = profileKey || "members";
+    const p = VENUE_PROFILES[key] || VENUE_PROFILES.members;
+
+    const subtitleEl = $("brandSubtitle");
+    const footerEl = $("brandFooter");
+    if(subtitleEl) subtitleEl.textContent = p.subtitle;
+    if(footerEl) footerEl.textContent = p.footer;
+
+    safeSetLogo(p.logo);
+
+    const info = $("venueProfileText");
+    if(info){
+      info.innerHTML = "<b>Active venue:</b> " + escapeHtml(p.label) + "<br>Branding switches automatically.";
+    }
+
+    const roomHireEl = $("roomHire");
+    const dryHireEl = $("dryHire");
+    const securityEl = $("security");
+
+    const r = Number(roomHireEl?.value || 0);
+    const d = Number(dryHireEl?.value || 0);
+    const s = Number(securityEl?.value || 0);
+
+    if(roomHireEl && r === 0) roomHireEl.value = p.defaults.roomHire;
+    if(dryHireEl && d === 0)  dryHireEl.value  = p.defaults.dryHire;
+    if(securityEl && s === 0) securityEl.value = p.defaults.security;
+
+    // Rebuild food lists with the new venue's menu
+    rebuildFoodLists();
+  }
+
   on($("copySummary"), "click", async ()=>{
     const text = finalSummaryEl.innerText;
     try{ await navigator.clipboard.writeText(text); alert("Summary copied"); }
@@ -1516,15 +1559,8 @@
   });
   on($("printSummary"), "click", ()=>window.print());
 
-  addCheckboxList("canapes","list-canapes");
-  addCheckboxList("antipasto","list-antipasto");
-  addCheckboxList("pasta","list-pasta");
-  addCheckboxList("mains","list-mains");
-  addCheckboxList("dessert","list-dessert");
-
-  attachLimitListeners();
-  enforceAntipastoLimit();
-  Object.keys(RULES).forEach(enforceLimit);
+  // Initial build with default venue (members)
+  rebuildFoodLists();
 
   document.querySelectorAll("input,select,textarea").forEach(el=>{
     el.addEventListener("input", renderAll);
