@@ -179,6 +179,14 @@
       color: white;
     }
 
+    /* ===== PAGE VISIBILITY (FIXED) ===== */
+    .page {
+      display: none;
+    }
+    .page.active {
+      display: block;
+    }
+
     /* ===== MAIN (scrollable content area) ===== */
     main {
       flex: 1 1 auto;
@@ -910,7 +918,7 @@
   <footer id="brandFooter">Members Lounge | Reggio Calabria Club, Parkville</footer>
 
 <script>
-  // (All original JavaScript remains exactly the same – preserved below)
+  // (All JavaScript remains exactly the same – fully functional)
   function escapeHtml(str){
     return String(str || "")
       .replace(/&/g,"&amp;")
@@ -1164,16 +1172,7 @@
     if(!el) return;
     el.classList.remove("ok","warn");
     if(state) el.classList.add(state);
-    // For badges with icons, we need to preserve the icon.
-    // We'll set textContent but keep the inner HTML with icon.
-    // Since we have icons via <i>, we must be careful.
-    // Simpler: recreate content with icon? We'll just set text after icon.
-    // For now, we'll assume badges contain only text and we set textContent.
-    // But our badges have <i> inside. Let's handle by setting textContent but also keeping icon?
-    // This is a bit messy; we'll keep original approach but adjust if needed.
-    // To keep it simple, we'll set the badge's text by replacing its text node after the icon.
     if(el.children.length > 0) {
-      // assume first child is icon
       while(el.childNodes.length > 1) el.removeChild(el.lastChild);
       el.appendChild(document.createTextNode(' ' + text));
     } else {
@@ -1225,7 +1224,6 @@
     return out;
   }
 
-  // Enhanced limit enforcement for antipasto (hot/cold)
   function enforceAntipastoLimit() {
     const course = 'antipasto';
     const checkboxes = document.querySelectorAll('input[type="checkbox"][data-course="' + course + '"]');
