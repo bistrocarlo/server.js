@@ -968,10 +968,10 @@
   const BASE_MENU = {
     canapes: [
       "Arancini",
-      "Focaccia Pugliese",
-      "Prawn roll",
-      "Parmesan bites with honey drizzle",
-      "Corn empanadas",
+      "Focaccia fingers",
+      "Prawn spring rolls",
+      "Parmigiano bites",
+      "Caprese empanadas",
       "Croquettes"
     ],
     antipasto: [
@@ -980,7 +980,7 @@
       "Feta & Kefalograviera",
       "Tiropita",
       "Trio of dips with pita",
-      "Grilled & pickled vegetables",
+      "Warm marinated olives",
       "Eggplant parmigiana",
       "Bocconcini & ricotta",
       "Calamari fritti",
@@ -989,9 +989,9 @@
       "Italian pork sausages"
     ],
     pasta: [
-      "Pasta al Ragú (four meat sauce)",
-      "Gnocchi Pesto (vegetarian)",
-      "Gnocchi Gorgonzola (blue vein cheese sauce)",
+      "Pasta al Ragú (three meats, tomato)",
+      "Gnocchi Pesto (basil, parmesan & nut-free)",
+      "Casarecce Amatriciana (guanciale & pecorino, tomato)",
       "Pasta Napoli (tomato & basil)"
     ],
     mains: [
@@ -1003,8 +1003,8 @@
       "Stuffed pepper with seasonal vegetables and cauliflower steak"
     ],
     dessert: [
-      "Roaming assorted desserts (mini cannoli & baklava)",
-      "Tiramisu & cheese cake (alternating)",
+      "Sharing assorted desserts (mini cannoli & baklava)",
+      "Tiramisu & vanilla cheese cake (alternating)",
       "Gelato dessert (cassata, tartufo, baci)"
     ]
   };
@@ -1013,7 +1013,7 @@
   const ALORA_MENU = {
     canapes: BASE_MENU.canapes.map(item => {
       if (item === "Arancini") return "Prosciutto-wrapped melon";
-      if (item === "Prawn roll") return "Caprese skewers";
+      if (item === "Prawn spring rolls") return "Caprese skewers";
       return item;
     }),
     antipasto: BASE_MENU.antipasto.map(item => 
