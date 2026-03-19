@@ -965,10 +965,10 @@
   const BASE_MENU = {
     canapes: [
       "Arancini",
-      "Focaccia Pugliese",
-      "Prawn roll",
-      "Parmesan bites with honey drizzle",
-      "Corn empanadas",
+      "Focaccia fingers",
+      "Prawn spring rolls",
+      "Parmesan bites",
+      "Caprese empanadas",
       "Croquettes"
     ],
     antipasto: [
@@ -977,7 +977,7 @@
       "Feta & Kefalograviera",
       "Tiropita",
       "Trio of dips with pita",
-      "Grilled & pickled vegetables",
+      "Marinated warm olives",
       "Eggplant parmigiana",
       "Bocconcini & ricotta",
       "Calamari fritti",
@@ -986,22 +986,22 @@
       "Italian pork sausages"
     ],
     pasta: [
-      "Pasta al Ragú (four meat sauce)",
-      "Gnocchi Pesto (vegetarian)",
-      "Gnocchi Gorgonzola (blue vein cheese sauce)",
+      "Pasta al Ragú (beef, pork & sausage)",
+      "Gnocchi Pesto (basil & nut free)",
+      "Casarecce Amatriciana (guanciale & pecorino)",
       "Pasta Napoli (tomato & basil)"
     ],
     mains: [
       "Chargrilled chicken breast with a chimichurri dressing",
-      "Italian herb crumbed barramundi fillet",
-      "Lamb shank with white wine and tomato",
+      "Italian herb & panko crumbed barramundi fillet",
+      "Lamb shank with white wine & tomato",
       "Braised beef short ribs in a red wine jus",
       "Bondiola, pork fillet with a salmoriglio sauce",
-      "Stuffed pepper with seasonal vegetables and cauliflower steak"
+      "Stuffed pepper with seasonal vegetables & cauliflower steak"
     ],
     dessert: [
-      "Roaming assorted desserts (mini cannoli & baklava)",
-      "Tiramisu & cheese cake (alternating)",
+      "Sharing assorted desserts (mini cannoli & baklava)",
+      "Tiramisu & vanilla cheese cake (alternating)",
       "Gelato dessert (cassata, tartufo, baci)"
     ]
   };
@@ -1009,7 +1009,7 @@
   // ALORA-specific menu (with replacements)
   const ALORA_MENU = {
     canapes: BASE_MENU.canapes.map(item => 
-      item === "Prawn roll" ? "Caprese skewers" : item
+      item === "Prawn spring roll" ? "Caprese skewers" : item
     ),
     antipasto: BASE_MENU.antipasto.map(item => 
       item === "Calamari fritti" ? "Chargrilled prawns" : item
