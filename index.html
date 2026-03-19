@@ -759,7 +759,10 @@
           <h2><i class="fas fa-map-marker-alt gold"></i> Venue Profile</h2>
           <div class="small" id="venueProfileText">
             Select a venue to apply branding + default costing (only fills if your cost fields are still $0).<br>
-            <strong>ALORA</strong> features a special menu (no deep fryer): Caprese skewers (instead of prawn roll) and Chargrilled prawns (instead of calamari).
+            <strong>ALORA Macedon</strong> features a tailored menu (no deep fryer):<br>
+            • Prosciutto-wrapped melon (instead of Arancini)<br>
+            • Caprese skewers (instead of Prawn roll)<br>
+            • Chargrilled prawns (instead of Calamari fritti)
           </div>
           <div class="divider"></div>
           <div class="hint">Menus adapt automatically to the venue.</div>
@@ -965,10 +968,10 @@
   const BASE_MENU = {
     canapes: [
       "Arancini",
-      "Focaccia fingers",
-      "Prawn spring rolls",
-      "Parmesan bites",
-      "Caprese empanadas",
+      "Focaccia Pugliese",
+      "Prawn roll",
+      "Parmesan bites with honey drizzle",
+      "Corn empanadas",
       "Croquettes"
     ],
     antipasto: [
@@ -977,7 +980,7 @@
       "Feta & Kefalograviera",
       "Tiropita",
       "Trio of dips with pita",
-      "Marinated warm olives",
+      "Grilled & pickled vegetables",
       "Eggplant parmigiana",
       "Bocconcini & ricotta",
       "Calamari fritti",
@@ -986,31 +989,33 @@
       "Italian pork sausages"
     ],
     pasta: [
-      "Pasta al Ragú (beef, pork & sausage)",
-      "Gnocchi Pesto (basil & nut free)",
-      "Casarecce Amatriciana (guanciale & pecorino)",
+      "Pasta al Ragú (four meat sauce)",
+      "Gnocchi Pesto (vegetarian)",
+      "Gnocchi Gorgonzola (blue vein cheese sauce)",
       "Pasta Napoli (tomato & basil)"
     ],
     mains: [
       "Chargrilled chicken breast with a chimichurri dressing",
-      "Italian herb & panko crumbed barramundi fillet",
-      "Lamb shank with white wine & tomato",
+      "Italian herb crumbed barramundi fillet",
+      "Lamb shank with white wine and tomato",
       "Braised beef short ribs in a red wine jus",
       "Bondiola, pork fillet with a salmoriglio sauce",
-      "Stuffed pepper with seasonal vegetables & cauliflower steak"
+      "Stuffed pepper with seasonal vegetables and cauliflower steak"
     ],
     dessert: [
-      "Sharing assorted desserts (mini cannoli & baklava)",
-      "Tiramisu & vanilla cheese cake (alternating)",
+      "Roaming assorted desserts (mini cannoli & baklava)",
+      "Tiramisu & cheese cake (alternating)",
       "Gelato dessert (cassata, tartufo, baci)"
     ]
   };
 
   // ALORA-specific menu (with replacements)
   const ALORA_MENU = {
-    canapes: BASE_MENU.canapes.map(item => 
-      item === "Prawn spring roll" ? "Caprese skewers" : item
-    ),
+    canapes: BASE_MENU.canapes.map(item => {
+      if (item === "Arancini") return "Prosciutto-wrapped melon";
+      if (item === "Prawn roll") return "Caprese skewers";
+      return item;
+    }),
     antipasto: BASE_MENU.antipasto.map(item => 
       item === "Calamari fritti" ? "Chargrilled prawns" : item
     ),
