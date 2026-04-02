@@ -1,1231 +1,1586 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FRESH LINER | Aroma style.</title>
-  <meta name="description" content="FRESH LINER - Aromatizadores con estilo. Fragancias para auto, hogar y espacios comerciales. Diseño moderno, catálogo destacado y contacto directo." />
-  <meta name="theme-color" content="#111111" />
+  <title>The Members Lounge | Event Signature Selection</title>
+  <!-- Elegant fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
-    :root{
-      --bg:#f7f6f2;
-      --surface:#ffffff;
-      --surface-2:#f0eee8;
-      --text:#171717;
-      --muted:#666666;
-      --line:rgba(0,0,0,.10);
-      --gold:#b08d2a;
-      --gold-dark:#8b6b16;
-      --shadow:0 14px 34px rgba(0,0,0,.08);
-      --radius:20px;
-      --radius-sm:14px;
-      --max:1220px;
+    /* ===== RESET & VARIABLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      background:linear-gradient(180deg,#faf9f6 0%, #f5f3ed 100%);
-      color:var(--text);
-      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-      line-height:1.5;
+    :root {
+      --deep-charcoal: #1E1E1E;
+      --warm-gold: #C6A43F;
+      --soft-gold: rgba(198, 164, 63, 0.15);
+      --cream: #FAF7F2;
+      --pure-white: #FFFFFF;
+      --light-gray: #F0F0F0;
+      --muted-text: #6B6B6B;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.12);
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --transition: all 0.2s ease;
     }
 
-    img{max-width:100%;display:block}
-    a{text-decoration:none;color:inherit}
-    button,input,textarea,select{font:inherit}
-
-    .container{
-      width:min(calc(100% - 32px), var(--max));
-      margin-inline:auto;
+    /* ----- Global scroll lock ----- */
+    html, body {
+      height: 100%;
+      overflow: hidden;
     }
 
-    .section{
-      padding:86px 0;
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--cream);
+      color: var(--deep-charcoal);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:8px 14px;
-      border:1px solid rgba(176,141,42,.22);
-      border-radius:999px;
-      background:rgba(176,141,42,.08);
-      color:var(--gold-dark);
-      font-size:.84rem;
-      font-weight:700;
-      letter-spacing:.06em;
-      text-transform:uppercase;
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
 
-    .section-head{
-      display:flex;
-      align-items:end;
-      justify-content:space-between;
-      gap:20px;
-      margin-bottom:28px;
-      flex-wrap:wrap;
+    .gold {
+      color: var(--warm-gold);
     }
 
-    .section-head h2{
-      margin:10px 0 0;
-      font-size:clamp(2rem, 4vw, 3.2rem);
-      line-height:1.05;
-      letter-spacing:-.03em;
+    /* ===== HEADER (fixed) ===== */
+    header {
+      flex-shrink: 0;
+      background: var(--pure-white);
+      padding: 20px 20px;
+      text-align: center;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      box-shadow: var(--shadow-sm);
     }
 
-    .section-head p{
-      margin:0;
-      color:var(--muted);
-      max-width:720px;
-      font-size:1.02rem;
+    .brandline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
-    /* Header */
-    .site-header{
-      position:sticky;
-      top:0;
-      z-index:50;
-      backdrop-filter:blur(14px);
-      background:rgba(247,246,242,.76);
-      border-bottom:1px solid rgba(0,0,0,.06);
+    .logoWrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      background: var(--pure-white);
+      border-radius: 60px;
+      box-shadow: var(--shadow-sm);
     }
 
-    .nav{
-      min-height:78px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width:0;
-    }
-
-    .brand-mark{
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.6), rgba(255,255,255,0) 35%),
-        linear-gradient(145deg, var(--gold), #d8bc69 45%, var(--gold-dark));
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 8px 18px rgba(176,141,42,.25);
-      display:grid;
-      place-items:center;
-      color:#fff;
-    }
-
-    /* Icono de hoja (logo) */
-    .brand-mark svg {
-      width: 28px;
-      height: 28px;
+    .logoImg {
+      max-height: 60px;
+      width: auto;
       display: block;
-      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
     }
 
-    .brand-copy{
-      min-width:0;
+    .logoFallback {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      font-size: 14px;
+      color: var(--deep-charcoal);
+    }
+
+    h1 {
+      margin: 10px 0 5px;
+      font-size: 2rem;
+      font-weight: 900;
     }
 
-    .brand-copy h1{
-      margin:0;
-      font-size:1.2rem;
-      line-height:1.1;
-      letter-spacing:.02em;
-      font-weight:800;
-      text-transform:uppercase;
+    .sub {
+      color: var(--muted-text);
+      font-size: 0.95rem;
+      font-weight: 300;
     }
 
-    .brand-copy span{
-      display:block;
-      margin-top:2px;
-      color:var(--gold-dark);
-      font-size:.78rem;
-      font-weight:600;
-      letter-spacing:.04em;
+    /* ===== TABS (fixed) ===== */
+    .tabs-wrap {
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      padding: 12px 0;
     }
 
-    .nav-links{
-      display:flex;
-      align-items:center;
-      gap:24px;
-      flex-wrap:wrap;
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
 
-    .nav-links a{
-      color:#2a2a2a;
-      font-weight:600;
-      font-size:.96rem;
+    .tab {
+      cursor: pointer;
+      user-select: none;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: transparent;
+      color: var(--muted-text);
+      border: 1px solid transparent;
+      transition: var(--transition);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      min-height:50px;
-      padding:0 20px;
-      border-radius:999px;
-      border:1px solid transparent;
-      transition:.22s ease;
-      font-weight:700;
-      cursor:pointer;
+    .tab:hover {
+      color: var(--warm-gold);
+      background: var(--soft-gold);
+      border-color: var(--soft-gold);
     }
 
-    .btn:hover{transform:translateY(-1px)}
-    .btn-primary{
-      background:linear-gradient(180deg, #c8a84a 0%, var(--gold) 100%);
-      color:#fff;
-      box-shadow:0 12px 28px rgba(176,141,42,.25);
+    .tab.active {
+      background: var(--warm-gold);
+      color: white;
+      border-color: var(--warm-gold);
+      box-shadow: var(--shadow-sm);
     }
 
-    .btn-secondary{
-      background:#fff;
-      color:#1b1b1b;
-      border-color:rgba(0,0,0,.08);
-      box-shadow:var(--shadow);
+    .tab.nextTab {
+      background: var(--soft-gold);
+      color: var(--warm-gold);
+      border-color: var(--warm-gold);
+      font-weight: 700;
     }
 
-    .menu-toggle{
-      display:none;
-      width:48px;
-      height:48px;
-      border-radius:14px;
-      border:1px solid rgba(0,0,0,.08);
-      background:#fff;
-      box-shadow:var(--shadow);
-      cursor:pointer;
+    .tab.nextTab:hover {
+      background: var(--warm-gold);
+      color: white;
     }
 
-    /* Hero */
-    .hero{
-      padding:68px 0 38px;
+    /* ===== PAGE VISIBILITY ===== */
+    .page {
+      display: none;
     }
-
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.08fr .92fr;
-      gap:34px;
-      align-items:center;
-    }
-
-    .hero-copy h2{
-      margin:18px 0 14px;
-      font-size:clamp(2.7rem, 6vw, 5.3rem);
-      line-height:.94;
-      letter-spacing:-.05em;
-    }
-
-    .hero-copy p{
-      margin:0 0 26px;
-      color:var(--muted);
-      font-size:1.08rem;
-      max-width:650px;
-    }
-
-    .hero-actions{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      margin-bottom:26px;
-    }
-
-    .hero-points{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:14px;
-    }
-
-    .hero-point{
-      background:rgba(255,255,255,.72);
-      border:1px solid rgba(0,0,0,.06);
-      border-radius:18px;
-      padding:16px 18px;
-      box-shadow:var(--shadow);
-    }
-
-    .hero-point strong{
-      display:block;
-      font-size:1.15rem;
-      margin-bottom:4px;
-    }
-
-    .hero-point span{
-      color:var(--muted);
-      font-size:.93rem;
-    }
-
-    .hero-visual{
-      position:relative;
-      min-height:620px;
-    }
-
-    .hero-card-main{
-      position:absolute;
-      inset:0;
-      border-radius:30px;
-      overflow:hidden;
-      background:
-        linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.48)),
-        url('images/hero-fragrance.jpg') center/cover no-repeat;
-      box-shadow:0 24px 44px rgba(0,0,0,.13);
-    }
-
-    .hero-overlay{
-      position:absolute;
-      left:24px;
-      right:24px;
-      bottom:24px;
-      padding:22px;
-      border-radius:22px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.18);
-      backdrop-filter:blur(8px);
-      color:#fff;
-    }
-
-    .hero-overlay h3{
-      margin:0 0 8px;
-      font-size:1.45rem;
-      line-height:1.05;
-    }
-
-    .hero-overlay p{
-      margin:0;
-      color:rgba(255,255,255,.86);
-    }
-
-    .floating-card{
-      position:absolute;
-      top:28px;
-      right:-10px;
-      width:min(280px, 72%);
-      background:#fff;
-      border:1px solid rgba(0,0,0,.06);
-      border-radius:22px;
-      padding:18px;
-      box-shadow:0 20px 40px rgba(0,0,0,.10);
-    }
-
-    .floating-card small{
-      color:var(--muted);
-      display:block;
-      margin-bottom:8px;
-      font-weight:700;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-    }
-
-    .floating-card h4{
-      margin:0 0 6px;
-      font-size:1.08rem;
-    }
-
-    .floating-card p{
-      margin:0;
-      color:var(--muted);
-      font-size:.94rem;
-    }
-
-    /* Cards */
-    .grid-3{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:22px;
-    }
-
-    .grid-4{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:22px;
-    }
-
-    .card{
-      background:rgba(255,255,255,.78);
-      border:1px solid rgba(0,0,0,.06);
-      border-radius:24px;
-      overflow:hidden;
-      box-shadow:var(--shadow);
-    }
-
-    .card-body{
-      padding:22px;
-    }
-
-    .card h3,.card h4{
-      margin:0 0 8px;
-      line-height:1.05;
-      letter-spacing:-.02em;
-    }
-
-    .card p{
-      margin:0;
-      color:var(--muted);
-    }
-
-    .img-box{
-      aspect-ratio:4/3;
-      background:#ece8df center/cover no-repeat;
-    }
-
-    .tag{
-      display:inline-flex;
-      margin-bottom:12px;
-      padding:7px 12px;
-      border-radius:999px;
-      background:rgba(176,141,42,.10);
-      color:var(--gold-dark);
-      font-size:.78rem;
-      font-weight:800;
-      letter-spacing:.06em;
-      text-transform:uppercase;
-    }
-
-    /* Product cards */
-    .product-card{
-      display:flex;
-      flex-direction:column;
-      min-height:100%;
-    }
-
-    .product-card .img-box{
-      aspect-ratio:1/1;
-    }
-
-    .product-card .meta{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-top:14px;
-    }
-
-    .product-card .meta span{
-      color:var(--muted);
-      font-size:.92rem;
-    }
-
-    /* Feature strip */
-    .feature-strip{
-      padding:28px;
-      border-radius:28px;
-      background:linear-gradient(135deg, #181818 0%, #2a2a2a 100%);
-      color:#fff;
-      box-shadow:0 24px 44px rgba(0,0,0,.14);
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:24px;
-      align-items:center;
-    }
-
-    .feature-strip h3{
-      margin:0 0 10px;
-      font-size:clamp(1.8rem, 3vw, 2.8rem);
-      line-height:1.02;
-      letter-spacing:-.03em;
+    .page.active {
+      display: block;
     }
 
-    .feature-strip p{
-      margin:0;
-      color:rgba(255,255,255,.78);
-      font-size:1rem;
+    /* ===== MAIN (scrollable content area) ===== */
+    main {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      padding: 20px;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
     }
 
-    .feature-list{
-      display:grid;
-      gap:12px;
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--pure-white);
+      border: none;
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+      margin-bottom: 20px;
     }
 
-    .feature-item{
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-      padding:14px 16px;
-      border-radius:18px;
-      background:rgba(255,255,255,.07);
-      border:1px solid rgba(255,255,255,.08);
+    .card:hover {
+      box-shadow: var(--shadow-lg);
     }
 
-    .feature-item strong{
-      display:block;
-      margin-bottom:4px;
+    .card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--deep-charcoal);
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .feature-item span{
-      color:rgba(255,255,255,.74);
-      font-size:.94rem;
+    .hint {
+      color: var(--muted-text);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      font-style: italic;
     }
 
-    /* About / process */
-    .two-col{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:24px;
+    /* ===== GRID LAYOUT FOR TWO COLUMNS ===== */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
     }
-
-    .panel{
-      background:rgba(255,255,255,.76);
-      border:1px solid rgba(0,0,0,.06);
-      border-radius:26px;
-      padding:28px;
-      box-shadow:var(--shadow);
-    }
-
-    .steps{
-      display:grid;
-      gap:14px;
-      margin-top:8px;
-    }
-
-    .step{
-      display:grid;
-      grid-template-columns:56px 1fr;
-      gap:14px;
-      align-items:start;
-      padding:14px;
-      border-radius:18px;
-      background:var(--surface-2);
-    }
-
-    .step-num{
-      width:56px;
-      height:56px;
-      border-radius:18px;
-      display:grid;
-      place-items:center;
-      font-weight:900;
-      color:#fff;
-      background:linear-gradient(180deg, #c8a84a 0%, var(--gold-dark) 100%);
-    }
-
-    .step h4{
-      margin:0 0 5px;
-    }
-
-    .step p{
-      margin:0;
-      color:var(--muted);
-    }
-
-    /* Stats */
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:18px;
-    }
-
-    .stat{
-      background:#fff;
-      border:1px solid rgba(0,0,0,.06);
-      border-radius:22px;
-      padding:22px;
-      box-shadow:var(--shadow);
-      text-align:center;
-    }
-
-    .stat strong{
-      display:block;
-      font-size:2rem;
-      line-height:1;
-      margin-bottom:8px;
-      letter-spacing:-.04em;
-    }
-
-    .stat span{
-      color:var(--muted);
-      font-size:.94rem;
-    }
-
-    /* Contact */
-    .contact-wrap{
-      display:grid;
-      grid-template-columns:1fr .95fr;
-      gap:24px;
-    }
-
-    .contact-form{
-      display:grid;
-      gap:14px;
-    }
-
-    .field{
-      display:grid;
-      gap:8px;
-    }
-
-    .field label{
-      font-weight:700;
-      font-size:.95rem;
-    }
-
-    .field input,
-    .field textarea,
-    .field select{
-      width:100%;
-      border:1px solid rgba(0,0,0,.10);
-      background:#fff;
-      min-height:56px;
-      border-radius:16px;
-      padding:0 16px;
-      color:var(--text);
-      outline:none;
-    }
-
-    .field textarea{
-      min-height:150px;
-      padding:16px;
-      resize:vertical;
-    }
-
-    .field input:focus,
-    .field textarea:focus,
-    .field select:focus{
-      border-color:rgba(176,141,42,.55);
-      box-shadow:0 0 0 4px rgba(176,141,42,.10);
-    }
-
-    .contact-card{
-      background:linear-gradient(180deg,#1b1b1b 0%, #101010 100%);
-      color:#fff;
-      border-radius:28px;
-      padding:30px;
-      box-shadow:0 24px 44px rgba(0,0,0,.18);
-    }
-
-    .contact-card h3{
-      margin:0 0 12px;
-      font-size:2rem;
-      line-height:1.03;
-      letter-spacing:-.03em;
-    }
-
-    .contact-card p{
-      color:rgba(255,255,255,.76);
-      margin:0 0 20px;
-    }
-
-    .contact-points{
-      display:grid;
-      gap:12px;
-      margin:20px 0 24px;
-    }
-
-    .contact-point{
-      padding:14px 16px;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:18px;
-      background:rgba(255,255,255,.05);
-    }
-
-    .contact-point strong{
-      display:block;
-      margin-bottom:4px;
-    }
-
-    .contact-point span{
-      color:rgba(255,255,255,.72);
-    }
-
-    /* Footer */
-    footer{
-      padding:24px 0 46px;
-      color:var(--muted);
-    }
-
-    .footer-wrap{
-      border-top:1px solid rgba(0,0,0,.08);
-      padding-top:22px;
-      display:flex;
-      justify-content:space-between;
-      gap:20px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-
-    .footer-links{
-      display:flex;
-      gap:18px;
-      flex-wrap:wrap;
-    }
-
-    /* Reveal animation */
-    .reveal{
-      opacity:0;
-      transform:translateY(18px);
-      transition:opacity .55s ease, transform .55s ease;
-    }
-
-    .reveal.visible{
-      opacity:1;
-      transform:none;
-    }
-
-    /* Responsive */
-    @media (max-width: 1080px){
-      .hero-grid,
-      .feature-strip,
-      .contact-wrap,
-      .two-col{
-        grid-template-columns:1fr;
-      }
-
-      .grid-4{
-        grid-template-columns:repeat(2,1fr);
-      }
-
-      .grid-3{
-        grid-template-columns:1fr;
-      }
-
-      .stats{
-        grid-template-columns:repeat(2,1fr);
-      }
 
-      .hero-visual{
-        min-height:520px;
+    @media (max-width: 920px) {
+      .grid {
+        grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 820px){
-      .nav-links{
-        position:fixed;
-        inset:78px 16px auto 16px;
-        display:none;
-        flex-direction:column;
-        align-items:stretch;
-        background:rgba(255,255,255,.96);
-        border:1px solid rgba(0,0,0,.08);
-        border-radius:22px;
-        padding:16px;
-        box-shadow:0 20px 44px rgba(0,0,0,.14);
-      }
-
-      .nav-links.open{display:flex}
-      .menu-toggle{display:block}
-      .nav .btn-primary.nav-cta{display:none}
-
-      .hero-points{
-        grid-template-columns:1fr;
-      }
-
-      .floating-card{
-        position:static;
-        margin-top:14px;
-        width:100%;
-      }
-
-      .hero-visual{
-        min-height:auto;
-      }
-
-      .hero-card-main{
-        position:relative;
-        min-height:420px;
-      }
+    /* ===== FORM ELEMENTS ===== */
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--muted-text);
+      margin-bottom: 6px;
     }
 
-    @media (max-width: 620px){
-      .section{padding:68px 0}
-      .grid-4{grid-template-columns:1fr}
-      .stats{grid-template-columns:1fr}
-      .footer-wrap{flex-direction:column;align-items:flex-start}
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid #E5E5E5;
+      background: var(--pure-white);
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition);
+      margin-bottom: 20px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--warm-gold);
+      box-shadow: 0 0 0 3px var(--soft-gold);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    /* ===== BUTTONS ===== */
+    .actions {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+
+    .btn {
+      cursor: pointer;
+      border: none;
+      background: var(--pure-white);
+      color: var(--deep-charcoal);
+      padding: 10px 22px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 1px solid #E5E5E5;
+      min-width: 120px;
+    }
+
+    .btn:hover {
+      background: var(--soft-gold);
+      border-color: var(--warm-gold);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn.primary {
+      background: var(--warm-gold);
+      color: white;
+      border-color: var(--warm-gold);
+    }
+
+    .btn.primary:hover {
+      background: #b18f35;
+      border-color: #b18f35;
+    }
+
+    .btn.ghost {
+      background: transparent;
+      border: 1px solid var(--warm-gold);
+      color: var(--warm-gold);
+    }
+
+    .btn.ghost:hover {
+      background: var(--warm-gold);
+      color: white;
+    }
+
+    /* ===== TABLES ===== */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1rem;
+      margin: 20px 0;
+    }
+
+    .table td {
+      padding: 12px 0;
+      border-bottom: 1px solid #F0F0F0;
+    }
+
+    .table td:last-child {
+      text-align: right;
+      font-weight: 700;
+      color: var(--warm-gold);
+    }
+
+    .total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 20px;
+      background: var(--soft-gold);
+      border-radius: var(--radius-md);
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-top: 20px;
+    }
+
+    .total div:last-child {
+      color: var(--warm-gold);
+      font-size: 1.4rem;
+    }
+
+    /* ===== KPI CARDS ===== */
+    .kpi {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 20px;
+      margin-top: 25px;
+    }
+
+    .kpi .box {
+      background: var(--pure-white);
+      border: 1px solid #F0F0F0;
+      border-radius: var(--radius-md);
+      padding: 15px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .kpi .box .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--muted-text);
+      margin-bottom: 6px;
+    }
+
+    .kpi .box .value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--deep-charcoal);
+    }
+
+    /* ===== FOOD BUILDER ===== */
+    .course {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px dashed #F0F0F0;
+    }
+
+    .course h3 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .optionsGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 15px;
+      margin: 15px 0;
+    }
+
+    .opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px;
+      background: var(--pure-white);
+      border: 1px solid #F0F0F0;
+      border-radius: var(--radius-md);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .opt:hover {
+      border-color: var(--warm-gold);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .opt input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--warm-gold);
+      flex-shrink: 0;
+    }
+
+    .optNum {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--soft-gold);
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--warm-gold);
+    }
+
+    .optLabel {
+      flex: 1;
+      font-weight: 600;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .hotTag {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 2px 8px;
+      background: rgba(198, 164, 63, 0.15);
+      border-radius: 30px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--warm-gold);
+    }
+
+    .count {
+      font-size: 0.9rem;
+      color: var(--muted-text);
+      margin: 10px 0 5px;
+    }
+
+    .warnBox {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      background: #fff3e0;
+      border-left: 4px solid #f5a623;
+      color: #8a6d2b;
+      display: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    /* ===== BADGES & PILLS ===== */
+    .statusRow {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: var(--soft-gold);
+      color: var(--warm-gold);
+    }
+
+    .badge.ok {
+      background: #e3f5e9;
+      color: #1e7b4c;
+    }
+
+    .badge.warn {
+      background: #fff3e0;
+      color: #b45b0a;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 40px;
+      background: var(--soft-gold);
+      color: var(--deep-charcoal);
+      font-size: 0.85rem;
+      margin: 0 6px 6px 0;
+      font-weight: 500;
+    }
+
+    /* ===== SUMMARY PAGE ===== */
+    .summary-section {
+      margin: 20px 0;
+    }
+
+    .summary-section h3 {
+      font-size: 1.2rem;
+      margin: 20px 0 10px;
+      color: var(--warm-gold);
+      border-bottom: 1px dashed #E5E5E5;
+      padding-bottom: 5px;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      padding: 8px 0;
+    }
+
+    .summary-line.total {
+      font-weight: 700;
+      border-top: 2px solid var(--warm-gold);
+      margin-top: 20px;
+      padding-top: 20px;
+      font-size: 1.2rem;
+    }
+
+    .summary-items {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0;
+    }
+
+    .summary-items li {
+      padding: 4px 0;
+      color: var(--muted-text);
+    }
+
+    #chips {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 15px 0;
+    }
+
+    /* ===== FOOTER (fixed) ===== */
+    footer {
+      flex-shrink: 0;
+      text-align: center;
+      padding: 15px 20px;
+      color: var(--muted-text);
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      background: var(--pure-white);
+    }
+
+    /* ===== RESPONSIVE TWEAKS ===== */
+    @media (max-width: 768px) {
+      h1 { font-size: 1.6rem; }
+      .tabs { overflow-x: auto; justify-content: flex-start; padding-bottom: 5px; }
+      .row { grid-template-columns: 1fr; gap: 10px; }
+      .card { padding: 20px; }
+      .btn { min-width: 100%; }
+      .optionsGrid { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      .tabs-wrap, .actions, .btn, footer { display: none !important; }
+      body { background: white; overflow: visible; }
+      main { overflow: visible; }
+      .card { box-shadow: none; border: 1px solid #ddd; }
     }
   </style>
 </head>
+
 <body>
-
-  <header class="site-header">
-    <div class="container nav">
-      <a class="brand" href="#inicio" aria-label="FRESH LINER inicio">
-        <div class="brand-mark">
-          <!-- Icono de hoja (logo) -->
-          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 4C12 4 8 6 6 10C4 14 5 19 8 22C11 25 16 26 21 24C26 22 28 17 27 13C26 9 22 5 16 4Z" fill="#2B5E2B" fill-opacity="0.9"/>
-            <path d="M15 8L13 13L16 15L19 13L17 8H15Z" fill="#F5E56B" />
-            <circle cx="16" cy="15" r="1.5" fill="#E63946" />
-          </svg>
-        </div>
-        <div class="brand-copy">
-          <h1>FRESH LINER</h1>
-          <span>Aroma style.</span>
-        </div>
-      </a>
-
-      <nav class="nav-links" id="navLinks">
-        <a href="#inicio">Inicio</a>
-        <a href="#categorias">Categorías</a>
-        <a href="#productos">Productos</a>
-        <a href="#empresa">Empresa</a>
-        <a href="#mayoristas">Mayoristas</a>
-        <a href="#contacto">Contacto</a>
-        <a class="btn btn-primary" href="#contacto">Solicitar catálogo</a>
-      </nav>
-
-      <a class="btn btn-primary nav-cta" href="#contacto">Solicitar catálogo</a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+  <header>
+    <div class="brandline">
+      <div class="logoWrap">
+        <img class="logoImg" id="brandLogo" src="members_lounge_logo.png" alt="Brand Logo"
+             onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='inline-flex';">
+        <span class="logoFallback" id="logoFallback" style="display:none;">
+          <i class="fas fa-crown" style="color: var(--warm-gold);"></i>
+          <span>THE MEMBERS LOUNGE</span>
+        </span>
+      </div>
     </div>
+    <h1><span class="gold" id="brandTitle">Event Signature Selection</span></h1>
+    <div class="sub" id="brandSubtitle">Reggio Calabria Club, Parkville</div>
   </header>
 
+  <div class="tabs-wrap">
+    <div class="tabs" role="tablist" aria-label="Event signature tabs">
+      <div class="tab active" data-page="quote" role="tab" aria-selected="true"><i class="fas fa-file-invoice"></i> Quote</div>
+      <div class="tab" data-page="couple" role="tab" aria-selected="false"><i class="fas fa-heart"></i> Couple</div>
+      <div class="tab" data-page="food" role="tab" aria-selected="false"><i class="fas fa-utensils"></i> Food</div>
+      <div class="tab" data-page="drinks" role="tab" aria-selected="false"><i class="fas fa-wine-glass-alt"></i> Drinks</div>
+      <div class="tab" data-page="summary" role="tab" aria-selected="false"><i class="fas fa-clipboard-list"></i> Summary</div>
+      <div class="tab nextTab" id="nextTab" title="Move to next tab">Next <i class="fas fa-arrow-right"></i></div>
+    </div>
+  </div>
+
   <main>
-    <section class="hero" id="inicio">
-      <div class="container hero-grid">
-        <div class="hero-copy reveal">
-          <span class="eyebrow">Fragancias que dejan huella</span>
-          <h2>Diseñamos experiencias aromáticas para auto, hogar y espacios comerciales.</h2>
-          <p>
-            Una web moderna para presentar la marca con fuerza, vender mejor, generar confianza y facilitar el contacto con distribuidores, clientes y puntos de venta.
-          </p>
+    <!-- PAGE 1 -->
+    <section class="page active" id="page-quote">
+      <div class="grid">
+        <div class="card">
+          <h2><i class="fas fa-calculator gold"></i> Indicative Quote (Live)</h2>
+          <div class="hint">Room hire + dry hire + security + selected food courses + selected drinks = estimate.</div>
 
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#productos">Ver productos</a>
-            <a class="btn btn-secondary" href="#contacto">Hablar con ventas</a>
+          <div class="row">
+            <div>
+              <label for="adults">Adults</label>
+              <input id="adults" type="number" min="0" step="1" value="120">
+            </div>
+            <div>
+              <label for="children">Children (Under 12)</label>
+              <input id="children" type="number" min="0" step="1" value="20">
+            </div>
           </div>
 
-          <div class="hero-points">
-            <div class="hero-point">
-              <strong>Imagen premium</strong>
-              <span>Diseño elegante, limpio y actual para elevar la marca.</span>
+          <label for="roomHire">Room Hire (AUD)</label>
+          <input id="roomHire" type="number" min="0" step="50" value="0">
+
+          <div class="row">
+            <div>
+              <label for="dryHire">Dry Hire (AUD)</label>
+              <input id="dryHire" type="number" min="0" step="50" value="0">
             </div>
-            <div class="hero-point">
-              <strong>Mayor conversión</strong>
-              <span>Llamados a la acción claros para consultas y ventas.</span>
+            <div>
+              <label for="security">Security (AUD)</label>
+              <input id="security" type="number" min="0" step="50" value="0">
             </div>
-            <div class="hero-point">
-              <strong>GitHub Ready</strong>
-              <span>Subir y publicar en GitHub Pages sin complicaciones.</span>
-            </div>
+          </div>
+
+          <table class="table" aria-label="Quote breakdown">
+            <tbody>
+              <tr><td>Room hire</td><td id="qRoom">$0.00</td></tr>
+              <tr><td>Food (course-driven)</td><td id="qFood">$0.00</td></tr>
+              <tr><td>Drinks</td><td id="qDrinks">$0.00</td></tr>
+              <tr><td>Dry hire</td><td id="qDry">$0.00</td></tr>
+              <tr><td>Security</td><td id="qSec">$0.00</td></tr>
+            </tbody>
+          </table>
+
+          <div class="total">
+            <div>Total Estimated Cost</div>
+            <div id="qTotal" class="mono">$0.00</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn" id="resetAll" type="button"><i class="fas fa-undo-alt"></i> Reset</button>
+            <button class="btn" id="printQuote" type="button"><i class="fas fa-print"></i> Print</button>
+            <button class="btn primary" id="nextQ" type="button">Next <i class="fas fa-arrow-right"></i></button>
           </div>
         </div>
 
-        <div class="hero-visual reveal">
-          <div class="hero-card-main">
-            <div class="hero-overlay">
-              <h3>Fragancias que transforman ambientes</h3>
-              <p>
-                Auto, hogar, oficinas, retail y más. Una línea pensada para destacar por calidad, estilo y personalidad.
-              </p>
-            </div>
+        <div class="card">
+          <h2><i class="fas fa-chart-pie gold"></i> Quick Snapshot</h2>
+
+          <div class="statusRow">
+            <span class="badge" id="foodCompleteBadge"><i class="fas fa-utensils"></i> Menu: Custom</span>
+            <span class="badge" id="drinksCompleteBadge"><i class="fas fa-wine-glass-alt"></i> Drinks: Draft</span>
           </div>
 
-          <div class="floating-card">
-            <small>Línea destacada</small>
-            <h4>Aromatizadores premium</h4>
-            <p>
-              Presentación visual moderna, catálogo atractivo y sección especial para ventas mayoristas.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="categorias">
-      <div class="container">
-        <div class="section-head reveal">
-          <div>
-            <span class="eyebrow">Categorías</span>
-            <h2>Una línea completa para cada espacio</h2>
-          </div>
-          <p>
-            Organizamos la web para que el cliente entienda rápido qué ofrece la marca y encuentre el producto ideal.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <article class="card reveal">
-            <div class="img-box" style="background-image:url('images/categoria-auto.jpg')"></div>
-            <div class="card-body">
-              <span class="tag">Auto</span>
-              <h3>Aromatizadores para auto</h3>
-              <p>Diseños atractivos, perfumes duraderos y presentación comercial de alto impacto.</p>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <div class="img-box" style="background-image:url('images/categoria-hogar.jpg')"></div>
-            <div class="card-body">
-              <span class="tag">Hogar</span>
-              <h3>Fragancias para hogar</h3>
-              <p>Difusores, sprays y soluciones aromáticas para crear una experiencia cálida y memorable.</p>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <div class="img-box" style="background-image:url('images/categoria-empresa.jpg')"></div>
-            <div class="card-body">
-              <span class="tag">Empresas</span>
-              <h3>Espacios comerciales</h3>
-              <p>Aromatización para oficinas, locales, hoteles y entornos profesionales que quieren destacar.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="productos">
-      <div class="container">
-        <div class="section-head reveal">
-          <div>
-            <span class="eyebrow">Productos</span>
-            <h2>Catálogo visual pensado para vender</h2>
-          </div>
-          <p>
-            Reemplaza estas tarjetas por los productos reales. La estructura ya está lista para destacar fragancias, formato, uso y contacto comercial.
-          </p>
-        </div>
-
-        <div class="grid-4">
-          <article class="card product-card reveal">
-            <div class="img-box" style="background-image:url('images/producto-1.jpg')"></div>
-            <div class="card-body">
-              <span class="tag">Nuevo</span>
-              <h4>Classic Car Fresh</h4>
-              <p>Aromatizador colgante de alta rotación para punto de venta y exhibición masiva.</p>
-              <div class="meta">
-                <span>Uso: Auto</span>
-                <a href="#contacto"><strong>Consultar</strong></a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card product-card reveal">
-            <div class="img-box" style="background-image:url('images/producto-2.jpg')"></div>
-            <div class="card-body">
-              <span class="tag">Premium</span>
-              <h4>Home Diffuser</h4>
-              <p>Fragancia sofisticada para ambientes interiores, con perfil elegante y presentación moderna.</p>
-              <div class="meta">
-                <span>Uso: Hogar</span>
-                <a href="#contacto"><strong>Consultar</strong></a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card product-card reveal">
-            <div class="img-box" style="background-image:url('images/producto-3.jpg')"></div>
-            <div class="card-body">
-              <span class="tag">Top Seller</span>
-              <h4>Ambient Spray</h4>
-              <p>Spray ambiental ideal para hogar, showroom, recepción y espacios de atención al público.</p>
-              <div class="meta">
-                <span>Uso: Ambiente</span>
-                <a href="#contacto"><strong>Consultar</strong></a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card product-card reveal">
-            <div class="img-box" style="background-image:url('images/producto-4.jpg')"></div>
-            <div class="card-body">
-              <span class="tag">Institucional</span>
-              <h4>Business Scent</h4>
-              <p>Solución pensada para empresas que buscan identidad olfativa y una presencia más premium.</p>
-              <div class="meta">
-                <span>Uso: Comercial</span>
-                <a href="#contacto"><strong>Consultar</strong></a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="feature-strip reveal">
-          <div>
-            <span class="eyebrow" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#e8d394;">Qué mejora esta web</span>
-            <h3>Una presencia digital mucho más fuerte, profesional y comercial.</h3>
-            <p>
-              Esta propuesta está pensada para que FRESH LINER se vea como una marca confiable, moderna y lista para crecer en retail, distribuidores y clientes corporativos.
-            </p>
-          </div>
-
-          <div class="feature-list">
-            <div class="feature-item">
-              <div>✦</div>
-              <div>
-                <strong>Diseño premium</strong>
-                <span>Mejor percepción de marca desde el primer segundo.</span>
-              </div>
-            </div>
-            <div class="feature-item">
-              <div>✦</div>
-              <div>
-                <strong>Secciones claras</strong>
-                <span>Categorías, productos, empresa y contacto sin confusión.</span>
-              </div>
-            </div>
-            <div class="feature-item">
-              <div>✦</div>
-              <div>
-                <strong>Preparada para vender</strong>
-                <span>Más fácil para el usuario pedir catálogo, precios o distribución.</span>
-              </div>
-            </div>
+          <div class="kpi">
+            <div class="box"><div class="label">Adults</div><div class="value" id="kpiAdults">120</div></div>
+            <div class="box"><div class="label">Children</div><div class="value" id="kpiChildren">20</div></div>
+            <div class="box"><div class="label">Food subtotal</div><div class="value" id="kpiFood">$0.00</div></div>
+            <div class="box"><div class="label">Avg per guest</div><div class="value" id="kpiAvg">$0.00</div></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="empresa">
-      <div class="container">
-        <div class="section-head reveal">
-          <div>
-            <span class="eyebrow">Empresa</span>
-            <h2>Presentación institucional con mucha más confianza</h2>
-          </div>
-          <p>
-            Esta sección cuenta la historia de la marca de manera sólida, profesional y visualmente atractiva.
-          </p>
-        </div>
+    <!-- PAGE 2 -->
+    <section class="page" id="page-couple">
+      <div class="grid">
+        <div class="card">
+          <h2><i class="fas fa-user-friends gold"></i> Couple Details</h2>
 
-        <div class="two-col">
-          <div class="panel reveal">
-            <h3 style="margin-top:0; font-size:1.9rem;">Nuestra esencia</h3>
-            <p style="color:var(--muted); margin:0 0 14px;">
-              FRESH LINER nace para desarrollar fragancias con identidad, calidad y presencia comercial. La propuesta busca unir producto, diseño y experiencia sensorial en una marca consistente.
-            </p>
-            <p style="color:var(--muted); margin:0;">
-              Este bloque puede adaptarse con la historia real de la empresa, visión, valores, capacidad productiva, red de distribución y fortalezas diferenciales.
-            </p>
-          </div>
+          <label for="coupleName">Couple Name</label>
+          <input id="coupleName" placeholder="e.g., Laura & Daniel">
 
-          <div class="panel reveal">
-            <h3 style="margin-top:0; font-size:1.9rem;">Cómo trabajamos</h3>
-            <div class="steps">
-              <div class="step">
-                <div class="step-num">01</div>
-                <div>
-                  <h4>Desarrollo</h4>
-                  <p>Selección de líneas, formatos, fragancias y posicionamiento visual.</p>
-                </div>
-              </div>
-              <div class="step">
-                <div class="step-num">02</div>
-                <div>
-                  <h4>Producción</h4>
-                  <p>Presentación confiable, homogénea y comercialmente atractiva.</p>
-                </div>
-              </div>
-              <div class="step">
-                <div class="step-num">03</div>
-                <div>
-                  <h4>Distribución</h4>
-                  <p>Atención a clientes mayoristas, puntos de venta y empresas.</p>
-                </div>
-              </div>
+          <div class="row">
+            <div>
+              <label for="weddingDate">Date of Choice</label>
+              <input id="weddingDate" type="date">
+            </div>
+            <div>
+              <label for="venueSpace">Venue Space</label>
+              <select id="venueSpace">
+                <option value="sala">Sala Reggio Ballroom</option>
+                <option value="members">Members Lounge Restaurant</option>
+                <option value="fior">FIOR Parkville</option>
+                <option value="alora">ALORA Macedon</option>
+              </select>
+              <div class="hint">Venue selection switches branding and menu items automatically.</div>
             </div>
           </div>
+
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="name@email.com">
+
+          <label for="phone">Phone</label>
+          <input id="phone" type="tel" placeholder="04xx xxx xxx">
+
+          <label for="notes">Notes / Requirements</label>
+          <textarea id="notes" placeholder="Dietary notes, timing, styling, music, special requests…"></textarea>
+
+          <div class="actions">
+            <button class="btn ghost" id="backC" type="button"><i class="fas fa-arrow-left"></i> Back</button>
+            <button class="btn primary" id="nextC" type="button">Next <i class="fas fa-arrow-right"></i></button>
+          </div>
         </div>
 
-        <div class="stats" style="margin-top:24px;">
-          <div class="stat reveal">
-            <strong>100%</strong>
-            <span>Diseño responsive</span>
+        <div class="card">
+          <h2><i class="fas fa-map-marker-alt gold"></i> Venue Profile</h2>
+          <div class="small" id="venueProfileText">
+            Select a venue to apply branding + default costing (only fills if your cost fields are still $0).<br>
+            <strong>ALORA Macedon</strong> features a tailored menu (no deep fryer):<br>
+            • Prosciutto-wrapped melon (instead of Arancini)<br>
+            • Caprese skewers (instead of Prawn roll)<br>
+            • Chargrilled prawns (instead of Calamari fritti)
           </div>
-          <div class="stat reveal">
-            <strong>1</strong>
-            <span>Archivo listo para GitHub</span>
-          </div>
-          <div class="stat reveal">
-            <strong>24/7</strong>
-            <span>Contacto visible en la web</span>
-          </div>
-          <div class="stat reveal">
-            <strong>∞</strong>
-            <span>Escalable a tienda online</span>
-          </div>
+          <div class="divider"></div>
+          <div class="hint">Menus adapt automatically to the venue.</div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="mayoristas">
-      <div class="container">
-        <div class="section-head reveal">
-          <div>
-            <span class="eyebrow">Mayoristas</span>
-            <h2>Una página que también capta distribuidores</h2>
-          </div>
-          <p>
-            No solo sirve para mostrar productos. También puede ayudar a abrir cuentas, generar consultas mayoristas y presentar la marca a revendedores.
-          </p>
+    <!-- PAGE 3 -->
+    <section class="page" id="page-food">
+      <div class="card">
+        <h2><i class="fas fa-utensils gold"></i> Food Builder (Course-Driven)</h2>
+        <div class="hint">
+          Select items. Each course adds its course price if at least one item is selected in that course.
         </div>
 
-        <div class="grid-3">
-          <article class="card reveal">
-            <div class="card-body">
-              <span class="tag">Retail</span>
-              <h3>Puntos de venta</h3>
-              <p>Presentación ideal para comercios que quieren sumar una línea atractiva y rentable.</p>
-            </div>
-          </article>
+        <div class="actions">
+          <button class="btn" type="button" onclick="selectAll(true)"><i class="fas fa-check-double"></i> Select All (up to max)</button>
+          <button class="btn" type="button" onclick="selectAll(false)"><i class="fas fa-times"></i> Deselect All</button>
+        </div>
 
-          <article class="card reveal">
-            <div class="card-body">
-              <span class="tag">Distribución</span>
-              <h3>Atención mayorista</h3>
-              <p>Formulario claro para recibir consultas de volumen, listas de precio y zonas.</p>
-            </div>
-          </article>
+        <div class="course" data-course="canapes">
+          <h3>Canapés <span class="badge">choose up to 3</span></h3>
+          <div class="optionsGrid" id="list-canapes"></div>
+          <div class="count" id="count-canapes">0 selected</div>
+          <div class="warnBox" id="warn-canapes"></div>
+        </div>
 
-          <article class="card reveal">
-            <div class="card-body">
-              <span class="tag">Empresas</span>
-              <h3>Clientes corporativos</h3>
-              <p>Hoteles, oficinas, locales y marcas que quieran aromatizar sus espacios con identidad.</p>
+        <div class="course" data-course="antipasto">
+          <h3>Antipasto Plates <span class="badge">max 2 hot, max 5 non‑hot</span></h3>
+          <div class="optionsGrid" id="list-antipasto"></div>
+          <div class="count" id="count-antipasto">Hot: 0/2 · Cold: 0/5</div>
+          <div class="warnBox" id="warn-antipasto"></div>
+        </div>
+
+        <div class="course" data-course="pasta">
+          <h3>Entrée / Pasta <span class="badge">choose up to 2</span></h3>
+          <div class="optionsGrid" id="list-pasta"></div>
+          <div class="count" id="count-pasta">0 selected</div>
+          <div class="warnBox" id="warn-pasta"></div>
+        </div>
+
+        <div class="course" data-course="mains">
+          <h3>Mains <span class="badge">choose up to 2</span></h3>
+          <div class="optionsGrid" id="list-mains"></div>
+          <div class="count" id="count-mains">0 selected</div>
+          <div class="warnBox" id="warn-mains"></div>
+        </div>
+
+        <div class="course" data-course="dessert">
+          <h3>Dessert <span class="badge">choose up to 1</span></h3>
+          <div class="optionsGrid" id="list-dessert"></div>
+          <div class="count" id="count-dessert">0 selected</div>
+          <div class="warnBox" id="warn-dessert"></div>
+        </div>
+
+        <div class="course">
+          <h3>Supper / Late Night (fixed)</h3>
+          <div class="hint">Pizza only (fixed). No selection required.</div>
+          <div class="count">Included: Pizza</div>
+
+          <h3 style="margin-top:20px;">Optional Add-on: Fruit Platter</h3>
+          <label style="display:flex; align-items:center; gap:10px; font-weight:600; margin-bottom:15px;">
+            <input id="fruitPlatter" type="checkbox" style="width:20px; height:20px;"> Add Fruit Platter (per table)
+          </label>
+          <div class="row">
+            <div>
+              <label for="tables">Estimated Tables</label>
+              <input id="tables" type="number" min="0" step="1" value="10">
             </div>
-          </article>
+            <div>
+              <label for="fruitPerTable">Fruit platter per table (AUD)</label>
+              <input id="fruitPerTable" type="number" min="0" step="1" value="35" readonly>
+            </div>
+          </div>
+          <div class="hint">This add-on is added to food total when checked.</div>
+        </div>
+
+        <div class="actions">
+          <button class="btn ghost" id="backF2" type="button"><i class="fas fa-arrow-left"></i> Back</button>
+          <button class="btn primary" id="nextF2" type="button">Next <i class="fas fa-arrow-right"></i></button>
         </div>
       </div>
     </section>
 
-    <section class="section" id="contacto">
-      <div class="container">
-        <div class="section-head reveal">
-          <div>
-            <span class="eyebrow">Contacto</span>
-            <h2>Invitá al cliente a dar el siguiente paso</h2>
+    <!-- PAGE 4 -->
+    <section class="page" id="page-drinks">
+      <div class="grid">
+        <div class="card">
+          <h2><i class="fas fa-wine-glass-alt gold"></i> Drinks</h2>
+          <div class="hint">Choose drinks. Quote updates live.</div>
+
+          <label for="drinkMode">Drinks Option</label>
+          <select id="drinkMode">
+            <option value="bar">Bar Prices (no package)</option>
+            <option value="custom">Custom per Adult (set price)</option>
+          </select>
+
+          <div class="row" id="customDrinkRow" style="display:none">
+            <div>
+              <label for="customDrinkPrice">Custom drink price per adult (AUD)</label>
+              <input id="customDrinkPrice" type="number" min="0" step="1" value="0">
+            </div>
+            <div>
+              <label for="customDrinkNote">Custom drink notes</label>
+              <input id="customDrinkNote" placeholder="e.g., beer/wine/spirits, 4hrs, premium…">
+            </div>
           </div>
-          <p>
-            Podés conectar este formulario a Formspree, Netlify Forms o WhatsApp. Por ahora ya queda bonito y listo para funcionar visualmente.
-          </p>
+
+          <div class="hint" id="drinkInfo"></div>
+
+          <div class="actions">
+            <button class="btn ghost" id="backD" type="button"><i class="fas fa-arrow-left"></i> Back</button>
+            <button class="btn primary" id="nextD" type="button">Next <i class="fas fa-arrow-right"></i></button>
+          </div>
         </div>
 
-        <div class="contact-wrap">
-          <div class="panel reveal">
-            <form class="contact-form" id="contactForm">
-              <div class="field">
-                <label for="nombre">Nombre</label>
-                <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required />
-              </div>
+        <div class="card">
+          <h2><i class="fas fa-info-circle gold"></i> Status</h2>
+          <div class="statusRow">
+            <span class="badge" id="drinksCompleteBadge2"><i class="fas fa-wine-glass-alt"></i> Drinks: Draft</span>
+          </div>
+          <div class="hint">Bar prices show $0 for drinks (indicative). Custom adds into the quote.</div>
+        </div>
+      </div>
+    </section>
 
-              <div class="field">
-                <label for="empresa">Empresa</label>
-                <input id="empresa" name="empresa" type="text" placeholder="Nombre de tu empresa o comercio" />
-              </div>
+    <!-- PAGE 5 -->
+    <section class="page" id="page-summary">
+      <div class="grid">
+        <div class="card">
+          <h2><i class="fas fa-clipboard-check gold"></i> Final Summary</h2>
+          <div id="finalSummary" class="small">Complete the steps to see your summary.</div>
 
-              <div class="field">
-                <label for="email">Correo electrónico</label>
-                <input id="email" name="email" type="email" placeholder="tuemail@ejemplo.com" required />
-              </div>
-
-              <div class="field">
-                <label for="tipo">Tipo de consulta</label>
-                <select id="tipo" name="tipo">
-                  <option value="catalogo">Solicitar catálogo</option>
-                  <option value="mayorista">Consulta mayorista</option>
-                  <option value="corporativo">Aromatización comercial</option>
-                  <option value="productos">Información de productos</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="mensaje">Mensaje</label>
-                <textarea id="mensaje" name="mensaje" placeholder="Contanos qué necesitás..."></textarea>
-              </div>
-
-              <button class="btn btn-primary" type="submit">Enviar consulta</button>
-            </form>
+          <div class="actions">
+            <button class="btn" id="copySummary" type="button"><i class="fas fa-copy"></i> Copy</button>
+            <button class="btn" id="printSummary" type="button"><i class="fas fa-print"></i> Print</button>
           </div>
 
-          <aside class="contact-card reveal">
-            <span class="eyebrow" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.14); color:#e8d394;">Ventas y atención</span>
-            <h3>Convertí visitas en clientes.</h3>
-            <p>
-              Reemplazá los datos de abajo por la información real de FRESH LINER.
-            </p>
+          <div class="actions" style="margin-top:14px">
+            <button class="btn ghost" id="backS" type="button"><i class="fas fa-arrow-left"></i> Back</button>
+            <button class="btn primary" id="toQuote" type="button"><i class="fas fa-home"></i> Back to Quote</button>
+          </div>
+        </div>
 
-            <div class="contact-points">
-              <div class="contact-point">
-                <strong>Email</strong>
-                <span>ventas@freshliner.com.ar</span>
-              </div>
-              <div class="contact-point">
-                <strong>Teléfono / WhatsApp</strong>
-                <span>+54 11 0000 0000</span>
-              </div>
-              <div class="contact-point">
-                <strong>Horario de atención</strong>
-                <span>Lunes a Viernes · 9:00 a 18:00</span>
-              </div>
-              <div class="contact-point">
-                <strong>Ubicación</strong>
-                <span>Buenos Aires, Argentina</span>
-              </div>
-            </div>
-
-            <a class="btn btn-secondary" href="https://wa.me/541100000000" target="_blank" rel="noopener">
-              WhatsApp directo
-            </a>
-          </aside>
+        <div class="card">
+          <h2><i class="fas fa-tags gold"></i> Selected Items</h2>
+          <div id="chips"></div>
+          <div class="divider"></div>
+          <div class="small" id="summaryCourseCounts"></div>
+          <div class="divider"></div>
+          <div class="small">Save 'members_lounge_logo.png' in the same folder as this file.</div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="container footer-wrap">
-      <div>
-        <strong>FRESH LINER</strong><br />
-        Aroma style.
-      </div>
+  <footer id="brandFooter">Members Lounge | Reggio Calabria Club, Parkville</footer>
 
-      <div class="footer-links">
-        <a href="#inicio">Inicio</a>
-        <a href="#categorias">Categorías</a>
-        <a href="#productos">Productos</a>
-        <a href="#empresa">Empresa</a>
-        <a href="#contacto">Contacto</a>
-      </div>
+<script>
+  function escapeHtml(str){
+    return String(str || "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+  const $ = (id) => document.getElementById(id);
+  function on(el, ev, fn){ if(el) el.addEventListener(ev, fn); }
 
-      <div>
-        © <span id="year"></span> FRESH LINER. Todos los derechos reservados.
-      </div>
-    </div>
-  </footer>
+  const VENUE_PROFILES = {
+    sala: {
+      label: "Sala Reggio Ballroom (Parkville)",
+      logo: "members_lounge_logo.png",
+      subtitle: "Reggio Calabria Club, Parkville",
+      footer: "Members Lounge | Reggio Calabria Club, Parkville",
+      defaults: { roomHire: 0, dryHire: 0, security: 0 }
+    },
+    members: {
+      label: "Members Lounge Restaurant (Parkville)",
+      logo: "members_lounge_logo.png",
+      subtitle: "Reggio Calabria Club, Parkville",
+      footer: "Members Lounge | Reggio Calabria Club, Parkville",
+      defaults: { roomHire: 0, dryHire: 0, security: 0 }
+    },
+    fior: {
+      label: "FIOR Parkville",
+      logo: "fior.png",
+      subtitle: "FIOR, Parkville",
+      footer: "FIOR | Parkville",
+      defaults: { roomHire: 0, dryHire: 0, security: 0 }
+    },
+    alora: {
+      label: "ALORA Macedon",
+      logo: "alora.png",
+      subtitle: "ALORA, Macedon",
+      footer: "ALORA | Macedon",
+      defaults: { roomHire: 0, dryHire: 0, security: 0 }
+    }
+  };
 
-  <script>
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+  // Base menu (used for all venues except ALORA)
+  const BASE_MENU = {
+    canapes: [
+      "Arancini",
+      "Focaccia fingers",
+      "Prawn spring rolls",
+      "Parmigiano bites",
+      "Caprese empanadas",
+      "Croquettes"
+    ],
+    antipasto: [
+      "Bruschettta di pomodoro",
+      "Salumi selection",
+      "Feta & Kefalograviera",
+      "Tiropita",
+      "Trio of dips with pita",
+      "Warm marinated olives",
+      "Eggplant parmigiana",
+      "Bocconcini & ricotta",
+      "Calamari fritti",
+      "Meatballs in sugo",
+      "Cevapi",
+      "Italian pork sausages"
+    ],
+    pasta: [
+      "Pasta al Ragú (three meats, tomato)",
+      "Gnocchi Pesto (basil, parmesan & nut-free)",
+      "Casarecce Amatriciana (guanciale & pecorino, tomato)",
+      "Pasta Napoli (tomato & basil)"
+    ],
+    mains: [
+      "Chargrilled chicken breast with a chimichurri dressing",
+      "Italian herb crumbed barramundi fillet",
+      "Lamb shank with white wine and tomato",
+      "Braised beef short ribs in a red wine jus",
+      "Bondiola, pork fillet with a salmoriglio sauce",
+      "Stuffed pepper with seasonal vegetables and cauliflower steak"
+    ],
+    dessert: [
+      "Sharing assorted desserts (mini cannoli & baklava)",
+      "Tiramisu & vanilla cheese cake (alternating)",
+      "Gelato dessert (cassata, tartufo, baci)"
+    ]
+  };
 
-    // Mobile menu
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
+  // ALORA-specific menu (with replacements)
+  const ALORA_MENU = {
+    canapes: BASE_MENU.canapes.map(item => {
+      if (item === "Arancini") return "Prosciutto-wrapped melon";
+      if (item === "Prawn spring rolls") return "Caprese skewers";
+      return item;
+    }),
+    antipasto: BASE_MENU.antipasto.map(item => 
+      item === "Calamari fritti" ? "Chargrilled prawns" : item
+    ),
+    pasta: BASE_MENU.pasta.slice(),
+    mains: BASE_MENU.mains.slice(),
+    dessert: BASE_MENU.dessert.slice()
+  };
 
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
+  // Return the appropriate menu based on selected venue
+  function getMenuForVenue(venueKey) {
+    return venueKey === 'alora' ? ALORA_MENU : BASE_MENU;
+  }
+
+  // Hot items mapping (updated for ALORA items)
+  const HOT_ANTIPASTO = {
+    "Calamari fritti": true,
+    "Chargrilled prawns": true,   // grilled = hot
+    "Cevapi": true,
+    "Meatballs in sugo": true,
+    "Italian pork sausages": true
+  };
+
+  const COURSE_LABEL = {
+    canapes: "Canapés",
+    antipasto: "Antipasto",
+    pasta: "Entrée / Pasta",
+    mains: "Mains",
+    dessert: "Dessert"
+  };
+
+  const RULES = {
+    canapes:   { max: 3 },
+    antipasto: { max: 7 },          // overall max not used directly now, but kept for reference
+    pasta:     { max: 2 },
+    mains:     { max: 2 },
+    dessert:   { max: 1 }
+  };
+
+  const FIXED_PRICES = {
+    canapes: 12,
+    antipasto: 28,
+    pasta: 15,
+    mains: 34,
+    dessert: 10
+  };
+
+  const TAB_ORDER = ["quote","couple","food","drinks","summary"];
+
+  function setActivePage(page){
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    const target = document.getElementById("page-" + page);
+    if(target) target.classList.add("active");
+
+    document.querySelectorAll(".tab[data-page]").forEach(t => {
+      const active = t.dataset.page === page;
+      t.classList.toggle("active", active);
+      t.setAttribute("aria-selected", active ? "true" : "false");
     });
 
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    document.querySelector('main').scrollTop = 0;
+    renderAll();
+  }
+  function nextPage(){
+    const current = document.querySelector(".tab[data-page].active")?.dataset.page || "quote";
+    const idx = TAB_ORDER.indexOf(current);
+    setActivePage(TAB_ORDER[(idx + 1) % TAB_ORDER.length]);
+  }
+  function prevPage(){
+    const current = document.querySelector(".tab[data-page].active")?.dataset.page || "quote";
+    const idx = TAB_ORDER.indexOf(current);
+    setActivePage(TAB_ORDER[(idx - 1 + TAB_ORDER.length) % TAB_ORDER.length]);
+  }
+
+  document.querySelectorAll(".tab[data-page]").forEach(tab => on(tab, "click", () => setActivePage(tab.dataset.page)));
+  on($("nextTab"), "click", nextPage);
+
+  on($("nextQ"), "click", nextPage);
+  on($("backC"), "click", prevPage);
+  on($("nextC"), "click", nextPage);
+  on($("backF2"), "click", prevPage);
+  on($("nextF2"), "click", nextPage);
+  on($("backD"), "click", prevPage);
+  on($("nextD"), "click", nextPage);
+  on($("backS"), "click", prevPage);
+  on($("toQuote"), "click", () => setActivePage("quote"));
+
+  const adultsEl   = $("adults");
+  const childrenEl = $("children");
+  const roomHireEl = $("roomHire");
+  const dryHireEl  = $("dryHire");
+  const securityEl = $("security");
+
+  const fruitPlatterEl = $("fruitPlatter");
+  const tablesEl = $("tables");
+  const fruitPerTableEl = $("fruitPerTable");
+
+  const drinkModeEl = $("drinkMode");
+  const customDrinkRow = $("customDrinkRow");
+  const customDrinkPriceEl = $("customDrinkPrice");
+  const customDrinkNoteEl = $("customDrinkNote");
+  const drinkInfoEl = $("drinkInfo");
+
+  const coupleNameEl = $("coupleName");
+  const weddingDateEl = $("weddingDate");
+
+  const qRoomEl   = $("qRoom");
+  const qFoodEl   = $("qFood");
+  const qDrinksEl = $("qDrinks");
+  const qDryEl    = $("qDry");
+  const qSecEl    = $("qSec");
+  const qTotalEl  = $("qTotal");
+
+  const kpiAdultsEl  = $("kpiAdults");
+  const kpiChildrenEl= $("kpiChildren");
+  const kpiFoodEl    = $("kpiFood");
+  const kpiAvgEl     = $("kpiAvg");
+
+  const finalSummaryEl = $("finalSummary");
+  const chipsEl = $("chips");
+  const summaryCourseCountsEl = $("summaryCourseCounts");
+
+  const foodCompleteBadgeEl = $("foodCompleteBadge");
+  const drinksCompleteBadgeEl = $("drinksCompleteBadge");
+
+  function aud(n){
+    const x = Number(n || 0);
+    return x.toLocaleString("en-AU", { style:"currency", currency:"AUD" });
+  }
+
+  function setBadge(el, state, text){
+    if(!el) return;
+    el.classList.remove("ok","warn");
+    if(state) el.classList.add(state);
+    if(el.children.length > 0) {
+      while(el.childNodes.length > 1) el.removeChild(el.lastChild);
+      el.appendChild(document.createTextNode(' ' + text));
+    } else {
+      el.textContent = text;
+    }
+  }
+
+  function updateDrinkUI(){
+    const mode = drinkModeEl.value;
+    if(customDrinkRow) customDrinkRow.style.display = (mode === "custom") ? "grid" : "none";
+    if(drinkInfoEl){
+      drinkInfoEl.textContent = (mode === "bar")
+        ? "Bar pricing is indicative only (drinks = $0 in the quote)."
+        : "Custom price adds your set amount per adult into the quote.";
+    }
+    renderAll();
+  }
+
+  // Rebuild all food checkboxes based on current venue
+  function rebuildFoodLists() {
+    const venue = $("venueSpace").value;
+    const menu = getMenuForVenue(venue);
+
+    addCheckboxList("canapes", "list-canapes", menu.canapes);
+    addCheckboxList("antipasto", "list-antipasto", menu.antipasto);
+    addCheckboxList("pasta", "list-pasta", menu.pasta);
+    addCheckboxList("mains", "list-mains", menu.mains);
+    addCheckboxList("dessert", "list-dessert", menu.dessert);
+
+    attachLimitListeners();
+    enforceAntipastoLimit();
+    Object.keys(RULES).forEach(enforceLimit);
+    renderAll();
+  }
+
+  function addCheckboxList(courseKey, listId, items){
+    const wrap = document.getElementById(listId);
+    if(!wrap) return;
+    wrap.innerHTML = "";
+
+    items.forEach((item, idx) => {
+      const div = document.createElement("div");
+      div.className = "opt";
+
+      const isHot = (courseKey === "antipasto" && HOT_ANTIPASTO[item]);
+      const id = "cb-" + courseKey + "-" + idx;
+
+      div.innerHTML =
+        '<input type="checkbox" data-course="' + courseKey + '" value="' + escapeHtml(item) + '" id="' + id + '">' +
+        '<span class="optNum">' + (idx + 1) + '</span>' +
+        '<label for="' + id + '" class="optLabel">' +
+          escapeHtml(item) +
+          (isHot ? '<span class="hotTag">HOT</span>' : '') +
+        '</label>';
+
+      wrap.appendChild(div);
+    });
+  }
+
+  function getSelections(){
+    const out = { canapes:[], antipasto:[], pasta:[], mains:[], dessert:[] };
+    document.querySelectorAll('input[type="checkbox"][data-course]:checked').forEach(cb => {
+      const c = cb.dataset.course;
+      if(out[c]) out[c].push(cb.value);
+    });
+    return out;
+  }
+
+  function enforceAntipastoLimit() {
+    const course = 'antipasto';
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][data-course="' + course + '"]');
+    let hotChecked = [], coldChecked = [];
+    checkboxes.forEach(cb => {
+      if (!cb.checked) return;
+      if (HOT_ANTIPASTO[cb.value]) hotChecked.push(cb);
+      else coldChecked.push(cb);
     });
 
-    // Reveal on scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+    const hotOver = hotChecked.length > 2;
+    const coldOver = coldChecked.length > 5;
+
+    if (hotOver) {
+      const lastHot = hotChecked[hotChecked.length - 1];
+      if (lastHot) lastHot.checked = false;
+    }
+    if (coldOver) {
+      const lastCold = coldChecked[coldChecked.length - 1];
+      if (lastCold) lastCold.checked = false;
+    }
+
+    hotChecked = []; coldChecked = [];
+    checkboxes.forEach(cb => {
+      if (!cb.checked) return;
+      if (HOT_ANTIPASTO[cb.value]) hotChecked.push(cb);
+      else coldChecked.push(cb);
+    });
+
+    const countEl = document.getElementById("count-antipasto");
+    if (countEl) {
+      countEl.textContent = `Hot: ${hotChecked.length}/2 · Cold: ${coldChecked.length}/5`;
+    }
+
+    const warnEl = document.getElementById("warn-antipasto");
+    if (warnEl) {
+      if (hotChecked.length === 2 || coldChecked.length === 5) {
+        warnEl.style.display = "block";
+        warnEl.textContent = "Maximum selections reached for one or both categories.";
+      } else {
+        warnEl.style.display = "none";
+      }
+    }
+  }
+
+  function enforceLimit(courseKey){
+    if (courseKey === 'antipasto') {
+      enforceAntipastoLimit();
+      return;
+    }
+    const rule = RULES[courseKey];
+    if(!rule) return;
+
+    const checked = Array.from(document.querySelectorAll('input[type="checkbox"][data-course="' + courseKey + '"]:checked'));
+    if(checked.length > rule.max){
+      checked[checked.length - 1].checked = false;
+    }
+
+    const now = Array.from(document.querySelectorAll('input[type="checkbox"][data-course="' + courseKey + '"]:checked'));
+    const countEl = document.getElementById("count-" + courseKey);
+    const warnEl  = document.getElementById("warn-" + courseKey);
+
+    if(countEl) countEl.textContent = now.length + " selected (max " + rule.max + ")";
+
+    if(warnEl){
+      if(now.length >= rule.max){
+        warnEl.style.display = "block";
+        warnEl.textContent = "Maximum " + rule.max + " selections for " + COURSE_LABEL[courseKey] + ".";
+      }else{
+        warnEl.style.display = "none";
+        warnEl.textContent = "";
+      }
+    }
+  }
+
+  function attachLimitListeners(){
+    document.querySelectorAll('input[type="checkbox"][data-course]').forEach(cb=>{
+      cb.removeEventListener("change", limitHandler);
+      cb.addEventListener("change", limitHandler);
+    });
+  }
+
+  function limitHandler(e) {
+    enforceLimit(e.target.dataset.course);
+    renderAll();
+  }
+
+  window.selectAll = function(checked){
+    if (checked) {
+      ['canapes', 'pasta', 'mains', 'dessert'].forEach(courseKey => {
+        const items = document.querySelectorAll('input[type="checkbox"][data-course="' + courseKey + '"]');
+        for(let i=0;i<Math.min(items.length, RULES[courseKey].max); i++){
+          items[i].checked = true;
         }
+        enforceLimit(courseKey);
       });
-    }, { threshold: 0.12 });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      const hotItems = Array.from(document.querySelectorAll('input[type="checkbox"][data-course="antipasto"]')).filter(cb => HOT_ANTIPASTO[cb.value]);
+      const coldItems = Array.from(document.querySelectorAll('input[type="checkbox"][data-course="antipasto"]')).filter(cb => !HOT_ANTIPASTO[cb.value]);
+      hotItems.slice(0,2).forEach(cb => cb.checked = true);
+      coldItems.slice(0,5).forEach(cb => cb.checked = true);
+      enforceAntipastoLimit();
+    } else {
+      document.querySelectorAll('input[type="checkbox"][data-course]').forEach(i => i.checked = false);
+      Object.keys(RULES).forEach(enforceLimit);
+      enforceAntipastoLimit();
+    }
+    renderAll();
+  };
 
-    // Demo contact form
-    document.getElementById('contactForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const nombre = document.getElementById('nombre').value.trim() || 'Gracias';
-      alert(nombre + ', tu consulta fue preparada correctamente. Ahora solo falta conectar este formulario a un servicio real.');
-      this.reset();
+  function calculateFood(){
+    const adults = Number(adultsEl.value||0);
+    const children = Number(childrenEl.value||0);
+
+    const sel = getSelections();
+    let perAdult = 0;
+
+    if(sel.canapes.length) perAdult += FIXED_PRICES.canapes;
+    if(sel.antipasto.length) perAdult += FIXED_PRICES.antipasto;
+    if(sel.pasta.length) perAdult += FIXED_PRICES.pasta;
+    if(sel.mains.length) perAdult += FIXED_PRICES.mains;
+    if(sel.dessert.length) perAdult += FIXED_PRICES.dessert;
+
+    const adultTotal = adults * perAdult;
+    const childTotal = children * perAdult * 0.3;
+
+    let fruitTotal = 0;
+    if(fruitPlatterEl && fruitPlatterEl.checked){
+      fruitTotal = Number(tablesEl.value||0) * Number(fruitPerTableEl.value||0);
+    }
+
+    return adultTotal + childTotal + fruitTotal;
+  }
+
+  function calculateDrinks(){
+    const adults = Number(adultsEl.value||0);
+    const mode = drinkModeEl.value;
+    if(mode === "custom") return adults * Number(customDrinkPriceEl.value||0);
+    return 0;
+  }
+
+  function renderAll(){
+    const adults = Number(adultsEl.value||0);
+    const children = Number(childrenEl.value||0);
+    const totalGuests = adults + children;
+
+    const room = Number(roomHireEl.value||0);
+    const dry = Number(dryHireEl.value||0);
+    const sec = Number(securityEl.value||0);
+
+    const food = calculateFood();
+    const drinks = calculateDrinks();
+    const total = room + dry + sec + food + drinks;
+
+    qRoomEl.textContent = aud(room);
+    qDryEl.textContent  = aud(dry);
+    qSecEl.textContent  = aud(sec);
+    qFoodEl.textContent = aud(food);
+    qDrinksEl.textContent = aud(drinks);
+    qTotalEl.textContent = aud(total);
+
+    kpiAdultsEl.textContent = adults;
+    kpiChildrenEl.textContent = children;
+    kpiFoodEl.textContent = aud(food);
+    kpiAvgEl.textContent = totalGuests ? aud(total/totalGuests) : aud(0);
+
+    const sel = getSelections();
+    const anyFood = Object.values(sel).some(a=>a.length);
+    setBadge(foodCompleteBadgeEl, anyFood ? "ok":"warn", anyFood ? "Menu Ready" : "Menu Empty");
+    setBadge(drinksCompleteBadgeEl, (drinkModeEl.value==="bar") ? "warn":"ok",
+      (drinkModeEl.value==="bar") ? "Bar Pricing" : "Custom Drinks");
+
+    const drinksBadge2 = $("drinksCompleteBadge2");
+    if(drinksBadge2) setBadge(drinksBadge2, (drinkModeEl.value==="bar") ? "warn":"ok",
+      (drinkModeEl.value==="bar") ? "Bar Pricing" : "Custom Drinks");
+
+    const coupleName = coupleNameEl.value.trim() || "Event";
+    const weddingDate = weddingDateEl.value || "Not set";
+    const venueSelect = $("venueSpace");
+    const venueText = venueSelect.options[venueSelect.selectedIndex]?.text || "Not selected";
+
+    const foodItemsHtml = Object.keys(COURSE_LABEL).map(courseKey => {
+      const items = sel[courseKey];
+      if(items.length === 0) return '';
+      return `<li><strong>${COURSE_LABEL[courseKey]}:</strong> ${items.map(escapeHtml).join(', ')}</li>`;
+    }).filter(s => s).join('');
+
+    const fruitHtml = fruitPlatterEl.checked
+      ? `<li><strong>Fruit platter:</strong> ${tablesEl.value} tables x $35 = ${aud(Number(tablesEl.value)*35)}</li>`
+      : '';
+
+    let drinkDetails = '';
+    if(drinkModeEl.value === 'bar') {
+      drinkDetails = 'Bar prices (no package cost)';
+    } else {
+      const price = Number(customDrinkPriceEl.value || 0);
+      const note = customDrinkNoteEl.value.trim();
+      drinkDetails = `Custom package: ${aud(price)} per adult × ${adults} = ${aud(price * adults)}`;
+      if(note) drinkDetails += ` (${escapeHtml(note)})`;
+    }
+
+    const summaryHtml = `
+      <div class="summary-section">
+        <div class="summary-line"><span>Event:</span> <span>${escapeHtml(coupleName)}</span></div>
+        <div class="summary-line"><span>Date:</span> <span>${escapeHtml(weddingDate)}</span></div>
+        <div class="summary-line"><span>Venue:</span> <span>${escapeHtml(venueText)}</span></div>
+        <div class="summary-line"><span>Guests:</span> <span>${adults} adults, ${children} children</span></div>
+      </div>
+
+      <div class="summary-section">
+        <h3>🍽️ Food</h3>
+        ${foodItemsHtml ? `<ul class="summary-items">${foodItemsHtml}${fruitHtml}</ul>` : '<p>No food items selected</p>'}
+        <div class="summary-line"><span>Food subtotal:</span> <span>${aud(food)}</span></div>
+      </div>
+
+      <div class="summary-section">
+        <h3>🥂 Drinks</h3>
+        <div class="summary-line"><span>Mode:</span> <span>${drinkDetails}</span></div>
+        <div class="summary-line"><span>Drinks total:</span> <span>${aud(drinks)}</span></div>
+      </div>
+
+      <div class="summary-section">
+        <h3>🏛️ Other costs</h3>
+        <div class="summary-line"><span>Room hire:</span> <span>${aud(room)}</span></div>
+        <div class="summary-line"><span>Dry hire:</span> <span>${aud(dry)}</span></div>
+        <div class="summary-line"><span>Security:</span> <span>${aud(sec)}</span></div>
+      </div>
+
+      <div class="summary-line total">
+        <span>Grand total</span>
+        <span>${aud(total)}</span>
+      </div>
+    `;
+
+    finalSummaryEl.innerHTML = summaryHtml;
+
+    chipsEl.innerHTML = '';
+    Object.entries(sel).forEach(([course, items]) => {
+      items.forEach(item => {
+        const chip = document.createElement("span");
+        chip.className = "pill";
+        chip.textContent = item;
+        chipsEl.appendChild(chip);
+      });
     });
-  </script>
+    if(fruitPlatterEl.checked) {
+      const chip = document.createElement("span");
+      chip.className = "pill";
+      chip.textContent = `Fruit platter (${tablesEl.value} tables)`;
+      chipsEl.appendChild(chip);
+    }
+
+    const counts = Object.keys(COURSE_LABEL).map(c => {
+      if (c === 'antipasto') {
+        const hot = (sel.antipasto.filter(i => HOT_ANTIPASTO[i])).length;
+        const cold = sel.antipasto.length - hot;
+        return `Antipasto: ${hot} hot, ${cold} cold`;
+      } else {
+        return `${COURSE_LABEL[c]}: ${sel[c].length}`;
+      }
+    }).join(' · ');
+    summaryCourseCountsEl.textContent = counts;
+  }
+
+  function resetAll(){
+    if(!confirm("Reset everything?")) return;
+
+    document.querySelectorAll('input[type="checkbox"][data-course]').forEach(cb => cb.checked = false);
+
+    adultsEl.value = 120;
+    childrenEl.value = 20;
+    roomHireEl.value = 0;
+    dryHireEl.value = 0;
+    securityEl.value = 0;
+
+    tablesEl.value = 10;
+    if(fruitPlatterEl) fruitPlatterEl.checked = false;
+
+    drinkModeEl.value = "bar";
+    customDrinkPriceEl.value = 0;
+    customDrinkNoteEl.value = "";
+
+    Object.keys(RULES).forEach(enforceLimit);
+    enforceAntipastoLimit();
+    updateDrinkUI();
+    renderAll();
+  }
+
+  function safeSetLogo(src){
+    const img = $("brandLogo");
+    const fallback = $("logoFallback");
+    if(!img) return;
+
+    img.style.display = "block";
+    if(fallback) fallback.style.display = "none";
+
+    img.onerror = function(){
+      if(src !== "members_lounge_logo.png"){
+        safeSetLogo("members_lounge_logo.png");
+        return;
+      }
+      img.style.display = "none";
+      if(fallback) fallback.style.display = "inline-flex";
+    };
+    img.src = src;
+  }
+
+  function applyVenueProfile(profileKey){
+    const key = profileKey || "members";
+    const p = VENUE_PROFILES[key] || VENUE_PROFILES.members;
+
+    const subtitleEl = $("brandSubtitle");
+    const footerEl = $("brandFooter");
+    if(subtitleEl) subtitleEl.textContent = p.subtitle;
+    if(footerEl) footerEl.textContent = p.footer;
+
+    safeSetLogo(p.logo);
+
+    const info = $("venueProfileText");
+    if(info){
+      info.innerHTML = "<b>Active venue:</b> " + escapeHtml(p.label) + "<br>Branding switches automatically.";
+    }
+
+    const roomHireEl = $("roomHire");
+    const dryHireEl = $("dryHire");
+    const securityEl = $("security");
+
+    const r = Number(roomHireEl?.value || 0);
+    const d = Number(dryHireEl?.value || 0);
+    const s = Number(securityEl?.value || 0);
+
+    if(roomHireEl && r === 0) roomHireEl.value = p.defaults.roomHire;
+    if(dryHireEl && d === 0)  dryHireEl.value  = p.defaults.dryHire;
+    if(securityEl && s === 0) securityEl.value = p.defaults.security;
+
+    // Rebuild food lists with the new venue's menu
+    rebuildFoodLists();
+  }
+
+  on($("copySummary"), "click", async ()=>{
+    const text = finalSummaryEl.innerText;
+    try{ await navigator.clipboard.writeText(text); alert("Summary copied"); }
+    catch(e){ alert("Copy failed (browser blocked clipboard)."); }
+  });
+  on($("printSummary"), "click", ()=>window.print());
+
+  // Initial build with default venue (members)
+  rebuildFoodLists();
+
+  document.querySelectorAll("input,select,textarea").forEach(el=>{
+    el.addEventListener("input", renderAll);
+    el.addEventListener("change", renderAll);
+  });
+
+  on($("resetAll"), "click", resetAll);
+  on($("printQuote"), "click", ()=>window.print());
+
+  on(drinkModeEl, "change", updateDrinkUI);
+  on($("venueSpace"), "change", ()=> applyVenueProfile($("venueSpace").value));
+
+  applyVenueProfile("members");
+  updateDrinkUI();
+  renderAll();
+</script>
 </body>
 </html>
