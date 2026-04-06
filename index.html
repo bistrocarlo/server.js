@@ -740,7 +740,7 @@
           <h2><i class="fas fa-map-marker-alt gold"></i> Venue Profile</h2>
           <div class="small" id="venueProfileText">
             Select a venue to apply branding + default costing (only fills if your cost fields are still $0).<br>
-            <strong>ALORA Macedon</strong> features a tailored menu with no fried items and no supper service.
+            <strong>ALORA Macedon</strong> features a tailored menu with no fried items, limited pasta options, and no supper service.
           </div>
           <div class="hint">Menus adapt automatically to the venue.</div>
         </div>
@@ -1001,15 +1001,14 @@
       "Trio of dips with pita",
       "Warm marinated olives",
       "Bocconcini & ricotta",
+      "Eggplant caponata",
       "Chargrilled prawns",
       "Italian pork sausages",
       "Meatballs in sugo"
     ],
     pasta: [
       "Pasta al Ragú (three meats, tomato)",
-      "Gnocchi Pesto (basil, parmesan & nut-free)",
-      "Casarecce Amatriciana (guanciale & pecorino, tomato)",
-      "Pasta Napoli (tomato & basil)"
+      "Baked gnocchi caprese"
     ],
     mains: [
       "Chargrilled chicken breast with a chimichurri dressing",
@@ -1606,7 +1605,7 @@
     const info = $("venueProfileText");
     if(info){
       if(key === "alora"){
-        info.innerHTML = "<b>Active venue:</b> " + escapeHtml(p.label) + "<br>ALORA Macedon menu excludes fried items, and includes Italian pork sausages and meatballs in sugo as hot antipasto options. No supper provided.";
+        info.innerHTML = "<b>Active venue:</b> " + escapeHtml(p.label) + "<br>ALORA Macedon menu: antipasto includes Eggplant caponata; pasta choices limited to Pasta al Ragú and Baked gnocchi caprese (due to small stove); no fried items; no supper provided.";
       } else {
         info.innerHTML = "<b>Active venue:</b> " + escapeHtml(p.label) + "<br>Branding switches automatically.";
       }
