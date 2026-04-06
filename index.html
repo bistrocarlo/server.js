@@ -1,821 +1,1238 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Members Lounge | Event Planner</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Members Lounge | Event Signature Selection</title>
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --deep-charcoal: #1E1E1E;
-      --warm-gold: #C6A43F;
-      --soft-gold: rgba(198, 164, 63, 0.15);
-      --cream: #FAF7F2;
-      --pure-white: #FFFFFF;
-      --muted-text: #6B6B6B;
-      --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
-      --radius-lg: 20px;
+    :root{
+      --bg:#ffffff;
+      --text:#0b0c10;
+      --muted:#4b5563;
+      --line:rgba(0,0,0,.10);
+      --gold:#b08d2a;
+      --goldSoft:rgba(176,141,42,.10);
+      --shadow:0 10px 26px rgba(0,0,0,.06);
+      --radius:16px;
+      --ok:#0f7a3a;
+      --warn:#b45309;
+      --bad:#b91c1c;
     }
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--cream);
-      color: var(--deep-charcoal);
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
     }
-    h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 700; }
-    .gold { color: var(--warm-gold); }
-    header {
-      flex-shrink: 0;
-      background: var(--pure-white);
-      padding: 16px;
-      text-align: center;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+    header{
+      padding:22px 18px 12px;
+      text-align:center;
+      border-bottom:1px solid var(--line);
+      background: linear-gradient(to bottom, #fff, #fff, rgba(176,141,42,.04));
     }
-    .logoWrap {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--pure-white);
-      padding: 6px 20px;
-      border-radius: 60px;
-      box-shadow: var(--shadow-sm);
+    .brandline{display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap;}
+    .logoWrap{
+      display:flex; align-items:center; justify-content:center;
+      padding:10px 14px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#fff;
+      box-shadow:0 6px 18px rgba(0,0,0,.03);
+      gap:10px;
     }
-    .tabs-wrap {
-      flex-shrink: 0;
-      background: rgba(255,255,255,0.95);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-      padding: 10px 0;
-      overflow-x: auto;
+    .logoImg{ height:34px; width:auto; display:block; }
+    .logoFallback{
+      display:inline-flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.14em; font-size:12px;
     }
-    .tabs {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      padding: 0 20px;
+    h1{margin:12px 0 6px; font-size:28px}
+    .sub{color:var(--muted); font-size:14px}
+    .gold{color:var(--gold)}
+    main{max-width:1180px; margin:0 auto; padding:10px 18px 70px;}
+
+    .tabs-wrap{
+      position:sticky; top:0; z-index:10;
+      padding:10px 0 12px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.98), rgba(255,255,255,.90), rgba(255,255,255,0));
+      backdrop-filter: blur(6px);
     }
-    .tab {
-      cursor: pointer;
-      padding: 8px 20px;
-      border-radius: 40px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      background: transparent;
-      color: var(--muted-text);
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .tabs{display:flex; flex-wrap:wrap; gap:10px; justify-content:center;}
+    .tab{
+      cursor:pointer; user-select:none;
+      border:1px solid var(--line);
+      background:#fff; color:var(--text);
+      padding:10px 12px; border-radius:999px;
+      font-size:13px; display:flex; gap:8px; align-items:center;
+      transition:transform .08s ease, background .15s ease, border-color .15s ease;
+      box-shadow:0 6px 18px rgba(0,0,0,.03);
+      white-space:nowrap;
     }
-    .tab:hover { color: var(--warm-gold); background: var(--soft-gold); }
-    .tab.active { background: var(--warm-gold); color: white; }
-    main {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px;
-      max-width: 1400px;
-      margin: 0 auto;
-      width: 100%;
+    .tab:hover{transform: translateY(-1px)}
+    .tab.active{border-color: rgba(176,141,42,.60); background:var(--goldSoft); font-weight:800;}
+    .ghost{border-color: rgba(176,141,42,.60); background:var(--goldSoft); font-weight:900;}
+
+    .page{display:none}
+    .page.active{display:block}
+
+    .grid{display:grid; grid-template-columns:1fr; gap:14px; margin-top:8px;}
+    @media(min-width:920px){ .grid{grid-template-columns:1fr 1fr;} .span2{grid-column:1/-1;} }
+
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:var(--shadow);
     }
-    .page { display: none; }
-    .page.active { display: block; }
-    .card {
-      background: var(--pure-white);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: var(--shadow-sm);
-      margin-bottom: 24px;
+    .card h2{margin:0 0 10px; font-size:16px;}
+    .hint{color:var(--muted); font-size:12px}
+
+    label{display:block; font-size:12px; color:var(--muted); margin:10px 0 6px;}
+    input, select, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      outline:none;
     }
-    .card h2 { font-size: 1.5rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
-    .btn {
-      cursor: pointer;
-      border: none;
-      background: var(--pure-white);
-      padding: 8px 20px;
-      border-radius: 40px;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: var(--shadow-sm);
-      transition: 0.2s;
-      border: 1px solid #E5E5E5;
+    textarea{min-height:90px; resize:vertical}
+    input::placeholder, textarea::placeholder{color:rgba(75,85,99,.7)}
+
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+    .divider{height:1px; background:var(--line); margin:12px 0}
+    .small{font-size:12px; color:var(--muted)}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
+    .btn{
+      cursor:pointer;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow:0 10px 22px rgba(0,0,0,.04);
     }
-    .btn.primary { background: var(--warm-gold); color: white; border-color: var(--warm-gold); }
-    .btn.ghost { background: transparent; border-color: var(--warm-gold); color: var(--warm-gold); }
-    .btn:hover { transform: translateY(-2px); }
-    input, select, textarea {
-      width: 100%;
-      padding: 10px 14px;
-      border-radius: 12px;
-      border: 1px solid #E5E5E5;
-      font-family: 'Inter', sans-serif;
-      margin-bottom: 16px;
+    .btn:hover{border-color: rgba(176,141,42,.60)}
+    .btn.primary{border-color: rgba(176,141,42,.75); background:var(--goldSoft); font-weight:900;}
+    .btn.ghost{border-color: rgba(176,141,42,.75); background:var(--goldSoft); font-weight:900;}
+
+    .table{width:100%; border-collapse:collapse; font-size:13px;}
+    .table td{padding:10px 8px; border-bottom:1px solid var(--line); vertical-align:top;}
+    .table td:last-child{text-align:right; font-weight:900;}
+    .total{
+      display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(176,141,42,.35);
+      background: rgba(176,141,42,.08);
+      margin-top:10px;
+      font-weight:900;
     }
-    label { font-weight: 600; font-size: 0.85rem; margin-bottom: 4px; display: block; color: var(--muted-text); }
-    .floorplan-grid, .dietary-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 16px;
-      margin: 20px 0;
+
+    .course{margin-top:12px; border-top:1px solid var(--line); padding-top:12px;}
+    .course h3{margin:0 0 8px; font-size:14px;}
+    .count{color:var(--muted); font-size:12px; margin-top:8px;}
+    .warnBox{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(176,141,42,.35);
+      background: rgba(176,141,42,.08);
+      color:#47370a;
+      display:none;
+      font-size:12px;
+      font-weight:800;
     }
-    .table-card {
-      background: #faf7f0;
-      border-radius: 16px;
-      padding: 12px 8px;
-      text-align: center;
-      border: 1px solid #ece2d0;
+    .statusRow{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:10px;}
+    .badge{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:12px;
+      font-weight:800;
     }
-    .table-card .table-num {
-      font-weight: 800;
-      font-size: 1rem;
-      background: var(--warm-gold);
-      display: inline-block;
-      padding: 2px 10px;
-      border-radius: 30px;
-      color: white;
-      margin-bottom: 8px;
+    .badge.ok{border-color: rgba(15,122,58,.35); background: rgba(15,122,58,.08); color: var(--ok);}
+    .badge.warn{border-color: rgba(180,83,9,.35); background: rgba(180,83,9,.08); color: var(--warn);}
+    .badge.bad{border-color: rgba(185,28,28,.35); background: rgba(185,28,28,.08); color: var(--bad);}
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border-radius:999px;
+      background:var(--goldSoft);
+      border:1px solid rgba(176,141,42,.35);
+      color:var(--text);
+      font-size:12px;
+      margin:6px 6px 0 0;
     }
-    .control-group {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 8px 0;
-      font-size: 0.8rem;
-      gap: 6px;
+    .hotTag{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      margin-left:8px;
+      padding:2px 8px;
+      border-radius:999px;
+      border:1px solid rgba(180,83,9,.35);
+      background: rgba(180,83,9,.08);
+      color: var(--warn);
+      font-size:11px;
+      font-weight:900;
+      white-space:nowrap;
     }
-    .control-group select {
-      width: 70px;
-      padding: 4px;
-      margin: 0;
-      font-size: 0.8rem;
+
+    .kpi{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;}
+    @media(min-width:920px){ .kpi{grid-template-columns:1fr 1fr 1fr 1fr;} }
+    .kpi .box{border:1px solid var(--line); background:#fff; border-radius:14px; padding:12px;}
+    .kpi .box .label{font-size:11px; color:var(--muted)}
+    .kpi .box .value{font-size:18px; font-weight:900; margin-top:4px}
+
+    footer{
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+      padding:18px 0 26px;
+      border-top:1px solid var(--line);
+      background:#fff;
     }
-    .control-group button {
-      background: var(--soft-gold);
-      border: none;
-      width: 28px;
-      height: 28px;
-      border-radius: 30px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    .totals-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-top: 20px;
-      padding: 15px;
-      background: #f0ebe0;
-      border-radius: 20px;
-    }
-    .total-guests {
-      font-size: 1.3rem;
-      font-weight: 800;
-      background: var(--warm-gold);
-      color: white;
-      padding: 6px 20px;
-      border-radius: 60px;
-    }
-    .optionsGrid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 12px;
-      margin: 15px 0;
-    }
-    .opt {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px;
-      background: var(--cream);
-      border-radius: 12px;
-    }
-    .hotTag { background: var(--warm-gold); color: white; padding: 2px 6px; border-radius: 20px; font-size: 0.7rem; margin-left: 6px; }
-    .dietary-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.75rem;
-      gap: 4px;
-    }
-    .dietary-row button {
-      background: var(--soft-gold);
-      border: none;
-      width: 24px;
-      height: 24px;
-      border-radius: 20px;
-      cursor: pointer;
-    }
-    .notes-input {
-      width: 100%;
-      font-size: 0.75rem;
-      padding: 6px;
-      margin-top: 6px;
-      border-radius: 8px;
+    @media print{
+      .tabs-wrap, .actions, .btn { display:none !important; }
+      .card{ box-shadow:none; }
     }
   </style>
 </head>
+
 <body>
-<header>
-  <div class="logoWrap">
-    <span style="font-size:1.4rem;"><i class="fas fa-crown gold"></i></span>
-    <span style="font-weight:700;">THE MEMBERS LOUNGE</span>
-  </div>
-  <h1><span class="gold">Event Master Planner</span></h1>
-  <div>Reggio Calabria Club • Parkville</div>
-</header>
+  <header>
+    <div class="brandline">
+      <div class="logoWrap">
+        <img class="logoImg" id="brandLogo" src="members.png" alt="Brand Logo"
+             onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='inline-flex';">
+        <span class="logoFallback" id="logoFallback" style="display:none;">✨ <span>THE MEMBERS LOUNGE</span></span>
+      </div>
+    </div>
 
-<div class="tabs-wrap">
-  <div class="tabs">
-    <div class="tab active" data-page="couple"><i class="fas fa-heart"></i> Couple</div>
-    <div class="tab" data-page="quote"><i class="fas fa-file-invoice"></i> Quote</div>
-    <div class="tab" data-page="food"><i class="fas fa-utensils"></i> Food</div>
-    <div class="tab" data-page="drinks"><i class="fas fa-wine-glass-alt"></i> Drinks</div>
-    <div class="tab" data-page="floorplan"><i class="fas fa-building"></i> Floor Plan</div>
-    <div class="tab" data-page="dietary"><i class="fas fa-clipboard-list"></i> Dietary</div>
-    <div class="tab" data-page="extras"><i class="fas fa-sliders-h"></i> Extras</div>
-    <div class="tab" data-page="runsheet"><i class="fas fa-clock"></i> Runsheet</div>
-    <div class="tab" data-page="summary"><i class="fas fa-file-alt"></i> Summary</div>
-    <div class="tab" id="nextTab"><i class="fas fa-arrow-right"></i> Next</div>
-  </div>
-</div>
+    <h1><span class="gold" id="brandTitle">Event Signature Selection</span></h1>
+    <div class="sub" id="brandSubtitle">Reggio Calabria Club, Parkville</div>
+  </header>
 
-<main>
-  <!-- COUPLE DETAILS -->
-  <section class="page active" id="page-couple">
-    <div class="grid-2">
-      <div class="card">
-        <h2><i class="fas fa-user-friends gold"></i> Couple Details</h2>
-        <label>Couple Name</label>
-        <input id="coupleName" placeholder="e.g., Laura & Daniel">
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-          <div><label>Date</label><input id="weddingDate" type="date"></div>
-          <div><label>Venue</label>
-            <select id="venueSpace">
-              <option value="Members Lounge">Members Lounge (Parkville)</option>
-              <option value="Sala Reggio Ballroom">Sala Reggio Ballroom</option>
-              <option value="FIOR Parkville">FIOR Parkville</option>
-              <option value="ALORA Macedon">ALORA Macedon</option>
-            </select>
+  <div class="tabs-wrap">
+    <div class="tabs" role="tablist" aria-label="Event signature tabs">
+      <div class="tab active" data-page="quote" role="tab" aria-selected="true">🧾 Quote</div>
+      <div class="tab" data-page="couple" role="tab" aria-selected="false">💍 Couple</div>
+      <div class="tab" data-page="food" role="tab" aria-selected="false">🍽️ Food</div>
+      <div class="tab" data-page="drinks" role="tab" aria-selected="false">🍾 Drinks</div>
+      <div class="tab" data-page="summary" role="tab" aria-selected="false">✅ Summary</div>
+      <div class="tab ghost" id="ghostNext" title="Tap to move to next tab">👻 Next</div>
+    </div>
+  </div>
+
+  <main>
+    <!-- PAGE 1 -->
+    <section class="page active" id="page-quote">
+      <div class="grid">
+        <div class="card">
+          <h2>Indicative Quote (Live)</h2>
+          <div class="hint">Room hire + dry hire + security + selected food courses + selected drinks = estimate.</div>
+
+          <div class="divider"></div>
+
+          <div class="row">
+            <div>
+              <label for="adults">Adults</label>
+              <input id="adults" type="number" min="0" step="1" value="120">
+            </div>
+            <div>
+              <label for="children">Children (Under 12)</label>
+              <input id="children" type="number" min="0" step="1" value="20">
+            </div>
+          </div>
+
+          <label for="roomHire">Room Hire (AUD)</label>
+          <input id="roomHire" type="number" min="0" step="50" value="0">
+
+          <div class="row">
+            <div>
+              <label for="dryHire">Dry Hire (AUD)</label>
+              <input id="dryHire" type="number" min="0" step="50" value="0">
+            </div>
+            <div>
+              <label for="security">Security (AUD)</label>
+              <input id="security" type="number" min="0" step="50" value="0">
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <table class="table" aria-label="Quote breakdown">
+            <tbody>
+              <tr><td>Room hire</td><td id="qRoom">$0.00</td></tr>
+              <tr><td>Food (course-driven)</td><td id="qFood">$0.00</td></tr>
+              <tr><td>Drinks</td><td id="qDrinks">$0.00</td></tr>
+              <tr><td>Dry hire</td><td id="qDry">$0.00</td></tr>
+              <tr><td>Security</td><td id="qSec">$0.00</td></tr>
+            </tbody>
+          </table>
+
+          <div class="total">
+            <div>Total Estimated Cost</div>
+            <div id="qTotal" class="mono">$0.00</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn" id="saveDraft">💾 Save Draft</button>
+            <button class="btn" id="loadDraft">📥 Load Draft</button>
+            <button class="btn" id="resetAll">🧹 Reset</button>
+            <button class="btn" id="printQuote">🖨️ Print</button>
+            <button class="btn primary" id="nextQ">👻 Next</button>
           </div>
         </div>
-        <label>Email</label><input id="email" type="email" placeholder="name@email.com">
-        <label>Phone</label><input id="phone" type="tel" placeholder="04xx xxx xxx">
-        <label>Notes / Special Requirements</label><textarea id="notes" rows="3" placeholder="Any special requests..."></textarea>
-        <button class="btn primary" id="nextCouple">Next: Quote →</button>
-      </div>
-      <div class="card">
-        <h2><i class="fas fa-map-marker-alt gold"></i> Venue Info</h2>
-        <div id="venueProfileText">Select a venue to see details.</div>
-      </div>
-    </div>
-  </section>
 
-  <!-- QUOTE -->
-  <section class="page" id="page-quote">
-    <div class="grid-2">
-      <div class="card">
-        <h2><i class="fas fa-calculator gold"></i> Quote Summary</h2>
-        <div style="background:var(--soft-gold); padding:15px; border-radius:12px; margin-bottom:20px;">
-          <p><strong>Guests (from Floor Plan):</strong></p>
-          <p>Total paying guests: <span id="quoteAdults">0</span> adults & <span id="quoteChildren">0</span> children</p>
-          <p>High chairs (non-paying): <span id="quoteHighChairs">0</span></p>
-        </div>
-        <table style="width:100%; border-collapse:collapse;">
-          <tr><td>Food</td><td id="quoteFood">$0.00</td></tr>
-          <tr><td>Drinks</td><td id="quoteDrinks">$0.00</td></tr>
-          <tr><td>Room Hire</td><td id="quoteRoom">$0.00</td></tr>
-          <tr><td>Dry Hire</td><td id="quoteDry">$0.00</td></tr>
-          <tr><td>Security</td><td id="quoteSec">$0.00</td></tr>
-          <tr><td>Extras</td><td id="quoteExtra">$0.00</td></tr>
-          <tr style="font-weight:700; border-top:2px solid var(--warm-gold);"><td>Total Estimate</td><td id="quoteTotal">$0.00</td></tr>
-        </table>
-        <div style="margin-top:20px; display:flex; gap:12px;">
-          <button class="btn ghost" id="backQuote">← Back</button>
-          <button class="btn primary" id="nextQuote">Next: Food Selection →</button>
-        </div>
-      </div>
-      <div class="card">
-        <h2><i class="fas fa-info-circle gold"></i> How Pricing Works</h2>
-        <p>• Adults pay the combined price of selected courses</p>
-        <p>• Children pay a flat <strong>$30 each</strong></p>
-        <p>• Drinks: Bar = $0 package, Custom = price per adult</p>
-        <p>• All numbers pulled live from Floor Plan tab</p>
-      </div>
-    </div>
-  </section>
+        <div class="card">
+          <h2>Quick Snapshot</h2>
 
-  <!-- FOOD SELECTION -->
-  <section class="page" id="page-food">
-    <div class="card">
-      <h2><i class="fas fa-utensils gold"></i> Food Selection</h2>
-      <p style="margin-bottom:20px; color:var(--muted-text);">Select items for each course. Prices are internal only.</p>
-      <div id="foodCourses"></div>
-      <div style="margin-top:20px; display:flex; gap:12px;">
-        <button class="btn ghost" id="backFood">← Back</button>
-        <button class="btn primary" id="nextFood">Next: Drinks →</button>
-      </div>
-    </div>
-  </section>
+          <div class="statusRow">
+            <span class="badge" id="menuBadge">Menu: Custom</span>
+            <span class="badge" id="drinksBadge">Drinks: Draft</span>
+          </div>
 
-  <!-- DRINKS -->
-  <section class="page" id="page-drinks">
-    <div class="card">
-      <h2><i class="fas fa-wine-glass-alt gold"></i> Drinks Package</h2>
-      <label>Drinks Option</label>
-      <select id="drinkMode">
-        <option value="bar">Bar Prices (no package cost)</option>
-        <option value="custom">Custom Package per Adult</option>
-      </select>
-      <div id="customDrinkRow" style="display:none;">
-        <label>Price per adult ($)</label>
-        <input type="number" id="customDrinkPrice" value="0" step="5" min="0">
-        <label>Notes</label>
-        <input id="customDrinkNote" placeholder="e.g. 4 hours beer, wine & soft drinks">
-      </div>
-      <div style="margin-top:20px; display:flex; gap:12px;">
-        <button class="btn ghost" id="backDrinks">← Back</button>
-        <button class="btn primary" id="nextDrinks">Next: Floor Plan →</button>
-      </div>
-    </div>
-  </section>
+          <div class="kpi">
+            <div class="box"><div class="label">Adults</div><div class="value" id="kpiAdults">120</div></div>
+            <div class="box"><div class="label">Children</div><div class="value" id="kpiChildren">20</div></div>
+            <div class="box"><div class="label">Food subtotal</div><div class="value mono" id="kpiFood">$0.00</div></div>
+            <div class="box"><div class="label">Avg per guest</div><div class="value mono" id="kpiAvg">$0.00</div></div>
+          </div>
 
-  <!-- FLOOR PLAN -->
-  <section class="page" id="page-floorplan">
-    <div class="card">
-      <h2><i class="fas fa-building gold"></i> Floor Plan – Tables 1-36 + Bridal Table</h2>
-      <button class="btn ghost" id="resetFloorBtn" style="margin-bottom:15px;">Reset All Tables to Zero</button>
-      <div class="floorplan-grid" id="floorplanGrid"></div>
+          <div class="divider"></div>
 
-      <div class="bridal-area" style="margin-top:30px; padding:20px; background:var(--soft-gold); border-radius:24px;">
-        <strong>👰 Bridal Table (T60)</strong>
-        <div class="control-group"><span>Guests:</span><select id="bridalGuests"></select></div>
-        <div class="control-group"><span>Children:</span><select id="bridalChildren"></select></div>
-        <div class="control-group"><span>High chairs:</span>
-          <button id="bridalHCMinus">-</button>
-          <span id="bridalHC">0</span>
-          <button id="bridalHCPlus">+</button>
+          <h2>Admin Pricing (Editable)</h2>
+          <div class="hint">Course pricing is per adult. If a course has at least 1 selection, that course price applies.</div>
+
+          <div class="row">
+            <div>
+              <label for="adultFactor">Adult pricing factor</label>
+              <input id="adultFactor" type="number" min="0" step="0.05" value="1.00">
+              <div class="small">Scales all adult food course pricing (1.00 = normal).</div>
+            </div>
+            <div>
+              <label for="childFactor">Child pricing factor</label>
+              <input id="childFactor" type="number" min="0" step="0.05" value="0.30">
+              <div class="small">Kids cost as a fraction of adult food (default 0.30).</div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="small">Tip: If you want kids to be exactly “$30”, we can swap this factor model to a fixed child price later.</div>
         </div>
       </div>
+    </section>
 
-      <div class="totals-bar">
-        <div><strong>Paying Guests:</strong> <span id="assignedPaying">0</span></div>
-        <div><strong>Children:</strong> <span id="assignedChildrenSpan">0</span></div>
-        <div><strong>High Chairs:</strong> <span id="assignedHC">0</span></div>
-      </div>
+    <!-- PAGE 2 -->
+    <section class="page" id="page-couple">
+      <div class="grid">
+        <div class="card">
+          <h2>Couple Details</h2>
 
-      <div style="margin-top:20px; display:flex; gap:12px;">
-        <button class="btn ghost" id="backFloor">← Back</button>
-        <button class="btn primary" id="nextFloor">Next: Dietary →</button>
-      </div>
-    </div>
-  </section>
+          <label for="coupleName">Couple Name</label>
+          <input id="coupleName" placeholder="e.g., Laura & Daniel">
 
-  <!-- DIETARY -->
-  <section class="page" id="page-dietary">
-    <div class="card">
-      <h2><i class="fas fa-clipboard-list gold"></i> Dietary Requirements (per table)</h2>
-      <button class="btn ghost" id="resetDietaryBtn" style="margin-bottom:15px;">Reset All Dietary Counts</button>
-      <div class="dietary-grid" id="dietaryGrid"></div>
-      <div style="margin-top:20px; display:flex; gap:12px;">
-        <button class="btn ghost" id="backDietary">← Back</button>
-        <button class="btn primary" id="nextDietary">Next: Extras →</button>
-      </div>
-    </div>
-  </section>
+          <div class="row">
+            <div>
+              <label for="weddingDate">Date of Choice</label>
+              <input id="weddingDate" type="date">
+            </div>
+            <div>
+              <label for="venueSpace">Venue Space</label>
+              <select id="venueSpace">
+                <option value="members">Sala Reggio Ballroom</option>
+                <option value="members">Members Lounge Restaurant</option>
+                <option value="fior">FIOR Parkville</option>
+                <option value="alora">ALORA Macedon</option>
+              </select>
+              <div class="small">Venue selection switches branding automatically.</div>
+            </div>
+          </div>
 
-  <!-- EXTRAS -->
-  <section class="page" id="page-extras">
-    <div class="card">
-      <h2><i class="fas fa-sliders-h gold"></i> Extras & Hire</h2>
-      <label>Setup Type</label><select id="setupType"><option>Standard</option><option>Cabaret</option><option>Theatre</option></select>
-      <label>Audio</label><select id="audioType"><option>None</option><option>DJ - $500</option><option>Live Band - $1200</option></select>
-      <label>Extra Cost ($)</label><input type="number" id="extraCost" value="0" min="0">
-      <label>Room Hire ($)</label><input type="number" id="roomHire" value="0" min="0">
-      <label>Dry Hire ($)</label><input type="number" id="dryHire" value="0" min="0">
-      <label>Security ($)</label><input type="number" id="security" value="0" min="0">
-      <div style="margin-top:20px; display:flex; gap:12px;">
-        <button class="btn ghost" id="backExtras">← Back</button>
-        <button class="btn primary" id="nextExtras">Next: Runsheet →</button>
-      </div>
-    </div>
-  </section>
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="name@email.com">
 
-  <!-- RUNSHEET -->
-  <section class="page" id="page-runsheet">
-    <div class="card">
-      <h2><i class="fas fa-clock gold"></i> Event Runsheet</h2>
-      <div id="runsheetList"></div>
-      <button class="btn" id="addEventBtn" style="margin-top:15px;">+ Add Event</button>
-      <div style="margin-top:20px; display:flex; gap:12px;">
-        <button class="btn ghost" id="backRunsheet">← Back</button>
-        <button class="btn primary" id="nextRunsheet">Next: Summary →</button>
-      </div>
-    </div>
-  </section>
+          <label for="phone">Phone</label>
+          <input id="phone" type="tel" placeholder="04xx xxx xxx">
 
-  <!-- SUMMARY -->
-  <section class="page" id="page-summary">
-    <div class="card">
-      <h2><i class="fas fa-file-alt gold"></i> Full Event Summary</h2>
-      <div id="fullSummary"></div>
-      <div style="margin-top:20px; display:flex; gap:12px;">
-        <button class="btn" id="copySummaryBtn">Copy to Clipboard</button>
-        <button class="btn" id="printSummaryBtn">Print</button>
-        <button class="btn ghost" id="backSummary">← Back</button>
+          <label for="notes">Notes / Requirements</label>
+          <textarea id="notes" placeholder="Dietary notes, timing, styling, music, special requests…"></textarea>
+
+          <div class="actions">
+            <button class="btn ghost" id="backC">⬅️ Back</button>
+            <button class="btn primary" id="nextC">👻 Next</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Venue Profile</h2>
+          <div class="small" id="venueProfileText">
+            Select a venue to apply branding + default costing (only fills if your cost fields are still $0).
+          </div>
+          <div class="divider"></div>
+          <div class="small">If you want different menus per venue later (FIOR vs ALORA), we can also do that.</div>
+        </div>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
+
+    <!-- PAGE 3 -->
+    <section class="page" id="page-food">
+      <div class="card">
+        <h2>Food Builder (Course-Driven)</h2>
+        <div class="hint">
+          Pick as many items as you like. If you select at least <b>one</b> item in a course, that course price is added to the quote.
+          You can do “Entrée only” or “Full package” — it will always add up correctly.
+        </div>
+
+        <div class="statusRow">
+          <span class="badge" id="foodCompleteBadge">Menu: Custom</span>
+          <span class="badge" id="foodRuleBadge">Rules: Modular</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="grid">
+          <div class="card">
+            <h2>Per-Adult Course Pricing (AUD)</h2>
+            <div class="hint">Applied when that course has 1+ selections (edit anytime).</div>
+
+            <div class="row">
+              <div>
+                <label for="pCanapes">Canapés</label>
+                <input id="pCanapes" type="number" min="0" step="0.5" value="10">
+              </div>
+              <div>
+                <label for="pAntipasto">Antipasto</label>
+                <input id="pAntipasto" type="number" min="0" step="0.5" value="25">
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label for="pPasta">Entrée / Pasta</label>
+                <input id="pPasta" type="number" min="0" step="0.5" value="20">
+              </div>
+              <div>
+                <label for="pMains">Mains</label>
+                <input id="pMains" type="number" min="0" step="0.5" value="30">
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label for="pDessert">Dessert</label>
+                <input id="pDessert" type="number" min="0" step="0.5" value="10">
+              </div>
+              <div>
+                <label for="pSupper">Supper (Pizza)</label>
+                <input id="pSupper" type="number" min="0" step="0.5" value="5">
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <label style="margin-top:0;">
+              <input id="enableSupperPricing" type="checkbox">
+              Add supper pricing to food total (Pizza)
+            </label>
+            <div class="small">If unchecked, supper remains informational and won’t affect the quote.</div>
+          </div>
+
+          <div class="card">
+            <h2>Extras (Optional)</h2>
+
+            <div class="small">Extras moved to the bottom under Supper (as requested).</div>
+
+            <div class="actions">
+              <button class="btn ghost" id="backF1">⬅️ Back</button>
+              <button class="btn primary" id="nextF1">👻 Next</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="course" data-course="canapes">
+          <h3>Canapés (choose up to 3)</h3>
+          <div class="row" id="list-canapes"></div>
+          <div class="count" id="count-canapes">0 selected</div>
+          <div class="warnBox" id="warn-canapes"></div>
+        </div>
+
+        <div class="course" data-course="antipasto">
+          <h3>Antipasto Plates (choose up to 7)</h3>
+          <div class="small">Hot items are marked 🔥 (Calamari, Cevape, Meatballs in sugo, Sausages).</div>
+          <div class="row" id="list-antipasto"></div>
+          <div class="count" id="count-antipasto">0 selected</div>
+          <div class="warnBox" id="warn-antipasto"></div>
+        </div>
+
+        <div class="course" data-course="pasta">
+          <h3>Entrée / Pasta (choose up to 2)</h3>
+          <div class="row" id="list-pasta"></div>
+          <div class="count" id="count-pasta">0 selected</div>
+          <div class="warnBox" id="warn-pasta"></div>
+        </div>
+
+        <div class="course" data-course="mains">
+          <h3>Mains (choose up to 2)</h3>
+          <div class="row" id="list-mains"></div>
+          <div class="count" id="count-mains">0 selected</div>
+          <div class="warnBox" id="warn-mains"></div>
+        </div>
+
+        <div class="course" data-course="dessert">
+          <h3>Dessert (choose up to 1)</h3>
+          <div class="row" id="list-dessert"></div>
+          <div class="count" id="count-dessert">0 selected</div>
+          <div class="warnBox" id="warn-dessert"></div>
+        </div>
+
+        <div class="course">
+          <h3>Supper / Late Night (fixed)</h3>
+          <div class="small">Pizza Only (fixed). No selection required.</div>
+          <div class="count">Included: Pizza</div>
+
+          <!-- ✅ FRUIT PLATTER MOVED HERE (BOTTOM UNDER SUPPER) -->
+          <div class="divider"></div>
+          <h3 style="margin-top:0;">Optional Add-on: Fruit Platter</h3>
+          <label><input id="fruitPlatter" type="checkbox"> Add Fruit Platter (per table)</label>
+          <div class="row">
+            <div>
+              <label for="tables">Estimated Tables</label>
+              <input id="tables" type="number" min="0" step="1" value="10">
+            </div>
+            <div>
+              <label for="fruitPerTable">Fruit platter per table (AUD)</label>
+              <input id="fruitPerTable" type="number" min="0" step="1" value="35">
+            </div>
+          </div>
+          <div class="small">This add-on is added to food total when checked.</div>
+        </div>
+
+        <div class="actions">
+          <button class="btn ghost" id="backF2">⬅️ Back</button>
+          <button class="btn primary" id="nextF2">👻 Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4 -->
+    <section class="page" id="page-drinks">
+      <div class="grid">
+        <div class="card">
+          <h2>Drinks</h2>
+          <div class="hint">Choose drinks. Quote updates live.</div>
+
+          <label for="drinkMode">Drinks Option</label>
+          <select id="drinkMode">
+            <option value="bar">Bar Prices (no package)</option>
+            <option value="custom">Custom per Adult (set price)</option>
+          </select>
+
+          <div class="row" id="customDrinkRow" style="display:none">
+            <div>
+              <label for="customDrinkPrice">Custom drink price per adult (AUD)</label>
+              <input id="customDrinkPrice" type="number" min="0" step="1" value="0">
+            </div>
+            <div>
+              <label for="customDrinkNote">Custom drink notes</label>
+              <input id="customDrinkNote" placeholder="e.g., beer/wine/spirits, 4hrs, premium…">
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="small" id="drinkInfo"></div>
+
+          <div class="actions">
+            <button class="btn ghost" id="backD">⬅️ Back</button>
+            <button class="btn primary" id="nextD">👻 Next</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Status</h2>
+          <div class="statusRow">
+            <span class="badge" id="drinksCompleteBadge">Drinks: Draft</span>
+          </div>
+          <div class="divider"></div>
+          <div class="small">“Bar prices” shows $0 for drinks (indicative). Custom adds into the quote.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 5 -->
+    <section class="page" id="page-summary">
+      <div class="grid">
+        <div class="card">
+          <h2>Final Summary</h2>
+          <div id="finalSummary" class="small">Complete the steps to see your summary.</div>
+
+          <div class="divider"></div>
+          <div class="actions">
+            <button class="btn" id="copySummary">📋 Copy</button>
+            <button class="btn" id="printSummary">🖨️ Print</button>
+          </div>
+
+          <div class="actions" style="margin-top:14px">
+            <button class="btn ghost" id="backS">⬅️ Back</button>
+            <button class="btn primary" id="toQuote">👻 Back to Quote</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Selected Items</h2>
+          <div id="chips"></div>
+          <div class="divider"></div>
+          <div class="small">Put <b>members.png</b>, <b>fior.png</b>, <b>alora.png</b> next to <b>index.html</b> to switch branding automatically.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="brandFooter">Members Lounge | Reggio Calabria Club, Parkville</footer>
 
 <script>
-// ==================== DATA & LOGIC ====================
-const COURSES = {
-  canapes: { name: "Canapés", price: 12, max: 3, items: ["Arancini", "Focaccia fingers", "Prawn spring rolls", "Parmigiano bites", "Caprese empanadas", "Beef empanadas"] },
-  antipasto: { name: "Antipasto", price: 28, max: 7, items: ["Bruschetta di pomodoro", "Salumi selection", "Feta & Kefalograviera", "Tiropita", "Trio of dips with pita", "Warm marinated olives", "Eggplant parmigiana", "Bocconcini & ricotta", "Calamari fritti", "Meatballs in sugo", "Cevapi", "Italian pork sausages"] },
-  pasta: { name: "Pasta / Entrée", price: 15, max: 2, items: ["Pasta al Ragú", "Gnocchi Pesto", "Casarecce Amatriciana", "Pasta Napoli"] },
-  mains: { name: "Mains", price: 34, max: 2, items: ["Chargrilled chicken", "Barramundi fillet", "Lamb shank", "Braised beef short ribs", "Bondiola", "Stuffed pepper (veg)"] },
-  dessert: { name: "Dessert", price: 10, max: 1, items: ["Sharing assorted desserts", "Tiramisu & cheesecake", "Gelato dessert"] }
-};
+  function escapeHtml(str){
+    return String(str || "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+  const $ = (id) => document.getElementById(id);
+  function on(el, ev, fn){ if(el) el.addEventListener(ev, fn); }
 
-let selectedFood = { canapes: [], antipasto: [], pasta: [], mains: [], dessert: [] };
-let drinkMode = "bar";
-let customDrinkPrice = 0;
-let runsheetEvents = [
-  { time: "5:00 PM", desc: "Setup & Staff Briefing" },
-  { time: "6:00 PM", desc: "Guest Arrival & Canapés" },
-  { time: "7:30 PM", desc: "Seated Dinner" },
-  { time: "9:00 PM", desc: "Speeches" }
-];
+  // -----------------------------
+  // VENUE PROFILES (EDIT THESE NUMBERS)
+  // -----------------------------
+  const VENUE_PROFILES = {
+    members: {
+      label: "Members Lounge / Reggio Calabria Club (Parkville)",
+      logo: "members.png",
+      subtitle: "Reggio Calabria Club, Parkville",
+      footer: "Members Lounge | Reggio Calabria Club, Parkville",
+      defaults: { roomHire: 6900, dryHire: 0, security: 0 }
+    },
+    fior: {
+      label: "FIOR Parkville",
+      logo: "fior.png",
+      subtitle: "FIOR, Parkville",
+      footer: "FIOR | Parkville",
+      defaults: { roomHire: 0, dryHire: 0, security: 0 }
+    },
+    alora: {
+      label: "ALORA Macedon",
+      logo: "alora.png",
+      subtitle: "ALORA, Macedon",
+      footer: "ALORA | Macedon",
+      defaults: { roomHire: 0, dryHire: 0, security: 0 }
+    }
+  };
 
-let tableData = Array(36).fill().map(() => ({ total: 0, children: 0, highChairs: 0 }));
-let bridal = { total: 0, children: 0, highChairs: 0 };
-let dietaryData = Array(36).fill().map(() => ({ veg:0, gluten:0, fructose:0, noSeafood:0, dairyFree:0, vegan:0, notes:"" }));
+  function safeSetLogo(src){
+    const img = $("brandLogo");
+    const fallback = $("logoFallback");
+    if(!img) return;
 
-function getGuestTotals() {
-  let paying = 0, children = 0, hc = 0;
-  tableData.forEach(t => {
-    paying += t.total;
-    children += t.children;
-    hc += t.highChairs;
-  });
-  paying += bridal.total;
-  children += bridal.children;
-  hc += bridal.highChairs;
-  return { paying, children, hc };
-}
+    img.style.display = "block";
+    if(fallback) fallback.style.display = "none";
 
-function updateQuote() {
-  const { paying, children, hc } = getGuestTotals();
-  const adults = paying - children;
+    img.onerror = function(){
+      if(src !== "members.png"){
+        safeSetLogo("members.png");
+        return;
+      }
+      img.style.display = "none";
+      if(fallback) fallback.style.display = "inline-flex";
+    };
 
-  document.getElementById("quoteAdults").innerText = adults;
-  document.getElementById("quoteChildren").innerText = children;
-  document.getElementById("quoteHighChairs").innerText = hc;
+    img.src = src;
+  }
 
-  let adultFoodPrice = 0;
-  Object.keys(selectedFood).forEach(key => {
-    if (selectedFood[key].length > 0) adultFoodPrice += COURSES[key].price;
-  });
+  function applyVenueProfile(profileKey){
+    const key = profileKey || "members";
+    const p = VENUE_PROFILES[key] || VENUE_PROFILES.members;
 
-  const foodTotal = (adults * adultFoodPrice) + (children * 30);
-  const drinksTotal = (drinkMode === "custom") ? adults * customDrinkPrice : 0;
-  const room = parseFloat(document.getElementById("roomHire").value) || 0;
-  const dry = parseFloat(document.getElementById("dryHire").value) || 0;
-  const sec = parseFloat(document.getElementById("security").value) || 0;
-  const extra = parseFloat(document.getElementById("extraCost").value) || 0;
+    const subtitleEl = $("brandSubtitle");
+    const footerEl = $("brandFooter");
+    if(subtitleEl) subtitleEl.textContent = p.subtitle;
+    if(footerEl) footerEl.textContent = p.footer;
 
-  const total = foodTotal + drinksTotal + room + dry + sec + extra;
+    safeSetLogo(p.logo);
 
-  document.getElementById("quoteFood").innerText = "$" + foodTotal.toFixed(2);
-  document.getElementById("quoteDrinks").innerText = "$" + drinksTotal.toFixed(2);
-  document.getElementById("quoteRoom").innerText = "$" + room.toFixed(2);
-  document.getElementById("quoteDry").innerText = "$" + dry.toFixed(2);
-  document.getElementById("quoteSec").innerText = "$" + sec.toFixed(2);
-  document.getElementById("quoteExtra").innerText = "$" + extra.toFixed(2);
-  document.getElementById("quoteTotal").innerText = "$" + total.toFixed(2);
-}
+    const info = $("venueProfileText");
+    if(info){
+      info.innerHTML = `<b>Active venue:</b> ${escapeHtml(p.label)}<br>
+        Branding switches automatically. Default costing fills only if your cost fields are still $0.`;
+    }
 
-// ==================== FOOD RENDERING ====================
-function renderFoodSelection() {
-  const container = document.getElementById("foodCourses");
-  container.innerHTML = "";
+    const roomHireEl = $("roomHire");
+    const dryHireEl = $("dryHire");
+    const securityEl = $("security");
 
-  Object.entries(COURSES).forEach(([key, course]) => {
-    const div = document.createElement("div");
-    div.innerHTML = `<h3>${course.name} (max ${course.max})</h3>`;
-    const grid = document.createElement("div");
-    grid.className = "optionsGrid";
+    const r = Number(roomHireEl?.value || 0);
+    const d = Number(dryHireEl?.value || 0);
+    const s = Number(securityEl?.value || 0);
 
-    course.items.forEach(item => {
-      const wrapper = document.createElement("div");
-      wrapper.className = "opt";
-      const checked = selectedFood[key].includes(item);
-      wrapper.innerHTML = `
-        <input type="checkbox" ${checked ? "checked" : ""} data-course="${key}" data-item="${item}">
-        <label>${item}</label>
-      `;
-      grid.appendChild(wrapper);
+    if(roomHireEl && r === 0) roomHireEl.value = p.defaults.roomHire;
+    if(dryHireEl && d === 0)  dryHireEl.value  = p.defaults.dryHire;
+    if(securityEl && s === 0) securityEl.value = p.defaults.security;
+  }
+
+  // -----------------------------
+  // MENU DATA
+  // -----------------------------
+  const COURSE_LABEL = {
+    canapes: "Canapés",
+    antipasto: "Antipasto",
+    pasta: "Entrée / Pasta",
+    mains: "Mains",
+    dessert: "Dessert"
+  };
+
+  const MENU = {
+    canapes: [
+      'Potato Croquettes',
+      'Arancini (vegetarian)',
+      'Pizza slices 🔥',
+      'Meatballs in sugo 🔥',
+      'Italian sausages 🔥'
+    ],
+    antipasto: [
+      'Italian dinner rolls',
+      'Bocconcini & Ricotta',
+      'Salumi (prosciutto & mortadella)',
+      'Eggplant parmigiana (vegetarian)',
+      'Grilled capsicum, artichokes, & olives (vegetarian)',
+      'Tomato bruschetta',
+      'Cocktail sausages 🔥',
+      'Calamari fritti 🔥',
+      'Polpette di casa (meatballs in ragu) 🔥'
+    ],
+    pasta: [
+      'Elicoidali Al Ragú (four-meat sauce)',
+      'Gnocchi Pesto (walnut pesto, vegetarian)',
+      'Pasta alla Norma (eggplant in Napoli sauce, vegetarian)',
+      'Tortellini al Brodo (veal tortellini in broth 🔥)',
+      'Lasagna (ragù with béchamel)',
+      'Risotto con Funghi Porcini (mushrooms, vegetarian)',
+      'Cassarecce all\'Amatriciana (guanciale, chilli 🔥)'
+    ],
+    mains: [
+      'Pollo alla Rosmarino (roasted chicken with rosemary 🔥)',
+      'Pesce con Salmoriglio (baked barramundi with herb dressing 🔥)',
+      'Pollo Provenciale (chargrilled chicken with chimichurri 🔥)',
+      'Cotoletta di Pesce (panko barramundi 🔥)',
+      'Porchetta (spiced pork loin 🔥)',
+      'Capretto (braised goat 🔥)',
+      'Melanzana Ripiena (stuffed eggplant, vegetarian)',
+      'Vegetable Stack (vegan)'
+    ],
+    dessert: [
+      'Tiramisu',
+      'Panna Cotta with berries',
+      'Cannoli Siciliani di Ricotta',
+      'Mini cheesecakes',
+      'Lemon tarts',
+      'Gelato assortment (chocolate, vanilla, strawberry)'
+    ]
+  };
+
+  const HOT_ANTIPASTO = {
+    'Cocktail sausages 🔥': true,
+    'Calamari fritti 🔥': true,
+    'Polpette di casa (meatballs in ragu) 🔥': true
+  };
+
+  const RULES = {
+    canapes:   { min: 0, max: 3 },
+    antipasto: { min: 0, max: 7 },
+    pasta:     { min: 0, max: 2 },
+    mains:     { min: 0, max: 2 },
+    dessert:   { min: 0, max: 1 }
+  };
+
+  // -----------------------------
+  // NAV
+  // -----------------------------
+  const TAB_ORDER = ["quote","couple","food","drinks","summary"];
+
+  function setActivePage(page){
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    const target = document.getElementById("page-" + page);
+    if(target) target.classList.add("active");
+
+    document.querySelectorAll(".tab[data-page]").forEach(t => {
+      const active = t.dataset.page === page;
+      t.classList.toggle("active", active);
+      t.setAttribute("aria-selected", active ? "true" : "false");
     });
 
-    div.appendChild(grid);
-    container.appendChild(div);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    renderAll();
+  }
+  function nextPage(){
+    const current = document.querySelector(".tab[data-page].active")?.dataset.page || "quote";
+    const idx = TAB_ORDER.indexOf(current);
+    setActivePage(TAB_ORDER[(idx + 1) % TAB_ORDER.length]);
+  }
+  function prevPage(){
+    const current = document.querySelector(".tab[data-page].active")?.dataset.page || "quote";
+    const idx = TAB_ORDER.indexOf(current);
+    setActivePage(TAB_ORDER[(idx - 1 + TAB_ORDER.length) % TAB_ORDER.length]);
+  }
 
-    // Event listeners
-    grid.querySelectorAll("input[type=checkbox]").forEach(cb => {
-      cb.addEventListener("change", (e) => {
-        const courseKey = e.target.dataset.course;
-        const itemName = e.target.dataset.item;
-        if (e.target.checked) {
-          if (selectedFood[courseKey].length < COURSES[courseKey].max) {
-            selectedFood[courseKey].push(itemName);
-          } else {
-            e.target.checked = false;
-          }
-        } else {
-          selectedFood[courseKey] = selectedFood[courseKey].filter(i => i !== itemName);
-        }
-        updateQuote();
+  document.querySelectorAll(".tab[data-page]").forEach(tab => on(tab, "click", () => setActivePage(tab.dataset.page)));
+  on($("ghostNext"), "click", nextPage);
+
+  on($("nextQ"), "click", nextPage);
+  on($("backC"), "click", prevPage);
+  on($("nextC"), "click", nextPage);
+  on($("backF1"), "click", prevPage);
+  on($("nextF1"), "click", nextPage);
+  on($("backF2"), "click", prevPage);
+  on($("nextF2"), "click", nextPage);
+  on($("backD"), "click", prevPage);
+  on($("nextD"), "click", nextPage);
+  on($("backS"), "click", prevPage);
+  on($("toQuote"), "click", () => setActivePage("quote"));
+
+  window.addEventListener("keydown", (e) => {
+    if(e.key === "ArrowRight") nextPage();
+    if(e.key === "ArrowLeft") prevPage();
+  });
+
+  // -----------------------------
+  // ELEMENTS
+  // -----------------------------
+  const adultsEl   = $("adults");
+  const childrenEl = $("children");
+  const roomHireEl = $("roomHire");
+  const dryHireEl  = $("dryHire");
+  const securityEl = $("security");
+
+  const adultFactorEl = $("adultFactor");
+  const childFactorEl = $("childFactor");
+
+  const pCanapesEl  = $("pCanapes");
+  const pAntipastoEl= $("pAntipasto");
+  const pPastaEl    = $("pPasta");
+  const pMainsEl    = $("pMains");
+  const pDessertEl  = $("pDessert");
+  const pSupperEl   = $("pSupper");
+  const enableSupperPricingEl = $("enableSupperPricing");
+
+  const fruitPlatterEl = $("fruitPlatter");
+  const tablesEl = $("tables");
+  const fruitPerTableEl = $("fruitPerTable");
+
+  const drinkModeEl = $("drinkMode");
+  const customDrinkRow = $("customDrinkRow");
+  const customDrinkPriceEl = $("customDrinkPrice");
+  const customDrinkNoteEl = $("customDrinkNote");
+  const drinkInfoEl = $("drinkInfo");
+
+  const coupleNameEl = $("coupleName");
+  const weddingDateEl = $("weddingDate");
+  const venueSpaceEl = $("venueSpace");
+  const emailEl = $("email");
+  const phoneEl = $("phone");
+  const notesEl = $("notes");
+
+  const qRoomEl   = $("qRoom");
+  const qFoodEl   = $("qFood");
+  const qDrinksEl = $("qDrinks");
+  const qDryEl    = $("qDry");
+  const qSecEl    = $("qSec");
+  const qTotalEl  = $("qTotal");
+
+  const kpiAdultsEl  = $("kpiAdults");
+  const kpiChildrenEl= $("kpiChildren");
+  const kpiFoodEl    = $("kpiFood");
+  const kpiAvgEl     = $("kpiAvg");
+
+  const finalSummaryEl = $("finalSummary");
+  const chipsEl = $("chips");
+
+  const foodCompleteBadgeEl = $("foodCompleteBadge");
+  const drinksCompleteBadgeEl = $("drinksCompleteBadge");
+
+  // -----------------------------
+  // HELPERS
+  // -----------------------------
+  const STORAGE_KEY = "memberslounge_event_signature_selection_clean_v2";
+
+  function aud(n){
+    const x = Number(n || 0);
+    return x.toLocaleString("en-AU", { style:"currency", currency:"AUD" });
+  }
+
+  function setBadge(el, state, text){
+    if(!el) return;
+    el.classList.remove("ok","warn","bad");
+    if(state) el.classList.add(state);
+    el.textContent = text;
+  }
+
+  function updateDrinkUI(){
+    const mode = drinkModeEl.value;
+
+    if(customDrinkRow){
+      customDrinkRow.style.display = (mode === "custom") ? "grid" : "none";
+    }
+
+    if(drinkInfoEl){
+      if(mode === "bar"){
+        drinkInfoEl.textContent = "Bar pricing is indicative only (drinks = $0 in the quote).";
+      } else {
+        drinkInfoEl.textContent = "Custom price adds your set amount per adult into the quote.";
+      }
+    }
+    renderAll();
+  }
+
+  // -----------------------------
+  // MENU RENDER
+  // -----------------------------
+  function addCheckboxList(courseKey, listId){
+    const wrap = document.getElementById(listId);
+    if(!wrap) return;
+    wrap.innerHTML = "";
+
+    (MENU[courseKey] || []).forEach((item, idx) => {
+      const div = document.createElement("div");
+      const isHot = (courseKey === "antipasto" && HOT_ANTIPASTO[item]);
+      const id = `cb-${courseKey}-${idx}`;
+
+      div.innerHTML = `
+        <label>
+          <input type="checkbox" data-course="${courseKey}" value="${escapeHtml(item)}" id="${id}">
+          ${escapeHtml(item)}
+          ${isHot ? `<span class="hotTag">🔥 HOT</span>` : ``}
+        </label>
+      `;
+      wrap.appendChild(div);
+    });
+  }
+
+  function getSelections(){
+    const out = { canapes:[], antipasto:[], pasta:[], mains:[], dessert:[] };
+    document.querySelectorAll('input[type="checkbox"][data-course]:checked').forEach(cb => {
+      const c = cb.dataset.course;
+      if(out[c]) out[c].push(cb.value);
+    });
+    return out;
+  }
+
+  function enforceLimit(courseKey){
+    const rule = RULES[courseKey];
+    if(!rule) return;
+
+    const checked = Array.from(
+      document.querySelectorAll(`input[type="checkbox"][data-course="${courseKey}"]:checked`)
+    );
+
+    if(checked.length > rule.max){
+      checked[checked.length - 1].checked = false;
+    }
+
+    const checkedNow = Array.from(
+      document.querySelectorAll(`input[type="checkbox"][data-course="${courseKey}"]:checked`)
+    );
+
+    const countEl = document.getElementById(`count-${courseKey}`);
+    const warnEl  = document.getElementById(`warn-${courseKey}`);
+
+    if(countEl) countEl.textContent = `${checkedNow.length} selected (max ${rule.max})`;
+
+    if(warnEl){
+      if(checkedNow.length >= rule.max){
+        warnEl.style.display = "block";
+        warnEl.textContent = `Maximum ${rule.max} selections for ${COURSE_LABEL[courseKey]}.`;
+      } else {
+        warnEl.style.display = "none";
+        warnEl.textContent = "";
+      }
+    }
+  }
+
+  function attachLimitListeners(){
+    document.querySelectorAll('input[type="checkbox"][data-course]').forEach(cb=>{
+      cb.addEventListener("change", ()=>{
+        enforceLimit(cb.dataset.course);
+        renderAll();
       });
     });
-  });
-}
-
-// ==================== FLOOR PLAN ====================
-function renderFloorplan() {
-  const grid = document.getElementById("floorplanGrid");
-  grid.innerHTML = "";
-
-  for (let i = 0; i < 36; i++) {
-    const d = tableData[i];
-    const card = document.createElement("div");
-    card.className = "table-card";
-    card.innerHTML = `
-      <div class="table-num">T${i+1}</div>
-      <div class="control-group">
-        <span>Guests:</span>
-        <select class="guest-select" data-idx="${i}"></select>
-      </div>
-      <div class="control-group">
-        <span>Children:</span>
-        <select class="child-select" data-idx="${i}"></select>
-      </div>
-      <div class="control-group">
-        <span>High chairs:</span>
-        <button class="hc-minus" data-idx="${i}">-</button>
-        <span class="hc-count" data-idx="${i}">${d.highChairs}</span>
-        <button class="hc-plus" data-idx="${i}">+</button>
-      </div>
-    `;
-    grid.appendChild(card);
   }
 
-  // Populate selects and attach listeners
-  for (let i = 0; i < 36; i++) {
-    const guestSelect = document.querySelector(`.guest-select[data-idx="${i}"]`);
-    const childSelect = document.querySelector(`.child-select[data-idx="${i}"]`);
+  // -----------------------------
+  // CALCULATIONS
+  // -----------------------------
+  function calculateFood(){
+    const adults = Number(adultsEl.value||0);
+    const children = Number(childrenEl.value||0);
+    const adultFactor = Number(adultFactorEl.value||1);
+    const childFactor = Number(childFactorEl.value||0);
 
-    for (let g = 0; g <= 12; g++) {
-      const opt = document.createElement("option");
-      opt.value = g;
-      opt.textContent = g;
-      if (g === tableData[i].total) opt.selected = true;
-      guestSelect.appendChild(opt);
+    const sel = getSelections();
+    let perAdult = 0;
+
+    if(sel.canapes.length) perAdult += Number(pCanapesEl.value||0);
+    if(sel.antipasto.length) perAdult += Number(pAntipastoEl.value||0);
+    if(sel.pasta.length) perAdult += Number(pPastaEl.value||0);
+    if(sel.mains.length) perAdult += Number(pMainsEl.value||0);
+    if(sel.dessert.length) perAdult += Number(pDessertEl.value||0);
+    if(enableSupperPricingEl.checked) perAdult += Number(pSupperEl.value||0);
+
+    const adultTotal = adults * perAdult * adultFactor;
+    const childTotal = children * perAdult * childFactor;
+
+    let fruitTotal = 0;
+    if(fruitPlatterEl.checked){
+      fruitTotal = Number(tablesEl.value||0) * Number(fruitPerTableEl.value||0);
     }
 
-    guestSelect.addEventListener("change", () => {
-      tableData[i].total = parseInt(guestSelect.value);
-      if (tableData[i].children > tableData[i].total) tableData[i].children = tableData[i].total;
-      updateChildSelect(i);
-      updateFloorTotals();
-    });
-
-    updateChildSelect(i);
-
-    childSelect.addEventListener("change", () => {
-      tableData[i].children = parseInt(childSelect.value);
-      updateFloorTotals();
-    });
-
-    // High chair buttons
-    card.querySelector(`.hc-minus[data-idx="${i}"]`).addEventListener("click", () => {
-      if (tableData[i].highChairs > 0) tableData[i].highChairs--;
-      card.querySelector(`.hc-count[data-idx="${i}"]`).textContent = tableData[i].highChairs;
-      updateFloorTotals();
-    });
-    card.querySelector(`.hc-plus[data-idx="${i}"]`).addEventListener("click", () => {
-      tableData[i].highChairs++;
-      card.querySelector(`.hc-count[data-idx="${i}"]`).textContent = tableData[i].highChairs;
-      updateFloorTotals();
-    });
-  }
-}
-
-function updateChildSelect(idx) {
-  const select = document.querySelector(`.child-select[data-idx="${idx}"]`);
-  select.innerHTML = "";
-  const max = tableData[idx].total;
-  for (let c = 0; c <= max; c++) {
-    const opt = document.createElement("option");
-    opt.value = c;
-    opt.textContent = c;
-    if (c === tableData[idx].children) opt.selected = true;
-    select.appendChild(opt);
-  }
-}
-
-function updateFloorTotals() {
-  const { paying, children, hc } = getGuestTotals();
-  document.getElementById("assignedPaying").innerText = paying;
-  document.getElementById("assignedChildrenSpan").innerText = children;
-  document.getElementById("assignedHC").innerText = hc;
-  updateQuote();
-}
-
-// Bridal Table
-function initBridal() {
-  const gSelect = document.getElementById("bridalGuests");
-  const cSelect = document.getElementById("bridalChildren");
-
-  for (let i = 0; i <= 12; i++) {
-    const opt = document.createElement("option");
-    opt.value = i;
-    opt.textContent = i;
-    if (i === bridal.total) opt.selected = true;
-    gSelect.appendChild(opt);
+    return adultTotal + childTotal + fruitTotal;
   }
 
-  gSelect.addEventListener("change", () => {
-    bridal.total = parseInt(gSelect.value);
-    if (bridal.children > bridal.total) bridal.children = bridal.total;
-    updateBridalChildren();
-    updateFloorTotals();
-  });
+  function calculateDrinks(){
+    const adults = Number(adultsEl.value||0);
+    const mode = drinkModeEl.value;
 
-  function updateBridalChildren() {
-    cSelect.innerHTML = "";
-    for (let i = 0; i <= bridal.total; i++) {
-      const opt = document.createElement("option");
-      opt.value = i;
-      opt.textContent = i;
-      if (i === bridal.children) opt.selected = true;
-      cSelect.appendChild(opt);
-    }
+    if(mode === "custom") return adults * Number(customDrinkPriceEl.value||0);
+    return 0;
   }
-  updateBridalChildren();
 
-  cSelect.addEventListener("change", () => {
-    bridal.children = parseInt(cSelect.value);
-    updateFloorTotals();
-  });
+  function renderAll(){
+    const adults = Number(adultsEl.value||0);
+    const children = Number(childrenEl.value||0);
 
-  document.getElementById("bridalHCMinus").onclick = () => {
-    if (bridal.highChairs > 0) bridal.highChairs--;
-    document.getElementById("bridalHC").textContent = bridal.highChairs;
-    updateFloorTotals();
-  };
-  document.getElementById("bridalHCPlus").onclick = () => {
-    bridal.highChairs++;
-    document.getElementById("bridalHC").textContent = bridal.highChairs;
-    updateFloorTotals();
-  };
-}
+    const room = Number(roomHireEl.value||0);
+    const dry = Number(dryHireEl.value||0);
+    const sec = Number(securityEl.value||0);
 
-// Dietary rendering (simplified for brevity - you can expand if needed)
-function renderDietary() {
-  // Similar structure as before - omitted for space. You can keep your original dietary code if you prefer the full version.
-  document.getElementById("dietaryGrid").innerHTML = "<p style='grid-column:1/-1; text-align:center; color:#888; padding:40px;'>Dietary requirements per table (fully functional in your original version)</p>";
-}
+    const food = calculateFood();
+    const drinks = calculateDrinks();
 
-// Runsheet (kept simple)
-function renderRunsheet() {
-  const container = document.getElementById("runsheetList");
-  container.innerHTML = "";
-  runsheetEvents.forEach((ev, i) => {
-    const div = document.createElement("div");
-    div.style = "display:flex; gap:10px; margin-bottom:10px; align-items:center;";
-    div.innerHTML = `
-      <input type="text" value="${ev.time}" style="width:100px;" data-index="${i}" data-field="time">
-      <input type="text" value="${ev.desc}" style="flex:1;" data-index="${i}" data-field="desc">
-      <button class="btn ghost" data-del="${i}" style="padding:5px 10px;">🗑</button>
+    const total = room + dry + sec + food + drinks;
+
+    qRoomEl.textContent = aud(room);
+    qDryEl.textContent = aud(dry);
+    qSecEl.textContent = aud(sec);
+    qFoodEl.textContent = aud(food);
+    qDrinksEl.textContent = aud(drinks);
+    qTotalEl.textContent = aud(total);
+
+    kpiAdultsEl.textContent = adults;
+    kpiChildrenEl.textContent = children;
+    kpiFoodEl.textContent = aud(food);
+
+    const guestTotal = adults + children;
+    kpiAvgEl.textContent = guestTotal ? aud(total/guestTotal) : aud(0);
+
+    // Badge updates
+    const sel = getSelections();
+    const anyFood = Object.values(sel).some(a=>a.length);
+    setBadge(foodCompleteBadgeEl, anyFood ? "ok":"warn", anyFood?"Menu Ready":"Menu Empty");
+
+    const drinkMode = drinkModeEl.value;
+    setBadge(drinksCompleteBadgeEl,
+      drinkMode==="bar" ? "warn" : "ok",
+      drinkMode==="bar" ? "Bar Pricing" : "Custom Drinks");
+
+    // Summary
+    finalSummaryEl.innerHTML = `
+      <b>${escapeHtml(coupleNameEl.value||"Event")}</b><br>
+      Date: ${escapeHtml(weddingDateEl.value||"-")}<br>
+      Adults: ${adults} | Children: ${children}<br><br>
+      Food: ${aud(food)}<br>
+      Drinks: ${aud(drinks)}<br>
+      Room: ${aud(room)}<br>
+      Dry Hire: ${aud(dry)}<br>
+      Security: ${aud(sec)}<br><br>
+      <b>Total: ${aud(total)}</b>
     `;
-    container.appendChild(div);
-  });
-}
 
-// Summary
-function renderSummary() {
-  const guests = getGuestTotals();
-  const adults = guests.paying - guests.children;
-
-  let html = `
-    <h3>Couple</h3>
-    <p><strong>Name:</strong> ${document.getElementById("coupleName").value || "Not entered"}</p>
-    <p><strong>Date:</strong> ${document.getElementById("weddingDate").value || "Not set"}</p>
-    <p><strong>Venue:</strong> ${document.getElementById("venueSpace").value}</p>
-
-    <h3>Guests</h3>
-    <p>Total paying: ${guests.paying} (${adults} adults, ${guests.children} children) | High chairs: ${guests.hc}</p>
-
-    <h3>Quote Total</h3>
-    <p style="font-size:1.4rem; font-weight:800; color:var(--warm-gold);">${document.getElementById("quoteTotal").innerText}</p>
-  `;
-
-  document.getElementById("fullSummary").innerHTML = html;
-}
-
-// Tab Navigation
-function setActivePage(pageId) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  document.getElementById(`page-${pageId}`).classList.add("active");
-
-  document.querySelectorAll(".tab[data-page]").forEach(t => {
-    t.classList.toggle("active", t.dataset.page === pageId);
-  });
-
-  if (pageId === "food") renderFoodSelection();
-  if (pageId === "floorplan") { renderFloorplan(); initBridal(); }
-  if (pageId === "runsheet") renderRunsheet();
-  if (pageId === "summary") renderSummary();
-}
-
-// Event Listeners
-document.querySelectorAll(".tab[data-page]").forEach(tab => {
-  tab.addEventListener("click", () => setActivePage(tab.dataset.page));
-});
-
-document.getElementById("nextTab").addEventListener("click", () => {
-  const order = ["couple","quote","food","drinks","floorplan","dietary","extras","runsheet","summary"];
-  let current = document.querySelector(".tab.active").dataset.page;
-  let idx = order.indexOf(current);
-  setActivePage(order[(idx + 1) % order.length]);
-});
-
-document.getElementById("drinkMode").addEventListener("change", (e) => {
-  drinkMode = e.target.value;
-  document.getElementById("customDrinkRow").style.display = drinkMode === "custom" ? "block" : "none";
-  updateQuote();
-});
-
-document.getElementById("customDrinkPrice").addEventListener("input", (e) => {
-  customDrinkPrice = parseFloat(e.target.value) || 0;
-  updateQuote();
-});
-
-["roomHire","dryHire","security","extraCost"].forEach(id => {
-  document.getElementById(id).addEventListener("input", updateQuote);
-});
-
-document.getElementById("resetFloorBtn").addEventListener("click", () => {
-  if (confirm("Reset all tables to zero?")) {
-    tableData = Array(36).fill().map(() => ({ total: 0, children: 0, highChairs: 0 }));
-    bridal = { total: 0, children: 0, highChairs: 0 };
-    renderFloorplan();
-    initBridal();
+    // Chips
+    chipsEl.innerHTML="";
+    Object.entries(sel).forEach(([course,items])=>{
+      items.forEach(item=>{
+        const chip=document.createElement("span");
+        chip.className="pill";
+        chip.textContent=item;
+        chipsEl.appendChild(chip);
+      });
+    });
   }
-});
 
-document.getElementById("copySummaryBtn").addEventListener("click", () => {
-  navigator.clipboard.writeText(document.getElementById("fullSummary").innerText);
-  alert("Summary copied to clipboard!");
-});
+  // -----------------------------
+  // SAVE / LOAD
+  // -----------------------------
+  function saveDraft(){
+    const data = {
+      adults: adultsEl.value,
+      children: childrenEl.value,
+      room: roomHireEl.value,
+      dry: dryHireEl.value,
+      sec: securityEl.value,
 
-document.getElementById("printSummaryBtn").addEventListener("click", () => window.print());
+      drinkMode: drinkModeEl.value,
+      customDrinkPrice: customDrinkPriceEl.value,
+      customDrinkNote: customDrinkNoteEl.value,
 
-// Button navigation
-const navButtons = {
-  nextCouple: "quote", backQuote: "couple",
-  nextQuote: "food", backFood: "quote",
-  nextFood: "drinks", backDrinks: "food",
-  nextDrinks: "floorplan", backFloor: "drinks",
-  nextFloor: "dietary", backDietary: "floorplan",
-  nextDietary: "extras", backExtras: "dietary",
-  nextExtras: "runsheet", backRunsheet: "extras",
-  nextRunsheet: "summary", backSummary: "runsheet"
-};
+      enableSupperPricing: enableSupperPricingEl.checked,
+      fruitPlatter: fruitPlatterEl.checked,
+      tables: tablesEl.value,
+      fruitPerTable: fruitPerTableEl.value,
+      adultFactor: adultFactorEl.value,
+      childFactor: childFactorEl.value,
 
-Object.keys(navButtons).forEach(id => {
-  const el = document.getElementById(id);
-  if (el) el.addEventListener("click", () => setActivePage(navButtons[id]));
-});
+      coupleName: coupleNameEl.value,
+      weddingDate: weddingDateEl.value,
+      venueSpace: venueSpaceEl.value,
+      email: emailEl.value,
+      phone: phoneEl.value,
+      notes: notesEl.value,
 
-// Initialize
-renderFoodSelection();
-renderFloorplan();
-initBridal();
-setActivePage("couple");
-updateQuote();
+      sel: getSelections()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    alert("Draft Saved");
+  }
+
+  function loadDraft(){
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return alert("No draft found");
+    const d = JSON.parse(raw);
+
+    adultsEl.value = d.adults||0;
+    childrenEl.value = d.children||0;
+    roomHireEl.value = d.room||0;
+    dryHireEl.value = d.dry||0;
+    securityEl.value = d.sec||0;
+
+    enableSupperPricingEl.checked = !!d.enableSupperPricing;
+    fruitPlatterEl.checked = !!d.fruitPlatter;
+    tablesEl.value = d.tables ?? tablesEl.value;
+    fruitPerTableEl.value = d.fruitPerTable ?? fruitPerTableEl.value;
+    adultFactorEl.value = d.adultFactor ?? adultFactorEl.value;
+    childFactorEl.value = d.childFactor ?? childFactorEl.value;
+
+    drinkModeEl.value = d.drinkMode || "bar";
+    customDrinkPriceEl.value = d.customDrinkPrice || 0;
+    customDrinkNoteEl.value = d.customDrinkNote || "";
+    updateDrinkUI();
+
+    coupleNameEl.value = d.coupleName || "";
+    weddingDateEl.value = d.weddingDate || "";
+    venueSpaceEl.value = d.venueSpace || "members";
+    emailEl.value = d.email || "";
+    phoneEl.value = d.phone || "";
+    notesEl.value = d.notes || "";
+
+    applyVenueProfile(venueSpaceEl.value);
+
+    document.querySelectorAll('input[type="checkbox"][data-course]').forEach(cb=>cb.checked=false);
+    Object.entries(d.sel||{}).forEach(([course,items])=>{
+      items.forEach(item=>{
+        const cb = document.querySelector(`input[data-course="${course}"][value="${CSS.escape(item)}"]`);
+        if(cb) cb.checked=true;
+      });
+    });
+
+    Object.keys(RULES).forEach(enforceLimit);
+    renderAll();
+  }
+
+  function resetAll(){
+    if(!confirm("Reset everything?")) return;
+
+    // reset inputs (keep reasonable defaults for some)
+    document.querySelectorAll("input").forEach(i=>{
+      if(i.type==="checkbox") i.checked=false;
+      else if(i.type==="number") i.value=0;
+      else i.value="";
+    });
+
+    // restore default values you want
+    adultsEl.value = 120;
+    childrenEl.value = 20;
+    adultFactorEl.value = 1.00;
+    childFactorEl.value = 0.30;
+
+    pCanapesEl.value = 10;
+    pAntipastoEl.value = 25;
+    pPastaEl.value = 20;
+    pMainsEl.value = 30;
+    pDessertEl.value = 10;
+    pSupperEl.value = 5;
+
+    tablesEl.value = 10;
+    fruitPerTableEl.value = 35;
+
+    drinkModeEl.value = "bar";
+    customDrinkPriceEl.value = 0;
+    customDrinkNoteEl.value = "";
+
+    updateDrinkUI();
+
+    renderAll();
+  }
+
+  // -----------------------------
+  // SUMMARY ACTIONS
+  // -----------------------------
+  on($("copySummary"), "click", async ()=>{
+    const text = finalSummaryEl.innerText;
+    try{
+      await navigator.clipboard.writeText(text);
+      alert("Summary copied");
+    }catch(e){
+      alert("Copy failed (browser blocked clipboard).");
+    }
+  });
+  on($("printSummary"), "click", ()=>window.print());
+
+  // -----------------------------
+  // INIT
+  // -----------------------------
+  addCheckboxList("canapes","list-canapes");
+  addCheckboxList("antipasto","list-antipasto");
+  addCheckboxList("pasta","list-pasta");
+  addCheckboxList("mains","list-mains");
+  addCheckboxList("dessert","list-dessert");
+
+  attachLimitListeners();
+
+  document.querySelectorAll("input,select,textarea").forEach(el=>{
+    el.addEventListener("input", renderAll);
+    el.addEventListener("change", renderAll);
+  });
+
+  on($("saveDraft"),"click",saveDraft);
+  on($("loadDraft"),"click",loadDraft);
+  on($("resetAll"),"click",resetAll);
+  on($("printQuote"),"click",()=>window.print());
+
+  on(drinkModeEl, "change", updateDrinkUI);
+  on(venueSpaceEl, "change", ()=> applyVenueProfile(venueSpaceEl.value));
+
+  applyVenueProfile("members");
+  updateDrinkUI();
+  renderAll();
 </script>
 </body>
 </html>
