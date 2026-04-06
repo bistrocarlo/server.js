@@ -4,15 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The Members Lounge | Event Signature Selection</title>
-  <!-- Elegant fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="preconnect" href="[fonts.googleapis.com](https://fonts.googleapis.com)">
+  <link rel="preconnect" href="[fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+  <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap)" rel="stylesheet">
+  <link rel="stylesheet" href="[cdnjs.cloudflare.com](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css)">
 
   <style>
-    /* ===== RESET & VARIABLES ===== */
     * {
       margin: 0;
       padding: 0;
@@ -35,7 +32,6 @@
       --transition: all 0.2s ease;
     }
 
-    /* ----- Global scroll lock ----- */
     html, body {
       height: 100%;
       overflow: hidden;
@@ -52,7 +48,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== TYPOGRAPHY ===== */
     h1, h2, h3, h4 {
       font-family: 'Playfair Display', serif;
       font-weight: 700;
@@ -63,7 +58,6 @@
       color: var(--warm-gold);
     }
 
-    /* ===== HEADER (fixed) ===== */
     header {
       flex-shrink: 0;
       background: var(--pure-white);
@@ -119,7 +113,6 @@
       font-weight: 300;
     }
 
-    /* ===== TABS (fixed) ===== */
     .tabs-wrap {
       flex-shrink: 0;
       background: rgba(255,255,255,0.95);
@@ -179,15 +172,14 @@
       color: white;
     }
 
-    /* ===== PAGE VISIBILITY ===== */
     .page {
       display: none;
     }
+
     .page.active {
       display: block;
     }
 
-    /* ===== MAIN (scrollable content area) ===== */
     main {
       flex: 1 1 auto;
       overflow-y: auto;
@@ -197,7 +189,6 @@
       margin: 0 auto;
     }
 
-    /* ===== CARDS ===== */
     .card {
       background: var(--pure-white);
       border: none;
@@ -228,7 +219,6 @@
       font-style: italic;
     }
 
-    /* ===== GRID LAYOUT FOR TWO COLUMNS ===== */
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -241,7 +231,6 @@
       }
     }
 
-    /* ===== FORM ELEMENTS ===== */
     label {
       display: block;
       font-size: 0.85rem;
@@ -276,7 +265,6 @@
       gap: 20px;
     }
 
-    /* ===== BUTTONS ===== */
     .actions {
       display: flex;
       gap: 15px;
@@ -332,7 +320,6 @@
       color: white;
     }
 
-    /* ===== TABLES ===== */
     .table {
       width: 100%;
       border-collapse: collapse;
@@ -368,7 +355,6 @@
       font-size: 1.4rem;
     }
 
-    /* ===== KPI CARDS ===== */
     .kpi {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -398,7 +384,6 @@
       color: var(--deep-charcoal);
     }
 
-    /* ===== FOOD BUILDER ===== */
     .course {
       margin-top: 30px;
       padding-top: 20px;
@@ -496,7 +481,6 @@
       font-size: 0.9rem;
     }
 
-    /* ===== BADGES & PILLS ===== */
     .statusRow {
       display: flex;
       gap: 12px;
@@ -539,7 +523,6 @@
       font-weight: 500;
     }
 
-    /* ===== SUMMARY PAGE ===== */
     .summary-section {
       margin: 20px 0;
     }
@@ -557,6 +540,7 @@
       justify-content: space-between;
       font-size: 0.95rem;
       padding: 8px 0;
+      gap: 20px;
     }
 
     .summary-line.total {
@@ -584,7 +568,6 @@
       margin: 15px 0;
     }
 
-    /* ===== FOOTER (fixed) ===== */
     footer {
       flex-shrink: 0;
       text-align: center;
@@ -595,7 +578,6 @@
       background: var(--pure-white);
     }
 
-    /* ===== RESPONSIVE TWEAKS ===== */
     @media (max-width: 768px) {
       h1 { font-size: 1.6rem; }
       .tabs { overflow-x: auto; justify-content: flex-start; padding-bottom: 5px; }
@@ -603,6 +585,7 @@
       .card { padding: 20px; }
       .btn { min-width: 100%; }
       .optionsGrid { grid-template-columns: 1fr; }
+      .summary-line { flex-direction: column; gap: 4px; }
     }
 
     @media print {
@@ -642,7 +625,6 @@
   </div>
 
   <main>
-    <!-- PAGE 1 -->
     <section class="page active" id="page-quote">
       <div class="grid">
         <div class="card">
@@ -676,11 +658,11 @@
 
           <table class="table" aria-label="Quote breakdown">
             <tbody>
-               <tr><td>Room hire</td><td id="qRoom">$0.00</td></tr>
-               <tr><td>Food (course-driven)</td><td id="qFood">$0.00</td></tr>
-               <tr><td>Drinks</td><td id="qDrinks">$0.00</td></tr>
-               <tr><td>Dry hire</td><td id="qDry">$0.00</td></tr>
-               <tr><td>Security</td><td id="qSec">$0.00</td></tr>
+              <tr><td>Room hire</td><td id="qRoom">$0.00</td></tr>
+              <tr><td>Food (course-driven)</td><td id="qFood">$0.00</td></tr>
+              <tr><td>Drinks</td><td id="qDrinks">$0.00</td></tr>
+              <tr><td>Dry hire</td><td id="qDry">$0.00</td></tr>
+              <tr><td>Security</td><td id="qSec">$0.00</td></tr>
             </tbody>
           </table>
 
@@ -714,7 +696,6 @@
       </div>
     </section>
 
-    <!-- PAGE 2 -->
     <section class="page" id="page-couple">
       <div class="grid">
         <div class="card">
@@ -759,23 +740,22 @@
           <h2><i class="fas fa-map-marker-alt gold"></i> Venue Profile</h2>
           <div class="small" id="venueProfileText">
             Select a venue to apply branding + default costing (only fills if your cost fields are still $0).<br>
-            <strong>ALORA Macedon</strong> features a tailored menu (no deep fryer, limited burners):<br>
-            • Antipasto: Caponata replaces eggplant parmigiana<br>
-            • Pasta: Baked options only (ravioli in ragu, baked gnocchi)<br>
-            • Other items adjusted as shown.
+            <strong>ALORA Macedon</strong> features a tailored menu with no fried items and no supper service.
           </div>
-          <div class="divider"></div>
           <div class="hint">Menus adapt automatically to the venue.</div>
         </div>
       </div>
     </section>
 
-    <!-- PAGE 3 -->
     <section class="page" id="page-food">
       <div class="card">
         <h2><i class="fas fa-utensils gold"></i> Food Builder (Course-Driven)</h2>
         <div class="hint">
           Select items. Each course adds its course price if at least one item is selected in that course.
+        </div>
+
+        <div class="hint" id="serviceInclusionNote">
+          Included with service: dinner rolls with portion-controlled butter are served at the commencement of service; garden salad is served with the main course; all main courses are accompanied by relevant seasonal vegetables.
         </div>
 
         <div class="actions">
@@ -819,13 +799,13 @@
         </div>
 
         <div class="course">
-          <h3>Supper / Late Night (fixed)</h3>
-          <div class="hint">Pizza only (fixed). No selection required.</div>
-          <div class="count">Included: Pizza</div>
+          <h3>Supper / Late Night</h3>
+          <div class="hint" id="supperNote">Pizza only (fixed). No selection required.</div>
+          <div class="count" id="supperIncluded">Included: Pizza</div>
 
           <h3 style="margin-top:20px;">Optional Add-on: Fruit Platter</h3>
-          <label style="display:flex; align-items:center; gap:10px; font-weight:600; margin-bottom:15px;">
-            <input id="fruitPlatter" type="checkbox" style="width:20px; height:20px;"> Add Fruit Platter (per table)
+          <label style="display:flex; align-items:center; gap:10px; font-weight:600; margin-bottom:15px; text-transform:none;">
+            <input id="fruitPlatter" type="checkbox" style="width:20px; height:20px; margin-bottom:0;"> Add Fruit Platter (per table)
           </label>
           <div class="row">
             <div>
@@ -847,7 +827,6 @@
       </div>
     </section>
 
-    <!-- PAGE 4 -->
     <section class="page" id="page-drinks">
       <div class="grid">
         <div class="card">
@@ -889,7 +868,6 @@
       </div>
     </section>
 
-    <!-- PAGE 5 -->
     <section class="page" id="page-summary">
       <div class="grid">
         <div class="card">
@@ -910,10 +888,8 @@
         <div class="card">
           <h2><i class="fas fa-tags gold"></i> Selected Items</h2>
           <div id="chips"></div>
-          <div class="divider"></div>
           <div class="small" id="summaryCourseCounts"></div>
-          <div class="divider"></div>
-          <div class="small">Save 'members_lounge_logo.png' in the same folder as this file.</div>
+          <div class="small" style="margin-top:12px;">Save logo files in the same folder as this file.</div>
         </div>
       </div>
     </section>
@@ -930,6 +906,7 @@
       .replace(/"/g,"&quot;")
       .replace(/'/g,"&#039;");
   }
+
   const $ = (id) => document.getElementById(id);
   function on(el, ev, fn){ if(el) el.addEventListener(ev, fn); }
 
@@ -964,7 +941,6 @@
     }
   };
 
-  // Base menu (used for all venues except ALORA)
   const BASE_MENU = {
     canapes: [
       "Arancini",
@@ -972,10 +948,10 @@
       "Prawn spring rolls",
       "Parmigiano bites",
       "Caprese empanadas",
-      "Croquettes"
+      "Beef empanadas"
     ],
     antipasto: [
-      "Bruschettta di pomodoro",
+      "Bruschetta di pomodoro",
       "Salumi selection",
       "Feta & Kefalograviera",
       "Tiropita",
@@ -1009,35 +985,52 @@
     ]
   };
 
-  // ALORA-specific menu (with replacements)
   const ALORA_MENU = {
-    canapes: BASE_MENU.canapes.map(item => {
-      if (item === "Arancini") return "Prosciutto-wrapped melon";
-      if (item === "Prawn spring rolls") return "Caprese skewers";
-      return item;
-    }),
-    antipasto: BASE_MENU.antipasto.map(item => {
-      if (item === "Calamari fritti") return "Chargrilled prawns";
-      if (item === "Eggplant parmigiana") return "Caponata";
-      return item;
-    }),
-    pasta: [
-      "Spinach and ricotta ravioli in three meat ragu sauce",
-      "Baked gnocchi"
+    canapes: [
+      "Prosciutto-wrapped melon",
+      "Focaccia fingers",
+      "Caprese skewers",
+      "Parmigiano bites",
+      "Fresh tomato bruschetta",
+      "Beef empanadas"
     ],
-    mains: BASE_MENU.mains.slice(),
-    dessert: BASE_MENU.dessert.slice()
+    antipasto: [
+      "Bruschetta di pomodoro",
+      "Salumi selection",
+      "Feta & Kefalograviera",
+      "Trio of dips with pita",
+      "Warm marinated olives",
+      "Bocconcini & ricotta",
+      "Chargrilled prawns"
+    ],
+    pasta: [
+      "Pasta al Ragú (three meats, tomato)",
+      "Gnocchi Pesto (basil, parmesan & nut-free)",
+      "Casarecce Amatriciana (guanciale & pecorino, tomato)",
+      "Pasta Napoli (tomato & basil)"
+    ],
+    mains: [
+      "Chargrilled chicken breast with a chimichurri dressing",
+      "Pan-seared barramundi fillet with lemon and herbs",
+      "Lamb shank with white wine and tomato",
+      "Braised beef short ribs in a red wine jus",
+      "Bondiola, pork fillet with a salmoriglio sauce",
+      "Stuffed pepper with seasonal vegetables and cauliflower steak"
+    ],
+    dessert: [
+      "Sharing assorted desserts (mini cannoli & baklava)",
+      "Tiramisu & vanilla cheese cake (alternating)",
+      "Gelato dessert (cassata, tartufo, baci)"
+    ]
   };
 
-  // Return the appropriate menu based on selected venue
   function getMenuForVenue(venueKey) {
-    return venueKey === 'alora' ? ALORA_MENU : BASE_MENU;
+    return venueKey === "alora" ? ALORA_MENU : BASE_MENU;
   }
 
-  // Hot items mapping (updated for ALORA items)
   const HOT_ANTIPASTO = {
     "Calamari fritti": true,
-    "Chargrilled prawns": true,   // grilled = hot
+    "Chargrilled prawns": true,
     "Cevapi": true,
     "Meatballs in sugo": true,
     "Italian pork sausages": true
@@ -1053,7 +1046,7 @@
 
   const RULES = {
     canapes:   { max: 3 },
-    antipasto: { max: 7 },          // overall max not used directly now, but kept for reference
+    antipasto: { max: 7 },
     pasta:     { max: 2 },
     mains:     { max: 2 },
     dessert:   { max: 1 }
@@ -1069,6 +1062,27 @@
 
   const TAB_ORDER = ["quote","couple","food","drinks","summary"];
 
+  const SERVICE_INCLUSION_TEXT = "Included with service: dinner rolls with portion-controlled butter are served at the commencement of service; garden salad is served with the main course; all main courses are accompanied by relevant seasonal vegetables.";
+
+  const SUPPER_BY_VENUE = {
+    sala: {
+      note: "Pizza only (fixed). No selection required.",
+      included: "Included: Pizza"
+    },
+    members: {
+      note: "Pizza only (fixed). No selection required.",
+      included: "Included: Pizza"
+    },
+    fior: {
+      note: "Pizza only (fixed). No selection required.",
+      included: "Included: Pizza"
+    },
+    alora: {
+      note: "No supper is provided at ALORA Macedon.",
+      included: "Included: No supper"
+    }
+  };
+
   function setActivePage(page){
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     const target = document.getElementById("page-" + page);
@@ -1080,14 +1094,16 @@
       t.setAttribute("aria-selected", active ? "true" : "false");
     });
 
-    document.querySelector('main').scrollTop = 0;
+    document.querySelector("main").scrollTop = 0;
     renderAll();
   }
+
   function nextPage(){
     const current = document.querySelector(".tab[data-page].active")?.dataset.page || "quote";
     const idx = TAB_ORDER.indexOf(current);
     setActivePage(TAB_ORDER[(idx + 1) % TAB_ORDER.length]);
   }
+
   function prevPage(){
     const current = document.querySelector(".tab[data-page].active")?.dataset.page || "quote";
     const idx = TAB_ORDER.indexOf(current);
@@ -1154,9 +1170,12 @@
     if(!el) return;
     el.classList.remove("ok","warn");
     if(state) el.classList.add(state);
-    if(el.children.length > 0) {
-      while(el.childNodes.length > 1) el.removeChild(el.lastChild);
-      el.appendChild(document.createTextNode(' ' + text));
+
+    const icon = el.querySelector("i");
+    el.innerHTML = "";
+    if(icon){
+      el.appendChild(icon);
+      el.appendChild(document.createTextNode(" " + text));
     } else {
       el.textContent = text;
     }
@@ -1165,15 +1184,16 @@
   function updateDrinkUI(){
     const mode = drinkModeEl.value;
     if(customDrinkRow) customDrinkRow.style.display = (mode === "custom") ? "grid" : "none";
+
     if(drinkInfoEl){
       drinkInfoEl.textContent = (mode === "bar")
         ? "Bar pricing is indicative only (drinks = $0 in the quote)."
         : "Custom price adds your set amount per adult into the quote.";
     }
+
     renderAll();
   }
 
-  // Rebuild all food checkboxes based on current venue
   function rebuildFoodLists() {
     const venue = $("venueSpace").value;
     const menu = getMenuForVenue(venue);
@@ -1224,9 +1244,10 @@
   }
 
   function enforceAntipastoLimit() {
-    const course = 'antipasto';
+    const course = "antipasto";
     const checkboxes = document.querySelectorAll('input[type="checkbox"][data-course="' + course + '"]');
     let hotChecked = [], coldChecked = [];
+
     checkboxes.forEach(cb => {
       if (!cb.checked) return;
       if (HOT_ANTIPASTO[cb.value]) hotChecked.push(cb);
@@ -1240,12 +1261,14 @@
       const lastHot = hotChecked[hotChecked.length - 1];
       if (lastHot) lastHot.checked = false;
     }
+
     if (coldOver) {
       const lastCold = coldChecked[coldChecked.length - 1];
       if (lastCold) lastCold.checked = false;
     }
 
-    hotChecked = []; coldChecked = [];
+    hotChecked = [];
+    coldChecked = [];
     checkboxes.forEach(cb => {
       if (!cb.checked) return;
       if (HOT_ANTIPASTO[cb.value]) hotChecked.push(cb);
@@ -1264,15 +1287,17 @@
         warnEl.textContent = "Maximum selections reached for one or both categories.";
       } else {
         warnEl.style.display = "none";
+        warnEl.textContent = "";
       }
     }
   }
 
   function enforceLimit(courseKey){
-    if (courseKey === 'antipasto') {
+    if (courseKey === "antipasto") {
       enforceAntipastoLimit();
       return;
     }
+
     const rule = RULES[courseKey];
     if(!rule) return;
 
@@ -1291,7 +1316,7 @@
       if(now.length >= rule.max){
         warnEl.style.display = "block";
         warnEl.textContent = "Maximum " + rule.max + " selections for " + COURSE_LABEL[courseKey] + ".";
-      }else{
+      } else {
         warnEl.style.display = "none";
         warnEl.textContent = "";
       }
@@ -1299,7 +1324,7 @@
   }
 
   function attachLimitListeners(){
-    document.querySelectorAll('input[type="checkbox"][data-course]').forEach(cb=>{
+    document.querySelectorAll('input[type="checkbox"][data-course]').forEach(cb => {
       cb.removeEventListener("change", limitHandler);
       cb.addEventListener("change", limitHandler);
     });
@@ -1312,34 +1337,36 @@
 
   window.selectAll = function(checked){
     if (checked) {
-      ['canapes', 'pasta', 'mains', 'dessert'].forEach(courseKey => {
+      ["canapes", "pasta", "mains", "dessert"].forEach(courseKey => {
         const items = document.querySelectorAll('input[type="checkbox"][data-course="' + courseKey + '"]');
-        for(let i=0;i<Math.min(items.length, RULES[courseKey].max); i++){
+        for(let i = 0; i < Math.min(items.length, RULES[courseKey].max); i++){
           items[i].checked = true;
         }
         enforceLimit(courseKey);
       });
 
-      const hotItems = Array.from(document.querySelectorAll('input[type="checkbox"][data-course="antipasto"]')).filter(cb => HOT_ANTIPASTO[cb.value]);
-      const coldItems = Array.from(document.querySelectorAll('input[type="checkbox"][data-course="antipasto"]')).filter(cb => !HOT_ANTIPASTO[cb.value]);
-      hotItems.slice(0,2).forEach(cb => cb.checked = true);
-      coldItems.slice(0,5).forEach(cb => cb.checked = true);
+      const antiItems = Array.from(document.querySelectorAll('input[type="checkbox"][data-course="antipasto"]'));
+      const hotItems = antiItems.filter(cb => HOT_ANTIPASTO[cb.value]);
+      const coldItems = antiItems.filter(cb => !HOT_ANTIPASTO[cb.value]);
+
+      hotItems.slice(0, 2).forEach(cb => cb.checked = true);
+      coldItems.slice(0, 5).forEach(cb => cb.checked = true);
       enforceAntipastoLimit();
     } else {
       document.querySelectorAll('input[type="checkbox"][data-course]').forEach(i => i.checked = false);
       Object.keys(RULES).forEach(enforceLimit);
       enforceAntipastoLimit();
     }
+
     renderAll();
   };
 
   function calculateFood(){
-    const adults = Number(adultsEl.value||0);
-    const children = Number(childrenEl.value||0);
-
+    const adults = Number(adultsEl.value || 0);
+    const children = Number(childrenEl.value || 0);
     const sel = getSelections();
-    let perAdult = 0;
 
+    let perAdult = 0;
     if(sel.canapes.length) perAdult += FIXED_PRICES.canapes;
     if(sel.antipasto.length) perAdult += FIXED_PRICES.antipasto;
     if(sel.pasta.length) perAdult += FIXED_PRICES.pasta;
@@ -1351,35 +1378,35 @@
 
     let fruitTotal = 0;
     if(fruitPlatterEl && fruitPlatterEl.checked){
-      fruitTotal = Number(tablesEl.value||0) * Number(fruitPerTableEl.value||0);
+      fruitTotal = Number(tablesEl.value || 0) * Number(fruitPerTableEl.value || 0);
     }
 
     return adultTotal + childTotal + fruitTotal;
   }
 
   function calculateDrinks(){
-    const adults = Number(adultsEl.value||0);
+    const adults = Number(adultsEl.value || 0);
     const mode = drinkModeEl.value;
-    if(mode === "custom") return adults * Number(customDrinkPriceEl.value||0);
+    if(mode === "custom") return adults * Number(customDrinkPriceEl.value || 0);
     return 0;
   }
 
   function renderAll(){
-    const adults = Number(adultsEl.value||0);
-    const children = Number(childrenEl.value||0);
+    const adults = Number(adultsEl.value || 0);
+    const children = Number(childrenEl.value || 0);
     const totalGuests = adults + children;
 
-    const room = Number(roomHireEl.value||0);
-    const dry = Number(dryHireEl.value||0);
-    const sec = Number(securityEl.value||0);
+    const room = Number(roomHireEl.value || 0);
+    const dry = Number(dryHireEl.value || 0);
+    const sec = Number(securityEl.value || 0);
 
     const food = calculateFood();
     const drinks = calculateDrinks();
     const total = room + dry + sec + food + drinks;
 
     qRoomEl.textContent = aud(room);
-    qDryEl.textContent  = aud(dry);
-    qSecEl.textContent  = aud(sec);
+    qDryEl.textContent = aud(dry);
+    qSecEl.textContent = aud(sec);
     qFoodEl.textContent = aud(food);
     qDrinksEl.textContent = aud(drinks);
     qTotalEl.textContent = aud(total);
@@ -1387,36 +1414,49 @@
     kpiAdultsEl.textContent = adults;
     kpiChildrenEl.textContent = children;
     kpiFoodEl.textContent = aud(food);
-    kpiAvgEl.textContent = totalGuests ? aud(total/totalGuests) : aud(0);
+    kpiAvgEl.textContent = totalGuests ? aud(total / totalGuests) : aud(0);
 
     const sel = getSelections();
-    const anyFood = Object.values(sel).some(a=>a.length);
-    setBadge(foodCompleteBadgeEl, anyFood ? "ok":"warn", anyFood ? "Menu Ready" : "Menu Empty");
-    setBadge(drinksCompleteBadgeEl, (drinkModeEl.value==="bar") ? "warn":"ok",
-      (drinkModeEl.value==="bar") ? "Bar Pricing" : "Custom Drinks");
+    const anyFood = Object.values(sel).some(a => a.length);
+
+    setBadge(foodCompleteBadgeEl, anyFood ? "ok" : "warn", anyFood ? "Menu Ready" : "Menu Empty");
+    setBadge(drinksCompleteBadgeEl, drinkModeEl.value === "bar" ? "warn" : "ok",
+      drinkModeEl.value === "bar" ? "Bar Pricing" : "Custom Drinks");
 
     const drinksBadge2 = $("drinksCompleteBadge2");
-    if(drinksBadge2) setBadge(drinksBadge2, (drinkModeEl.value==="bar") ? "warn":"ok",
-      (drinkModeEl.value==="bar") ? "Bar Pricing" : "Custom Drinks");
+    if(drinksBadge2){
+      setBadge(drinksBadge2, drinkModeEl.value === "bar" ? "warn" : "ok",
+        drinkModeEl.value === "bar" ? "Bar Pricing" : "Custom Drinks");
+    }
 
     const coupleName = coupleNameEl.value.trim() || "Event";
     const weddingDate = weddingDateEl.value || "Not set";
     const venueSelect = $("venueSpace");
     const venueText = venueSelect.options[venueSelect.selectedIndex]?.text || "Not selected";
+    const venueKey = venueSelect.value;
 
     const foodItemsHtml = Object.keys(COURSE_LABEL).map(courseKey => {
       const items = sel[courseKey];
-      if(items.length === 0) return '';
-      return `<li><strong>${COURSE_LABEL[courseKey]}:</strong> ${items.map(escapeHtml).join(', ')}</li>`;
-    }).filter(s => s).join('');
+      if(items.length === 0) return "";
+      return `<li><strong>${COURSE_LABEL[courseKey]}:</strong> ${items.map(escapeHtml).join(", ")}</li>`;
+    }).filter(Boolean).join("");
 
     const fruitHtml = fruitPlatterEl.checked
-      ? `<li><strong>Fruit platter:</strong> ${tablesEl.value} tables x $35 = ${aud(Number(tablesEl.value)*35)}</li>`
-      : '';
+      ? `<li><strong>Fruit platter:</strong> ${escapeHtml(tablesEl.value)} tables × ${aud(Number(fruitPerTableEl.value || 0))} = ${aud(Number(tablesEl.value || 0) * Number(fruitPerTableEl.value || 0))}</li>`
+      : "";
 
-    let drinkDetails = '';
-    if(drinkModeEl.value === 'bar') {
-      drinkDetails = 'Bar prices (no package cost)';
+    const supperSummary = venueKey === "alora"
+      ? "No supper provided"
+      : "Pizza supper included";
+
+    const serviceHtml = `
+      <li><strong>Service inclusions:</strong> Dinner rolls with portion-controlled butter served at the commencement of service; garden salad served with the main course; all main courses served with relevant seasonal vegetables.</li>
+      <li><strong>Supper:</strong> ${escapeHtml(supperSummary)}</li>
+    `;
+
+    let drinkDetails = "";
+    if(drinkModeEl.value === "bar") {
+      drinkDetails = "Bar prices (no package cost)";
     } else {
       const price = Number(customDrinkPriceEl.value || 0);
       const note = customDrinkNoteEl.value.trim();
@@ -1433,19 +1473,19 @@
       </div>
 
       <div class="summary-section">
-        <h3>🍽️ Food</h3>
-        ${foodItemsHtml ? `<ul class="summary-items">${foodItemsHtml}${fruitHtml}</ul>` : '<p>No food items selected</p>'}
+        <h3>Food</h3>
+        ${(foodItemsHtml || fruitHtml || serviceHtml) ? `<ul class="summary-items">${foodItemsHtml}${fruitHtml}${serviceHtml}</ul>` : "<p>No food items selected</p>"}
         <div class="summary-line"><span>Food subtotal:</span> <span>${aud(food)}</span></div>
       </div>
 
       <div class="summary-section">
-        <h3>🥂 Drinks</h3>
+        <h3>Drinks</h3>
         <div class="summary-line"><span>Mode:</span> <span>${drinkDetails}</span></div>
         <div class="summary-line"><span>Drinks total:</span> <span>${aud(drinks)}</span></div>
       </div>
 
       <div class="summary-section">
-        <h3>🏛️ Other costs</h3>
+        <h3>Other costs</h3>
         <div class="summary-line"><span>Room hire:</span> <span>${aud(room)}</span></div>
         <div class="summary-line"><span>Dry hire:</span> <span>${aud(dry)}</span></div>
         <div class="summary-line"><span>Security:</span> <span>${aud(sec)}</span></div>
@@ -1459,7 +1499,7 @@
 
     finalSummaryEl.innerHTML = summaryHtml;
 
-    chipsEl.innerHTML = '';
+    chipsEl.innerHTML = "";
     Object.entries(sel).forEach(([course, items]) => {
       items.forEach(item => {
         const chip = document.createElement("span");
@@ -1468,6 +1508,7 @@
         chipsEl.appendChild(chip);
       });
     });
+
     if(fruitPlatterEl.checked) {
       const chip = document.createElement("span");
       chip.className = "pill";
@@ -1475,22 +1516,31 @@
       chipsEl.appendChild(chip);
     }
 
+    const supperChip = document.createElement("span");
+    supperChip.className = "pill";
+    supperChip.textContent = venueKey === "alora" ? "No supper" : "Pizza supper included";
+    chipsEl.appendChild(supperChip);
+
+    const serviceChip = document.createElement("span");
+    serviceChip.className = "pill";
+    serviceChip.textContent = "Dinner rolls, butter, garden salad, seasonal vegetables included";
+    chipsEl.appendChild(serviceChip);
+
     const counts = Object.keys(COURSE_LABEL).map(c => {
-      if (c === 'antipasto') {
-        const hot = (sel.antipasto.filter(i => HOT_ANTIPASTO[i])).length;
+      if (c === "antipasto") {
+        const hot = sel.antipasto.filter(i => HOT_ANTIPASTO[i]).length;
         const cold = sel.antipasto.length - hot;
         return `Antipasto: ${hot} hot, ${cold} cold`;
       } else {
         return `${COURSE_LABEL[c]}: ${sel[c].length}`;
       }
-    }).join(' · ');
+    }).join(" · ");
+
     summaryCourseCountsEl.textContent = counts;
   }
 
   function resetAll(){
     if(!confirm("Reset everything?")) return;
-
-    document.querySelectorAll('input[type="checkbox"][data-course]').forEach(cb => cb.checked = false);
 
     adultsEl.value = 120;
     childrenEl.value = 20;
@@ -1505,9 +1555,17 @@
     customDrinkPriceEl.value = 0;
     customDrinkNoteEl.value = "";
 
+    coupleNameEl.value = "";
+    weddingDateEl.value = "";
+    $("email").value = "";
+    $("phone").value = "";
+    $("notes").value = "";
+    $("venueSpace").value = "members";
+
     Object.keys(RULES).forEach(enforceLimit);
-    enforceAntipastoLimit();
+    rebuildFoodLists();
     updateDrinkUI();
+    applyVenueProfile("members");
     renderAll();
   }
 
@@ -1527,6 +1585,7 @@
       img.style.display = "none";
       if(fallback) fallback.style.display = "inline-flex";
     };
+
     img.src = src;
   }
 
@@ -1536,6 +1595,7 @@
 
     const subtitleEl = $("brandSubtitle");
     const footerEl = $("brandFooter");
+
     if(subtitleEl) subtitleEl.textContent = p.subtitle;
     if(footerEl) footerEl.textContent = p.footer;
 
@@ -1543,46 +1603,56 @@
 
     const info = $("venueProfileText");
     if(info){
-      info.innerHTML = "<b>Active venue:</b> " + escapeHtml(p.label) + "<br>Branding switches automatically.";
+      if(key === "alora"){
+        info.innerHTML = "<b>Active venue:</b> " + escapeHtml(p.label) + "<br>ALORA Macedon menu excludes fried items, excludes eggplant parmigiana, and no supper is provided.";
+      } else {
+        info.innerHTML = "<b>Active venue:</b> " + escapeHtml(p.label) + "<br>Branding switches automatically.";
+      }
     }
-
-    const roomHireEl = $("roomHire");
-    const dryHireEl = $("dryHire");
-    const securityEl = $("security");
 
     const r = Number(roomHireEl?.value || 0);
     const d = Number(dryHireEl?.value || 0);
     const s = Number(securityEl?.value || 0);
 
     if(roomHireEl && r === 0) roomHireEl.value = p.defaults.roomHire;
-    if(dryHireEl && d === 0)  dryHireEl.value  = p.defaults.dryHire;
+    if(dryHireEl && d === 0) dryHireEl.value = p.defaults.dryHire;
     if(securityEl && s === 0) securityEl.value = p.defaults.security;
 
-    // Rebuild food lists with the new venue's menu
+    const supperNoteEl = $("supperNote");
+    const supperIncludedEl = $("supperIncluded");
+    const supperConfig = SUPPER_BY_VENUE[key] || SUPPER_BY_VENUE.members;
+
+    if(supperNoteEl) supperNoteEl.textContent = supperConfig.note;
+    if(supperIncludedEl) supperIncludedEl.textContent = supperConfig.included;
+
+    const serviceInclusionNoteEl = $("serviceInclusionNote");
+    if(serviceInclusionNoteEl) serviceInclusionNoteEl.textContent = SERVICE_INCLUSION_TEXT;
+
     rebuildFoodLists();
   }
 
-  on($("copySummary"), "click", async ()=>{
+  on($("copySummary"), "click", async () => {
     const text = finalSummaryEl.innerText;
-    try{ await navigator.clipboard.writeText(text); alert("Summary copied"); }
-    catch(e){ alert("Copy failed (browser blocked clipboard)."); }
+    try {
+      await navigator.clipboard.writeText(text);
+      alert("Summary copied");
+    } catch(e) {
+      alert("Copy failed (browser blocked clipboard).");
+    }
   });
-  on($("printSummary"), "click", ()=>window.print());
 
-  // Initial build with default venue (members)
-  rebuildFoodLists();
+  on($("printSummary"), "click", () => window.print());
+  on($("resetAll"), "click", resetAll);
+  on($("printQuote"), "click", () => window.print());
+  on(drinkModeEl, "change", updateDrinkUI);
+  on($("venueSpace"), "change", () => applyVenueProfile($("venueSpace").value));
 
-  document.querySelectorAll("input,select,textarea").forEach(el=>{
+  document.querySelectorAll("input, select, textarea").forEach(el => {
     el.addEventListener("input", renderAll);
     el.addEventListener("change", renderAll);
   });
 
-  on($("resetAll"), "click", resetAll);
-  on($("printQuote"), "click", ()=>window.print());
-
-  on(drinkModeEl, "change", updateDrinkUI);
-  on($("venueSpace"), "change", ()=> applyVenueProfile($("venueSpace").value));
-
+  rebuildFoodLists();
   applyVenueProfile("members");
   updateDrinkUI();
   renderAll();
