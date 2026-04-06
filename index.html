@@ -4,10 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The Members Lounge | Event Signature Selection</title>
-  <link rel="preconnect" href="[fonts.googleapis.com](https://fonts.googleapis.com)">
-  <link rel="preconnect" href="[fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-  <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap)" rel="stylesheet">
-  <link rel="stylesheet" href="[cdnjs.cloudflare.com](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
     * {
@@ -1001,7 +1001,9 @@
       "Trio of dips with pita",
       "Warm marinated olives",
       "Bocconcini & ricotta",
-      "Chargrilled prawns"
+      "Chargrilled prawns",
+      "Italian pork sausages",
+      "Meatballs in sugo"
     ],
     pasta: [
       "Pasta al Ragú (three meats, tomato)",
@@ -1604,7 +1606,7 @@
     const info = $("venueProfileText");
     if(info){
       if(key === "alora"){
-        info.innerHTML = "<b>Active venue:</b> " + escapeHtml(p.label) + "<br>ALORA Macedon menu excludes fried items, excludes eggplant parmigiana, and no supper is provided.";
+        info.innerHTML = "<b>Active venue:</b> " + escapeHtml(p.label) + "<br>ALORA Macedon menu excludes fried items, and includes Italian pork sausages and meatballs in sugo as hot antipasto options. No supper provided.";
       } else {
         info.innerHTML = "<b>Active venue:</b> " + escapeHtml(p.label) + "<br>Branding switches automatically.";
       }
